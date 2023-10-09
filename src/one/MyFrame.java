@@ -15,17 +15,17 @@ import javax.swing.JTextField;
 public class MyFrame extends JFrame implements ActionListener {
 	JRadioButton noOffense = SkillsCreator.createSkillRadioButton(this, "No");
 	JRadioButton advancedOffense = SkillsCreator.createSkillRadioButton(this, "Advanced");
-	JRadioButton basicOffense = SkillsCreator.createSkillRadioButton(this, "basic");
+	JRadioButton basicOffense = SkillsCreator.createSkillRadioButton(this, "Basic");
 	JRadioButton expertOffense = SkillsCreator.createSkillRadioButton(this, "Expert");
 
 	JRadioButton noArmorer = SkillsCreator.createSkillRadioButton(this, "No");
 	JRadioButton advancedArmorer = SkillsCreator.createSkillRadioButton(this, "Advanced");
-	JRadioButton basicArmorer = SkillsCreator.createSkillRadioButton(this, "basic");
+	JRadioButton basicArmorer = SkillsCreator.createSkillRadioButton(this, "Basic");
 	JRadioButton expertArmorer = SkillsCreator.createSkillRadioButton(this, "Expert");
 
 	JRadioButton noArchery = SkillsCreator.createSkillRadioButton(this, "No");
 	JRadioButton advancedArchery = SkillsCreator.createSkillRadioButton(this, "Advanced");
-	JRadioButton basicArchery = SkillsCreator.createSkillRadioButton(this, "basic");
+	JRadioButton basicArchery = SkillsCreator.createSkillRadioButton(this, "Basic");
 	JRadioButton expertArchery = SkillsCreator.createSkillRadioButton(this, "Expert");
 
 	JTextField specialtyLevelOffense;
