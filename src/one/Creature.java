@@ -16,7 +16,7 @@ public class Creature {
 	public int health;
 	public boolean ranged;
 	
-	public Creature(String name, int attack, int defense, int minDamage, int maxDamage, int health, boolean ranged) {
+	private Creature(String name, int attack, int defense, int minDamage, int maxDamage, int health, boolean ranged) {
 		this.name=name;
 		this.attack=attack;
 		this.defense=defense;
@@ -60,16 +60,36 @@ public class Creature {
 			creature[i+12]=new Creature("NixWarrior", 14, 17, 18, 22, 90, false);
 			creature[i+13]=new Creature("SeaSerpent", 22, 16, 30, 55, 180, false);
 			creature[i+14]=new Creature("Haspid", 29, 20, 30, 55, 300, false);
-			
+			sortByNames(creature);
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return creature;
 	}
+	
+	private static Creature[] sortByNames(Creature[] creature) {
+		for(int i=0; i<156; i++) {
+			for(int j=0 ;j<156-i-1; j++) {
+			for(int n=0; n<creature[j].name.length(); n++) {
+				if(creature[j].name.length()==n || creature[j+1].name.charAt(n)<creature[j].name.charAt(n)) {
+					Creature temp=creature[j];
+					creature[j]=creature[j+1];
+					creature[j+1]=temp;
+					break;
+				}
+				if(creature[j+1].name.charAt(n)==creature[j].name.charAt(n)) {
+					continue;
+				}
+				break;
+			}
+		}
+	}
+		return creature;
+	}
+	
 	public static String[] createCreatureNames() {
 		Creature[] creatures=createCreatures();
 		String[] creatureNames=new String[156];

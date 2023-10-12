@@ -13,15 +13,15 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class SkillsCreator {
+public class ObjectCreator {
 
-	public static JRadioButton createSkillRadioButton(JFrame frame, String skillLevel) {
+	public static JRadioButton secondarySkillRadioButton(JFrame frame, String skillLevel) {
 		JRadioButton skill = new JRadioButton(skillLevel);
 		skill.setFocusable(false);
 		return skill;
 	}
 
-	public static ButtonGroup createGroup(JRadioButton no, JRadioButton basic, JRadioButton advanced, JRadioButton expert) {
+	public static ButtonGroup secondarySkillGroup(JRadioButton no, JRadioButton basic, JRadioButton advanced, JRadioButton expert) {
 		ButtonGroup group = new ButtonGroup();
 		group.add(no);
 		group.add(basic);
@@ -30,7 +30,7 @@ public class SkillsCreator {
 		return group;
 	}
 
-	public static JPanel createSkillPanel(String skillName, JRadioButton no, JRadioButton basic, JRadioButton advanced,
+	public static JPanel secondarySkillPanel(String skillName, JRadioButton no, JRadioButton basic, JRadioButton advanced,
 			JRadioButton expert, int x, int y, int weight, int height) {
 		JPanel panel = new JPanel();
 		JLabel skill = new JLabel(skillName);
@@ -59,7 +59,7 @@ public class SkillsCreator {
 		return textField;
 	}
 
-	public static JButton createButton(JFrame frame) {
+	public static JButton button(JFrame frame) {
 		JButton button = new JButton();
 		button.setBounds(30, 270, 420, 60);
 		button.addActionListener((ActionListener) frame);
@@ -68,7 +68,7 @@ public class SkillsCreator {
 		return button;
 	}
 
-	public static Creature findCreatureFromComboBox(String creatureName, Creature[] creature) {
+	public static Creature findCreatureFromCreatureList(String creatureName, Creature[] creature) {
 		for (int i = 0; i < 156; i++) {
 			if (creatureName.equals(creature[i].name))
 				return creature[i];
@@ -76,8 +76,8 @@ public class SkillsCreator {
 		return null;
 	}
 
-	public static void damageDealth(JLabel label, Creature attackingCreature, Creature defendingCreature) {
-		label.setFont(new Font("MV Boli", Font.PLAIN, 18));
+	public static void damageDealthLabel(JLabel label, Creature attackingCreature, Creature defendingCreature) {
+		label.setFont(new Font("", Font.PLAIN, 18));
 		label.setBounds(30, 340, 420, 60);
 		int[] totalDamage = Calculator.calculator();
 		int minTotalDamage = totalDamage[0];
@@ -86,16 +86,20 @@ public class SkillsCreator {
 			minTotalDamage=1;
 		if(maxTotalDamage==0)
 			maxTotalDamage=1;
-		if (minTotalDamage == maxTotalDamage)
-			label.setText("Deals " + minTotalDamage + " damage  Kills " + minTotalDamage / defendingCreature.health + " + "
-					+ minTotalDamage % defendingCreature.health + " HP");
-		else {
-			label.setText("<html>Deals " + minTotalDamage + "-" + maxTotalDamage + " damage ("
-					+ (minTotalDamage + maxTotalDamage) / 2 + " on average)" + "<br/>"+"Kills (" + minTotalDamage / defendingCreature.health + "+" + minTotalDamage % defendingCreature.health
-					+ " HP)" + "-(" + maxTotalDamage / defendingCreature.health + "+" + maxTotalDamage % defendingCreature.health
-					+ " HP) ("+(minTotalDamage+maxTotalDamage)/2/defendingCreature.health+"+"+(minTotalDamage+maxTotalDamage)/2%defendingCreature.health+ " HP on average)</html>");
+		if(Calculator.numberOfAttackingCreatures!=0) {			
+			if (minTotalDamage == maxTotalDamage)
+				label.setText("Deals " + minTotalDamage + " damage  Kills " + minTotalDamage / defendingCreature.health + " + "
+						+ minTotalDamage % defendingCreature.health + " HP");
+			else {
+				label.setText("<html>Deals " + minTotalDamage + "-" + maxTotalDamage + " damage ("
+						+ (minTotalDamage + maxTotalDamage) / 2 + " on average)" + "<br/>"+"Kills (" + minTotalDamage / defendingCreature.health + "+" + minTotalDamage % defendingCreature.health
+						+ " HP)" + "-(" + maxTotalDamage / defendingCreature.health + "+" + maxTotalDamage % defendingCreature.health
+						+ " HP) ("+(minTotalDamage+maxTotalDamage)/2/defendingCreature.health+"+"+(minTotalDamage+maxTotalDamage)/2%defendingCreature.health+ " HP on average)</html>");
+			}
 		}
-		 
+		else {
+			label.setText("Insert number of attacking creatures");
+		}
 	}
 	public static void main(String[] args) {
 		new MyFrame();
