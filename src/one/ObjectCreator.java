@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,7 +22,8 @@ public class ObjectCreator {
 		return skill;
 	}
 
-	public static ButtonGroup secondarySkillGroup(JRadioButton no, JRadioButton basic, JRadioButton advanced, JRadioButton expert) {
+	public static ButtonGroup secondarySkillGroup(JRadioButton no, JRadioButton basic, JRadioButton advanced,
+			JRadioButton expert) {
 		ButtonGroup group = new ButtonGroup();
 		group.add(no);
 		group.add(basic);
@@ -30,8 +32,8 @@ public class ObjectCreator {
 		return group;
 	}
 
-	public static JPanel secondarySkillPanel(String skillName, JRadioButton no, JRadioButton basic, JRadioButton advanced,
-			JRadioButton expert, int x, int y, int weight, int height) {
+	public static JPanel secondarySkillPanel(String skillName, JRadioButton no, JRadioButton basic,
+			JRadioButton advanced, JRadioButton expert, int x, int y, int weight, int height) {
 		JPanel panel = new JPanel();
 		JLabel skill = new JLabel(skillName);
 		panel.add(skill);
@@ -59,6 +61,25 @@ public class ObjectCreator {
 		return textField;
 	}
 
+	public static JComboBox creatureList(int x, int y, int weight, int height, JFrame frame) {
+		JComboBox list=new JComboBox(Creature.createCreatureNames());
+		list.setBounds(x, y, weight, height);
+		list.addActionListener((ActionListener) frame);
+		return list;
+	}
+	public static JComboBox removingCreaturesFromList(JComboBox list, Character letter, int letterNumber) {
+		int indexToDelete=0;
+		int n=list.getItemCount();
+		for(int i=0; i<n; i++) {
+			String creature=(String) list.getItemAt(indexToDelete);
+			if(creature.charAt(letterNumber)!=letter)
+				list.removeItemAt(indexToDelete);
+			else 
+				indexToDelete++;
+		}
+		return list;
+	}
+
 	public static JButton button(JFrame frame) {
 		JButton button = new JButton();
 		button.setBounds(30, 270, 420, 60);
@@ -82,25 +103,28 @@ public class ObjectCreator {
 		int[] totalDamage = Calculator.calculator();
 		int minTotalDamage = totalDamage[0];
 		int maxTotalDamage = totalDamage[1];
-		if(minTotalDamage==0)
-			minTotalDamage=1;
-		if(maxTotalDamage==0)
-			maxTotalDamage=1;
-		if(Calculator.numberOfAttackingCreatures!=0) {			
+		if (minTotalDamage == 0)
+			minTotalDamage = 1;
+		if (maxTotalDamage == 0)
+			maxTotalDamage = 1;
+		if (Calculator.numberOfAttackingCreatures != 0) {
 			if (minTotalDamage == maxTotalDamage)
-				label.setText("Deals " + minTotalDamage + " damage  Kills " + minTotalDamage / defendingCreature.health + " + "
-						+ minTotalDamage % defendingCreature.health + " HP");
+				label.setText("Deals " + minTotalDamage + " damage  Kills " + minTotalDamage / defendingCreature.health
+						+ " + " + minTotalDamage % defendingCreature.health + " HP");
 			else {
 				label.setText("<html>Deals " + minTotalDamage + "-" + maxTotalDamage + " damage ("
-						+ (minTotalDamage + maxTotalDamage) / 2 + " on average)" + "<br/>"+"Kills (" + minTotalDamage / defendingCreature.health + "+" + minTotalDamage % defendingCreature.health
-						+ " HP)" + "-(" + maxTotalDamage / defendingCreature.health + "+" + maxTotalDamage % defendingCreature.health
-						+ " HP) ("+(minTotalDamage+maxTotalDamage)/2/defendingCreature.health+"+"+(minTotalDamage+maxTotalDamage)/2%defendingCreature.health+ " HP on average)</html>");
+						+ (minTotalDamage + maxTotalDamage) / 2 + " on average)" + "<br/>" + "Kills ("
+						+ minTotalDamage / defendingCreature.health + "+" + minTotalDamage % defendingCreature.health
+						+ " HP)" + "-(" + maxTotalDamage / defendingCreature.health + "+"
+						+ maxTotalDamage % defendingCreature.health + " HP) ("
+						+ (minTotalDamage + maxTotalDamage) / 2 / defendingCreature.health + "+"
+						+ (minTotalDamage + maxTotalDamage) / 2 % defendingCreature.health + " HP on average)</html>");
 			}
-		}
-		else {
+		} else {
 			label.setText("Insert number of attacking creatures");
 		}
 	}
+
 	public static void main(String[] args) {
 		new MyFrame();
 	}

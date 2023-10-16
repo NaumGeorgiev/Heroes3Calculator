@@ -2,42 +2,33 @@ package one;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
-public class MyFrameTest extends JFrame implements ActionListener, KeyListener {
+public class MyFrameTest extends JFrame implements ActionListener {
 	String creatureName;
 MyFrameTest(){
+	JComboBox test=ObjectCreator.creatureList(1, 1, 1, 1, this);
+	
+	
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.setSize(100, 100);
+	this.add(test);
+	this.pack();
 	this.setLayout(null);
-	this.addKeyListener(this);
 	this.setVisible(true);
+	test=ObjectCreator.removingCreaturesFromList(test, 'B', 0);
 }
-	@Override
-	public void keyTyped(KeyEvent e) {
-		System.out.println(e.getKeyChar());
-	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+	public static void main(String[] args) {
+		new MyFrameTest();
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
-	}
-	public static void main(String[] args) {
-		new MyFrameTest();
 	}
 
 }
