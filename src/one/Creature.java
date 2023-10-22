@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Creature {
-	int bruh;
+	
 	public String name;
 	public int attack;	
 	public int defense;
