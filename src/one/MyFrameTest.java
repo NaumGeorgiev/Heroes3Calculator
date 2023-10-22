@@ -22,7 +22,7 @@ MyFrameTest(){
 
 	public static void main(String[] args) {
 		new MyFrameTest();
-		
+		int bruh;
 	}
 
 	@Override

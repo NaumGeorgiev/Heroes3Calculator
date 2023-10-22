@@ -15,7 +15,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class ObjectCreator {
-
+	int bruh;
 	public static JRadioButton secondarySkillRadioButton(JFrame frame, String skillLevel) {
 		JRadioButton skill = new JRadioButton(skillLevel);
 		skill.setFocusable(false);

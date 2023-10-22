@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 public class MyFrame extends JFrame implements ActionListener {
+	int bruh;
 	public JRadioButton noOffense = ObjectCreator.secondarySkillRadioButton(this, "No");
 	JRadioButton advancedOffense = ObjectCreator.secondarySkillRadioButton(this, "Advanced");
 	JRadioButton basicOffense = ObjectCreator.secondarySkillRadioButton(this, "Basic");
