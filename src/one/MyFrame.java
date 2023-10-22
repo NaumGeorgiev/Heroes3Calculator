@@ -1,12 +1,9 @@
 package one;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -14,9 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 public class MyFrame extends JFrame implements ActionListener {
-	JRadioButton noOffense = ObjectCreator.secondarySkillRadioButton(this, "No");
+	public JRadioButton noOffense = ObjectCreator.secondarySkillRadioButton(this, "No");
 	JRadioButton advancedOffense = ObjectCreator.secondarySkillRadioButton(this, "Advanced");
 	JRadioButton basicOffense = ObjectCreator.secondarySkillRadioButton(this, "Basic");
 	JRadioButton expertOffense = ObjectCreator.secondarySkillRadioButton(this, "Expert");
@@ -40,66 +38,69 @@ public class MyFrame extends JFrame implements ActionListener {
 
 	Creature[] creatures = Creature.createCreatures();
 	JComboBox creatureListAttacker;
+	JTextField creatureName;
 	JComboBox creatureListDefender;
-	int letterNumber=0;
+	int letterNumber = 0;
 
 	JTextField numberOfAttackingCreatures;
 
 	JButton button;
 
 	JLabel damageDealth = new JLabel();
-	
-	
 
 	MyFrame() {
 		noArchery.setSelected(true);
 		noOffense.setSelected(true);
 		noArmorer.setSelected(true);
-		
-		ButtonGroup groupOffense = ObjectCreator.secondarySkillGroup(noOffense, basicOffense, advancedOffense, expertOffense);
-		ButtonGroup groupArmorer = ObjectCreator.secondarySkillGroup(noArmorer, basicArmorer, advancedArmorer, expertArmorer);
-		ButtonGroup groupArchery = ObjectCreator.secondarySkillGroup(noArchery, basicArchery, advancedArchery, expertArchery);
-		
+
+		ObjectCreator.secondarySkillGroups(noOffense, basicOffense, advancedOffense, expertOffense, noArmorer, basicArmorer,
+				advancedArmorer, expertArmorer, noArchery, basicArchery, advancedArchery, expertArchery);
+
 		JPanel panelOffense = ObjectCreator.secondarySkillPanel("Offense:", noOffense, basicOffense, advancedOffense,
 				expertOffense, 0, 0, 350, 30);
 		JPanel panelArmorer = ObjectCreator.secondarySkillPanel("Armorer:", noArmorer, basicArmorer, advancedArmorer,
 				expertArmorer, 0, 30, 350, 30);
 		JPanel panelArchery = ObjectCreator.secondarySkillPanel("Archery:", noArchery, basicArchery, advancedArchery,
 				expertArchery, 0, 60, 350, 30);
-		
+
 		specialtyLevelOffense = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(350, 0, 40, 30);
 		specialtyLevelArmorer = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(350, 30, 40, 30);
 		specialtyLevelArchery = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(350, 60, 40, 30);
 
-		
-		
-		
 		JLabel heroAttackLabel = new JLabel("Hero's attack skill");
 		heroAttackLabel.setBounds(30, 120, 130, 30);
 		JLabel heroDefenseLabel = new JLabel("Hero's defense skill");
 		heroDefenseLabel.setBounds(320, 120, 130, 30);
-		
+
 		heroAttackTextField = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(30, 150, 40, 30);
 		heroDefenceTextField = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(320, 150, 40, 30);
 
-		creatureListAttacker = ObjectCreator.creatureList(30, 200, 130, 30, this);
-		creatureListDefender = ObjectCreator.creatureList(320, 200, 130, 30, this);
-		creatureListAttacker.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				Character input=e.getKeyChar();
-				if(letterNumber==0)
-					input=Character.toUpperCase(input);
-				creatureListAttacker=ObjectCreator.removingCreaturesFromList(creatureListAttacker, input, letterNumber);
-				letterNumber++;
-			}
-		});
-		numberOfAttackingCreatures = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(160, 200, 40, 30);
+
+		numberOfAttackingCreatures = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(140, 40, 40, 30);
 
 		
+		creatureListAttacker = ObjectCreator.creatureList(0, 40, 140, 30, this);
+		creatureListDefender = ObjectCreator.creatureList(320, 200, 130, 30, this);
+		creatureName = new JTextField();
+		JPanel creatureListAttackerPanel = new JPanel();
+		creatureListAttackerPanel.setLayout(null);
+		creatureListAttackerPanel.add(creatureListAttacker);
+		creatureListAttackerPanel.add(numberOfAttackingCreatures);
+		creatureListAttackerPanel.setBounds(30, 180, 180, 70);
+		creatureListAttackerPanel.setBorder(new LineBorder(Color.red));
+		creatureListAttackerPanel.repaint();
+
+//		creatureListAttacker.addKeyListener(new KeyAdapter() {
+//			public void keyTyped(KeyEvent e) {
+//				Character input=e.getKeyChar();
+//				if(letterNumber==0)
+//					input=Character.toUpperCase(input);
+//				creatureListAttacker=ObjectCreator.removingCreaturesFromList(creatureListAttacker, input, letterNumber);
+//				letterNumber++;
+//			}
+//		});
+
 		button = ObjectCreator.button(this);
-		
-		
-		
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(500, 500);
@@ -115,12 +116,16 @@ public class MyFrame extends JFrame implements ActionListener {
 		this.add(heroDefenseLabel);
 		this.add(heroAttackTextField);
 		this.add(heroDefenceTextField);
-		this.add(creatureListAttacker);
+//		this.add(creatureListAttacker);
+		this.add(creatureListAttackerPanel);
+
 		this.add(creatureListDefender);
-		this.add(numberOfAttackingCreatures);
+//		this.add(numberOfAttackingCreatures);
 		this.add(button);
 		this.add(damageDealth);
+
 		this.setVisible(true);
+		this.repaint();
 	}
 
 	@Override
@@ -188,15 +193,18 @@ public class MyFrame extends JFrame implements ActionListener {
 			if (numberOfAttackingCreatures.getText().isEmpty())
 				Calculator.numberOfAttackingCreatures = 0;
 			else
-				Calculator.numberOfAttackingCreatures = Integer.valueOf(numberOfAttackingCreatures.getText());				
+				Calculator.numberOfAttackingCreatures = Integer.valueOf(numberOfAttackingCreatures.getText());
 
 			ObjectCreator.damageDealthLabel(damageDealth, attackingCreature, defendingCreature);
 
 			this.add(damageDealth);
 		}
+		else if(e.getSource()==creatureListAttacker) {
+			creatureName.setEditable(true);
+		}
 
 	}
-	
+
 	public static void main(String[] args) {
 		new MyFrame();
 	}

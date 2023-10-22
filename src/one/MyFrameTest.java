@@ -11,7 +11,6 @@ public class MyFrameTest extends JFrame implements ActionListener {
 MyFrameTest(){
 	JComboBox test=ObjectCreator.creatureList(1, 1, 1, 1, this);
 	
-	
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	this.setSize(100, 100);
 	this.add(test);

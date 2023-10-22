@@ -5,11 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class Creature {
 	public String name;
-	public int attack;
+	public int attack;	
 	public int defense;
 	public int minDamage;
 	public int maxDamage;

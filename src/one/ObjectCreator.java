@@ -19,21 +19,33 @@ public class ObjectCreator {
 	public static JRadioButton secondarySkillRadioButton(JFrame frame, String skillLevel) {
 		JRadioButton skill = new JRadioButton(skillLevel);
 		skill.setFocusable(false);
+		skill.setSize(10, 10);
 		return skill;
 	}
 
-	public static ButtonGroup secondarySkillGroup(JRadioButton no, JRadioButton basic, JRadioButton advanced,
-			JRadioButton expert) {
-		ButtonGroup group = new ButtonGroup();
-		group.add(no);
-		group.add(basic);
-		group.add(advanced);
-		group.add(expert);
-		return group;
+	public static void secondarySkillGroups(JRadioButton noOffense, JRadioButton basicOffense, JRadioButton advancedOffense,
+			JRadioButton expertOffense, JRadioButton noArmorer, JRadioButton basicArmorer, JRadioButton advancedArmorer,
+			JRadioButton expertArmorer, JRadioButton noArchery, JRadioButton basicArchery, JRadioButton advancedArchery,
+			JRadioButton expertArchery) {
+		ButtonGroup groupOffense = new ButtonGroup();
+		ButtonGroup groupArmorer = new ButtonGroup();
+		ButtonGroup groupArchery = new ButtonGroup();
+		groupOffense.add(noOffense);
+		groupOffense.add(basicOffense);
+		groupOffense.add(advancedOffense);
+		groupOffense.add(expertOffense);
+		groupArmorer.add(noArmorer);
+		groupArmorer.add(basicArmorer);
+		groupArmorer.add(advancedArmorer);
+		groupArmorer.add(expertArmorer);
+		groupArchery.add(noArchery);
+		groupArchery.add(basicArchery);
+		groupArchery.add(advancedArchery);
+		groupArchery.add(expertArchery);
 	}
 
-	public static JPanel secondarySkillPanel(String skillName, JRadioButton no, JRadioButton basic,
-			JRadioButton advanced, JRadioButton expert, int x, int y, int weight, int height) {
+	public static JPanel secondarySkillPanel(String skillName, JRadioButton no, JRadioButton basic, JRadioButton advanced,
+			JRadioButton expert, int x, int y, int weight, int height) {
 		JPanel panel = new JPanel();
 		JLabel skill = new JLabel(skillName);
 		panel.add(skill);
@@ -62,19 +74,20 @@ public class ObjectCreator {
 	}
 
 	public static JComboBox creatureList(int x, int y, int weight, int height, JFrame frame) {
-		JComboBox list=new JComboBox(Creature.createCreatureNames());
+		JComboBox list = new JComboBox(Creature.createCreatureNames());
 		list.setBounds(x, y, weight, height);
 		list.addActionListener((ActionListener) frame);
 		return list;
 	}
-	public static JComboBox removingCreaturesFromList(JComboBox list, Character letter, int letterNumber) {
-		int indexToDelete=0;
-		int n=list.getItemCount();
-		for(int i=0; i<n; i++) {
-			String creature=(String) list.getItemAt(indexToDelete);
-			if(creature.charAt(letterNumber)!=letter)
+
+	public static JComboBox<String> removingCreaturesFromList(JComboBox<String> list, Character letter, int letterNumber) {
+		int indexToDelete = 0;
+		int n = list.getItemCount();
+		for (int i = 0; i < n; i++) {
+			String creature = (String) list.getItemAt(indexToDelete);
+			if (creature.charAt(letterNumber) != letter)
 				list.removeItemAt(indexToDelete);
-			else 
+			else
 				indexToDelete++;
 		}
 		return list;
@@ -109,15 +122,14 @@ public class ObjectCreator {
 			maxTotalDamage = 1;
 		if (Calculator.numberOfAttackingCreatures != 0) {
 			if (minTotalDamage == maxTotalDamage)
-				label.setText("Deals " + minTotalDamage + " damage  Kills " + minTotalDamage / defendingCreature.health
-						+ " + " + minTotalDamage % defendingCreature.health + " HP");
+				label.setText("Deals " + minTotalDamage + " damage  Kills " + minTotalDamage / defendingCreature.health + " + "
+						+ minTotalDamage % defendingCreature.health + " HP");
 			else {
 				label.setText("<html>Deals " + minTotalDamage + "-" + maxTotalDamage + " damage ("
 						+ (minTotalDamage + maxTotalDamage) / 2 + " on average)" + "<br/>" + "Kills ("
-						+ minTotalDamage / defendingCreature.health + "+" + minTotalDamage % defendingCreature.health
-						+ " HP)" + "-(" + maxTotalDamage / defendingCreature.health + "+"
-						+ maxTotalDamage % defendingCreature.health + " HP) ("
-						+ (minTotalDamage + maxTotalDamage) / 2 / defendingCreature.health + "+"
+						+ minTotalDamage / defendingCreature.health + "+" + minTotalDamage % defendingCreature.health + " HP)"
+						+ "-(" + maxTotalDamage / defendingCreature.health + "+" + maxTotalDamage % defendingCreature.health
+						+ " HP) (" + (minTotalDamage + maxTotalDamage) / 2 / defendingCreature.health + "+"
 						+ (minTotalDamage + maxTotalDamage) / 2 % defendingCreature.health + " HP on average)</html>");
 			}
 		} else {
