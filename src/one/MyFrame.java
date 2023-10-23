@@ -3,6 +3,8 @@ package one;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -38,12 +40,12 @@ public class MyFrame extends JFrame implements ActionListener {
 
 	Creature[] creatures = Creature.createCreatures();
 	JComboBox creatureListAttacker;
-	JTextField creatureName;
 	JComboBox creatureListDefender;
-	int letterNumber = 0;
 
 	JTextField numberOfAttackingCreatures;
 
+	JTextField attackingCreatureTextField;
+	String inputString=new String();
 	JButton button;
 
 	JLabel damageDealth = new JLabel();
@@ -76,29 +78,25 @@ public class MyFrame extends JFrame implements ActionListener {
 		heroDefenceTextField = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(320, 150, 40, 30);
 
 
-		numberOfAttackingCreatures = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(140, 40, 40, 30);
+		numberOfAttackingCreatures = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(140, 30, 40, 30);
 
-		
-		creatureListAttacker = ObjectCreator.creatureList(0, 40, 140, 30, this);
+		attackingCreatureTextField=new JTextField();
+		attackingCreatureTextField.setBounds(0, 0, 140, 30);
+
+
+		creatureListAttacker = ObjectCreator.creatureList(0, 30, 140, 30, this);
 		creatureListDefender = ObjectCreator.creatureList(320, 200, 130, 30, this);
-		creatureName = new JTextField();
-		JPanel creatureListAttackerPanel = new JPanel();
-		creatureListAttackerPanel.setLayout(null);
-		creatureListAttackerPanel.add(creatureListAttacker);
-		creatureListAttackerPanel.add(numberOfAttackingCreatures);
-		creatureListAttackerPanel.setBounds(30, 180, 180, 70);
-		creatureListAttackerPanel.setBorder(new LineBorder(Color.red));
-		creatureListAttackerPanel.repaint();
+		JPanel creatureListAttackerPanel = ObjectCreator.creatureListAttackingPanel(creatureListAttacker, numberOfAttackingCreatures, attackingCreatureTextField);
+	
 
-//		creatureListAttacker.addKeyListener(new KeyAdapter() {
-//			public void keyTyped(KeyEvent e) {
-//				Character input=e.getKeyChar();
-//				if(letterNumber==0)
-//					input=Character.toUpperCase(input);
-//				creatureListAttacker=ObjectCreator.removingCreaturesFromList(creatureListAttacker, input, letterNumber);
-//				letterNumber++;
-//			}
-//		});
+		creatureListAttacker.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				Character input=e.getKeyChar();
+					inputString+=input;
+					attackingCreatureTextField.setText(inputString);
+					JComboBox newCreatureListAttacker=creatureListAttacker;
+			}
+		});
 
 		button = ObjectCreator.button(this);
 
@@ -199,10 +197,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
 			this.add(damageDealth);
 		}
-		else if(e.getSource()==creatureListAttacker) {
-			creatureName.setEditable(true);
-		}
-
 	}
 
 	public static void main(String[] args) {

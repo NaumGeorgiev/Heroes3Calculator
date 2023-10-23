@@ -1,5 +1,6 @@
 package one;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 public class ObjectCreator {
 	public static JRadioButton secondarySkillRadioButton(JFrame frame, String skillLevel) {
@@ -79,18 +81,7 @@ public class ObjectCreator {
 		return list;
 	}
 
-	public static JComboBox<String> removingCreaturesFromList(JComboBox<String> list, Character letter, int letterNumber) {
-		int indexToDelete = 0;
-		int n = list.getItemCount();
-		for (int i = 0; i < n; i++) {
-			String creature = (String) list.getItemAt(indexToDelete);
-			if (creature.charAt(letterNumber) != letter)
-				list.removeItemAt(indexToDelete);
-			else
-				indexToDelete++;
-		}
-		return list;
-	}
+
 
 	public static JButton button(JFrame frame) {
 		JButton button = new JButton();
@@ -108,6 +99,29 @@ public class ObjectCreator {
 		}
 		return null;
 	}
+	public static JPanel creatureListAttackingPanel(JComboBox creatureListAttacker, JTextField numberOfAttackingCreatures, JTextField attackingCreatureTextField){
+
+		JPanel creatureListAttackerPanel = new JPanel();
+		creatureListAttackerPanel.setLayout(null);
+		creatureListAttackerPanel.add(creatureListAttacker);
+		creatureListAttackerPanel.add(numberOfAttackingCreatures);
+		creatureListAttackerPanel.add(attackingCreatureTextField);
+		creatureListAttackerPanel.setBounds(30, 190, 180, 60);
+		return creatureListAttackerPanel;
+	}
+
+	
+	// public static JComboBox<String> removingCreaturesFromList(JComboBox<String> list, Character letter) {
+	// 	int indexToDelete = 0;
+	// 	int n = list.getItemCount();
+	// 	for (int i = 0; i < n; i++) {
+	// 		String creature = (String) list.getItemAt(indexToDelete);
+	// 			list.removeItemAt(indexToDelete);
+	// 		else
+	// 			indexToDelete++;
+	// 	}
+	// 	return list;
+	// }
 
 	public static void damageDealthLabel(JLabel label, Creature attackingCreature, Creature defendingCreature) {
 		label.setFont(new Font("", Font.PLAIN, 18));
