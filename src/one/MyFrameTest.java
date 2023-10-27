@@ -17,11 +17,13 @@ MyFrameTest(){
 	this.pack();
 	this.setLayout(null);
 	this.setVisible(true);
-	test=ObjectCreator.removingCreaturesFromList(test, 'B', 0);
 }
 
 	public static void main(String[] args) {
-		new MyFrameTest();
+		// new MyFrameTest();
+		System.out.println((char)(8));
+		String a="abc";
+		char[] b=a.toCharArray(); 
 	}
 
 	@Override

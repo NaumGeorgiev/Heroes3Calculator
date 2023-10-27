@@ -109,8 +109,23 @@ public class ObjectCreator {
 		creatureListAttackerPanel.setBounds(30, 190, 180, 60);
 		return creatureListAttackerPanel;
 	}
+	public static void attackingCreatureTextFieldSettingText(JTextField attackingCreatureTextField, char input, String inputString){
+		if(input==(char)8 && attackingCreatureTextField.getText().isEmpty()==false)
+			removeLastIndex(inputString);
+		else{
+			inputString+=input;
+		}
+		attackingCreatureTextField.setText(inputString);
 
-	
+	}
+	private static void removeLastIndex(String s){
+		char[] charArray=s.toCharArray();
+		String temp=new String();
+		for(int i=0; i<charArray.length-1; i++){
+			temp+=charArray[i];
+		}
+		s=temp;
+	}
 	// public static JComboBox<String> removingCreaturesFromList(JComboBox<String> list, Character letter) {
 	// 	int indexToDelete = 0;
 	// 	int n = list.getItemCount();

@@ -43,9 +43,9 @@ public class MyFrame extends JFrame implements ActionListener {
 	JComboBox creatureListDefender;
 
 	JTextField numberOfAttackingCreatures;
+	String inputString=new String();
 
 	JTextField attackingCreatureTextField;
-	String inputString=new String();
 	JButton button;
 
 	JLabel damageDealth = new JLabel();
@@ -92,9 +92,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		creatureListAttacker.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				Character input=e.getKeyChar();
-					inputString+=input;
-					attackingCreatureTextField.setText(inputString);
-					JComboBox newCreatureListAttacker=creatureListAttacker;
+				ObjectCreator.attackingCreatureTextFieldSettingText(attackingCreatureTextField, input, inputString);
 			}
 		});
 
