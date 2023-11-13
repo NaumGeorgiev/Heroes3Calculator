@@ -21,7 +21,7 @@ public class Calculator {
 	public static int numberOfAttackingCreatures;
 	
 
-	public static int[] calculator() {
+	public static int[] calculate() {
 
 		if (behemoth == true) {
 			if ((defence * 3) % 5 > 0)

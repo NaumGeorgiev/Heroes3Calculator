@@ -109,6 +109,8 @@ public class ObjectCreator {
 		creatureListAttackerPanel.setBounds(30, 190, 180, 60);
 		return creatureListAttackerPanel;
 	}
+
+	
 	public static void attackingCreatureTextFieldSettingText(JTextField attackingCreatureTextField, char input, String inputString){
 		if(input==(char)8 && attackingCreatureTextField.getText().isEmpty()==false)
 			removeLastIndex(inputString);
@@ -126,22 +128,11 @@ public class ObjectCreator {
 		}
 		s=temp;
 	}
-	// public static JComboBox<String> removingCreaturesFromList(JComboBox<String> list, Character letter) {
-	// 	int indexToDelete = 0;
-	// 	int n = list.getItemCount();
-	// 	for (int i = 0; i < n; i++) {
-	// 		String creature = (String) list.getItemAt(indexToDelete);
-	// 			list.removeItemAt(indexToDelete);
-	// 		else
-	// 			indexToDelete++;
-	// 	}
-	// 	return list;
-	// }
 
 	public static void damageDealthLabel(JLabel label, Creature attackingCreature, Creature defendingCreature) {
 		label.setFont(new Font("", Font.PLAIN, 18));
 		label.setBounds(30, 340, 420, 60);
-		int[] totalDamage = Calculator.calculator();
+		int[] totalDamage = Calculator.calculate();
 		int minTotalDamage = totalDamage[0];
 		int maxTotalDamage = totalDamage[1];
 		if (minTotalDamage == 0)

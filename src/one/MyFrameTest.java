@@ -19,11 +19,14 @@ MyFrameTest(){
 	this.setVisible(true);
 }
 
+public static void testingVoid(int a){
+a=a+2;
+}
 	public static void main(String[] args) {
 		// new MyFrameTest();
-		System.out.println((char)(8));
-		String a="abc";
-		char[] b=a.toCharArray(); 
+		int a=3;
+		testingVoid(a);
+		System.out.println(a);	
 	}
 
 	@Override

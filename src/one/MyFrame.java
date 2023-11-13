@@ -1,6 +1,5 @@
 package one;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -13,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 
 public class MyFrame extends JFrame implements ActionListener {
 	public JRadioButton noOffense = ObjectCreator.secondarySkillRadioButton(this, "No");
@@ -39,8 +37,8 @@ public class MyFrame extends JFrame implements ActionListener {
 	JTextField heroDefenceTextField;
 
 	Creature[] creatures = Creature.createCreatures();
-	JComboBox creatureListAttacker;
-	JComboBox creatureListDefender;
+	JComboBox<String> creatureListAttacker;
+	JComboBox<String> creatureListDefender;
 
 	JTextField numberOfAttackingCreatures;
 	String inputString=new String();
@@ -195,6 +193,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
 			this.add(damageDealth);
 		}
+
 	}
 
 	public static void main(String[] args) {

@@ -36,8 +36,10 @@ public class Creature {
 			int i=0;
 			while(true) {
 				creatureInfo=reader.readLine();
-				if(creatureInfo==null)
+				if(creatureInfo==null){
+					reader.close();
 					break;
+				}
 				boolean ranged=false;
 				String[] stats=creatureInfo.split(",");
 				if(stats[13].contains("Ranged"))
