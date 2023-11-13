@@ -75,7 +75,7 @@ public class ObjectCreator {
 	}
 
 	public static JComboBox creatureList(int x, int y, int weight, int height, JFrame frame) {
-		JComboBox list = new JComboBox(Creature.createCreatureNames());
+		JComboBox list = new JComboBox(Creature.createNames());
 		list.setBounds(x, y, weight, height);
 		list.addActionListener((ActionListener) frame);
 		return list;

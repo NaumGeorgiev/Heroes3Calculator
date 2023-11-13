@@ -2,9 +2,7 @@ package one;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 
 public class Creature {
 	
@@ -27,9 +25,9 @@ public class Creature {
 			
 	}
 	
-	public static Creature[] createCreatures() {
+	public static Creature[] createAll() {
 	File csvFile=new File("H3Units.csv");
-		Creature[] creature=new Creature[156];
+		Creature[] creatures=new Creature[156];
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(csvFile));
 			String creatureInfo=reader.readLine();
@@ -44,32 +42,30 @@ public class Creature {
 				String[] stats=creatureInfo.split(",");
 				if(stats[13].contains("Ranged"))
 					ranged=true;
-				creature[i]=new Creature(stats[0], Integer.valueOf(stats[3]), Integer.valueOf(stats[4]), Integer.valueOf(stats[5]), Integer.valueOf(stats[6]), Integer.valueOf(stats[7]), ranged);
+				creatures[i]=new Creature(stats[0], Integer.valueOf(stats[3]), Integer.valueOf(stats[4]), Integer.valueOf(stats[5]), Integer.valueOf(stats[6]), Integer.valueOf(stats[7]), ranged);
 				i++;
 			}
-			creature[i]=new Creature("Nymph", 5, 2, 1, 2, 4, false);
-			creature[i+1]=new Creature("Oceanid", 6, 2, 1, 3, 4, false);
-			creature[i+2]=new Creature("CrewMate", 7, 4, 2, 4, 15, false);
-			creature[i+3]=new Creature("Seaman", 8, 6, 3, 4, 15, false);
-			creature[i+4]=new Creature("Pirate", 8, 6, 3, 7, 15, true);
-			creature[i+5]=new Creature("Corasair", 10, 8, 3, 7, 15, true);
-			creature[i+6]=new Creature("SeaDog", 12, 11, 3, 7, 15, true);
-			creature[i+7]=new Creature("Stormbird", 10, 8, 6, 9, 30, false);
-			creature[i+8]=new Creature("Ayssid", 11, 8, 6, 10, 30, false);
-			creature[i+9]=new Creature("SeaWitch", 12, 7, 10, 14, 35, true);
-			creature[i+10]=new Creature("Sorceress", 12, 9, 10, 16, 35, true);
-			creature[i+11]=new Creature("Nix", 13, 16, 18, 22, 80, false);
-			creature[i+12]=new Creature("NixWarrior", 14, 17, 18, 22, 90, false);
-			creature[i+13]=new Creature("SeaSerpent", 22, 16, 30, 55, 180, false);
-			creature[i+14]=new Creature("Haspid", 29, 20, 30, 55, 300, false);
-			sortByNames(creature);
+			creatures[i]=new Creature("Nymph", 5, 2, 1, 2, 4, false);
+			creatures[i+1]=new Creature("Oceanid", 6, 2, 1, 3, 4, false);
+			creatures[i+2]=new Creature("CrewMate", 7, 4, 2, 4, 15, false);
+			creatures[i+3]=new Creature("Seaman", 8, 6, 3, 4, 15, false);
+			creatures[i+4]=new Creature("Pirate", 8, 6, 3, 7, 15, true);
+			creatures[i+5]=new Creature("Corasair", 10, 8, 3, 7, 15, true);
+			creatures[i+6]=new Creature("SeaDog", 12, 11, 3, 7, 15, true);
+			creatures[i+7]=new Creature("Stormbird", 10, 8, 6, 9, 30, false);
+			creatures[i+8]=new Creature("Ayssid", 11, 8, 6, 10, 30, false);
+			creatures[i+9]=new Creature("SeaWitch", 12, 7, 10, 14, 35, true);
+			creatures[i+10]=new Creature("Sorceress", 12, 9, 10, 16, 35, true);
+			creatures[i+11]=new Creature("Nix", 13, 16, 18, 22, 80, false);
+			creatures[i+12]=new Creature("NixWarrior", 14, 17, 18, 22, 90, false);
+			creatures[i+13]=new Creature("SeaSerpent", 22, 16, 30, 55, 180, false);
+			creatures[i+14]=new Creature("Haspid", 29, 20, 30, 55, 300, false);
+			sortByNames(creatures);
 			
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return creature;
+		} 
+		return creatures;
 	}
 	
 	private static Creature[] sortByNames(Creature[] creature) {
@@ -92,13 +88,13 @@ public class Creature {
 		return creature;
 	}
 	
-	public static String[] createCreatureNames() {
-		Creature[] creatures=createCreatures();
-		String[] creatureNames=new String[156];
+	public static String[] createNames() {
+		Creature[] creatures=createAll();
+		String[] creaturesNames=new String[156];
 		for(int i=0; i<156; i++) {
-			creatureNames[i]=creatures[i].name;
+			creaturesNames[i]=creatures[i].name;
 		}
-		return creatureNames;
+		return creaturesNames;
 	}
 	
 	public String toString() {

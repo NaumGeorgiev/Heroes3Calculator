@@ -36,7 +36,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	JTextField heroAttackTextField;
 	JTextField heroDefenceTextField;
 
-	Creature[] creatures = Creature.createCreatures();
+	Creature[] creatures = Creature.createAll();
 	JComboBox<String> creatureListAttacker;
 	JComboBox<String> creatureListDefender;
 
