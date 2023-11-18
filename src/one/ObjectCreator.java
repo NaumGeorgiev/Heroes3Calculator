@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -72,8 +73,8 @@ public class ObjectCreator {
 		return textField;
 	}
 
-	public static JComboBox<String> creatureList(int x, int y, int weight, int height, JFrame frame) {
-		JComboBox<String> list = new JComboBox<String>(Creature.createNames());
+	public static JComboBox<String> creatureList(int x, int y, int weight, int height, JFrame frame, String[] creaturesNames) {
+		JComboBox<String> list = new JComboBox<String>(creaturesNames);
 		list.setBounds(x, y, weight, height);
 		list.addActionListener((ActionListener) frame);
 		return list;
@@ -106,24 +107,45 @@ public class ObjectCreator {
 		return creatureListAttackerPanel;
 	}
 
+	public static String characterPressed(String input, char e){
+		if(e==(char)8){
+			input=deleteLastChar(input);
+			return input;
+		}
+		if(e<65 || e>122){
+			return input;
+		}
+		input+=e;
+		if(input.length()==1)
+		input=input.toUpperCase();
+		return input;
+	}
+	private static String deleteLastChar(String s){
+		if(s.length()==0)
+		return s;
+		String toBeReturned=new String("");
+		for(int i=0; i<s.length()-1; i++){
+			toBeReturned+=s.charAt(i);
+		}
+		return toBeReturned;
+	}
 	
-	// public static void attackingCreatureTextFieldSettingText(JTextField attackingCreatureTextField, char input, String inputString){
-	// 	if(input==(char)8 && attackingCreatureTextField.getText().isEmpty()==false)
-	// 		removeLastIndex(inputString);
-	// 	else{
-	// 		inputString+=input;
-	// 	}
-	// 	attackingCreatureTextField.setText(inputString);
-
-	// }
-	// private static void removeLastIndex(String s){
-	// 	char[] charArray=s.toCharArray();
-	// 	String temp=new String();
-	// 	for(int i=0; i<charArray.length-1; i++){
-	// 		temp+=charArray[i];
-	// 	}
-	// 	s=temp;
-	// }
+	public static String[] creatureNamesPick(String[] creatureNames, String input){
+		ArrayList<String> picked=new ArrayList<>();
+		for(int i=0; i<creatureNames.length; i++){
+			if(creatureNames[i].startsWith(input))
+			picked.add(creatureNames[i]);
+		}
+		return arraysListToString(picked);
+		
+	}
+	private static String[] arraysListToString(ArrayList<String> al){
+		String[] toBeReturned =new String[al.size()];
+		for(int i=0; i<al.size(); i++){
+			toBeReturned[i]=al.get(i);
+		}
+		return toBeReturned;
+	}
 
 	public static void damageDealthLabel(JLabel label, Creature attackingCreature, Creature defendingCreature) {
 		label.setFont(new Font("", Font.PLAIN, 22));

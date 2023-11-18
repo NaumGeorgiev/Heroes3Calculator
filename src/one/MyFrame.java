@@ -2,6 +2,10 @@ package one;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -32,13 +36,15 @@ public class MyFrame extends JFrame implements ActionListener {
 	JTextField heroDefenceTextField;
 
 	Creature[] creatures = Creature.createAll();
+	String[] creaturesNames=Creature.createNames();
 	JComboBox<String> creatureListAttacker;
 	JComboBox<String> creatureListDefender;
 
 	JTextField creaturesNumber;
-	String inputString=new String();
+	String input=new String();
 
 	JTextField creatureSearchAttacker;
+	
 	JButton submit;
 
 	JLabel damageDealth = new JLabel();
@@ -87,17 +93,22 @@ public class MyFrame extends JFrame implements ActionListener {
 		creatureSearchAttacker.setBounds(0, 0, 140, 30);
 
 
-		creatureListAttacker = ObjectCreator.creatureList(0, 30, 140, 30, this);
-		creatureListDefender = ObjectCreator.creatureList(320, 200, 130, 30, this);
+		creatureListAttacker = ObjectCreator.creatureList(0, 30, 140, 30, this, creaturesNames);
+		creatureListDefender = ObjectCreator.creatureList(320, 200, 130, 30, this, creaturesNames);
 		JPanel attackerPanel = ObjectCreator.attackerPanel(creatureListAttacker, creaturesNumber, creatureSearchAttacker);
 	// defenderPanel
-
-		// creatureListAttacker.addKeyListener(new KeyAdapter() {
-		// 	public void keyTyped(KeyEvent e) {
-		// 		Character input=e.getKeyChar();
-		// 		ObjectCreator.creatureSearchAttackerSettingText(creatureSearchAttacker, input, inputString);
-		// 	}
-		// });
+	creatureListAttacker.addKeyListener((KeyListener) new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				char c=e.getKeyChar();
+				input=ObjectCreator.characterPressed(input, c);
+				creatureSearchAttacker.setText(input);
+				String[] filteredNames = ObjectCreator.creatureNamesPick(creaturesNames, input);
+				creatureListAttacker.removeAllItems();
+				for (String name : filteredNames) {
+					creatureListAttacker.addItem(name);
+				}
+			}
+		});
 
 		submit = ObjectCreator.button(this);
 
