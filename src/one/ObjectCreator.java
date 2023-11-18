@@ -1,6 +1,5 @@
 package one;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -14,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 
 public class ObjectCreator {
 	public static JRadioButton secondarySkillRadioButton(JFrame frame, String skillLevel) {
@@ -28,21 +26,21 @@ public class ObjectCreator {
 			JRadioButton expertOffense, JRadioButton noArmorer, JRadioButton basicArmorer, JRadioButton advancedArmorer,
 			JRadioButton expertArmorer, JRadioButton noArchery, JRadioButton basicArchery, JRadioButton advancedArchery,
 			JRadioButton expertArchery) {
-		ButtonGroup groupOffense = new ButtonGroup();
-		ButtonGroup groupArmorer = new ButtonGroup();
-		ButtonGroup groupArchery = new ButtonGroup();
-		groupOffense.add(noOffense);
-		groupOffense.add(basicOffense);
-		groupOffense.add(advancedOffense);
-		groupOffense.add(expertOffense);
-		groupArmorer.add(noArmorer);
-		groupArmorer.add(basicArmorer);
-		groupArmorer.add(advancedArmorer);
-		groupArmorer.add(expertArmorer);
-		groupArchery.add(noArchery);
-		groupArchery.add(basicArchery);
-		groupArchery.add(advancedArchery);
-		groupArchery.add(expertArchery);
+		ButtonGroup offenseGroup = new ButtonGroup();
+		ButtonGroup armorerGroup = new ButtonGroup();
+		ButtonGroup archeryGroup = new ButtonGroup();
+		offenseGroup.add(noOffense);
+		offenseGroup.add(basicOffense);
+		offenseGroup.add(advancedOffense);
+		offenseGroup.add(expertOffense);
+		armorerGroup.add(noArmorer);
+		armorerGroup.add(basicArmorer);
+		armorerGroup.add(advancedArmorer);
+		armorerGroup.add(expertArmorer);
+		archeryGroup.add(noArchery);
+		archeryGroup.add(basicArchery);
+		archeryGroup.add(advancedArchery);
+		archeryGroup.add(expertArchery);
 	}
 
 	public static JPanel secondarySkillPanel(String skillName, JRadioButton no, JRadioButton basic, JRadioButton advanced,
@@ -74,14 +72,12 @@ public class ObjectCreator {
 		return textField;
 	}
 
-	public static JComboBox creatureList(int x, int y, int weight, int height, JFrame frame) {
-		JComboBox list = new JComboBox(Creature.createNames());
+	public static JComboBox<String> creatureList(int x, int y, int weight, int height, JFrame frame) {
+		JComboBox<String> list = new JComboBox<String>(Creature.createNames());
 		list.setBounds(x, y, weight, height);
 		list.addActionListener((ActionListener) frame);
 		return list;
 	}
-
-
 
 	public static JButton button(JFrame frame) {
 		JButton button = new JButton();
@@ -92,14 +88,14 @@ public class ObjectCreator {
 		return button;
 	}
 
-	public static Creature findCreatureFromCreatureList(String creatureName, Creature[] creature) {
+	public static Creature findCreatureFromList(String creatureName, Creature[] creature) {
 		for (int i = 0; i < 156; i++) {
 			if (creatureName.equals(creature[i].name))
 				return creature[i];
 		}
 		return null;
 	}
-	public static JPanel creatureListAttackingPanel(JComboBox creatureListAttacker, JTextField numberOfAttackingCreatures, JTextField attackingCreatureTextField){
+	public static JPanel attackerPanel(JComboBox<String> creatureListAttacker, JTextField numberOfAttackingCreatures, JTextField attackingCreatureTextField){
 
 		JPanel creatureListAttackerPanel = new JPanel();
 		creatureListAttackerPanel.setLayout(null);
@@ -111,27 +107,27 @@ public class ObjectCreator {
 	}
 
 	
-	public static void attackingCreatureTextFieldSettingText(JTextField attackingCreatureTextField, char input, String inputString){
-		if(input==(char)8 && attackingCreatureTextField.getText().isEmpty()==false)
-			removeLastIndex(inputString);
-		else{
-			inputString+=input;
-		}
-		attackingCreatureTextField.setText(inputString);
+	// public static void attackingCreatureTextFieldSettingText(JTextField attackingCreatureTextField, char input, String inputString){
+	// 	if(input==(char)8 && attackingCreatureTextField.getText().isEmpty()==false)
+	// 		removeLastIndex(inputString);
+	// 	else{
+	// 		inputString+=input;
+	// 	}
+	// 	attackingCreatureTextField.setText(inputString);
 
-	}
-	private static void removeLastIndex(String s){
-		char[] charArray=s.toCharArray();
-		String temp=new String();
-		for(int i=0; i<charArray.length-1; i++){
-			temp+=charArray[i];
-		}
-		s=temp;
-	}
+	// }
+	// private static void removeLastIndex(String s){
+	// 	char[] charArray=s.toCharArray();
+	// 	String temp=new String();
+	// 	for(int i=0; i<charArray.length-1; i++){
+	// 		temp+=charArray[i];
+	// 	}
+	// 	s=temp;
+	// }
 
 	public static void damageDealthLabel(JLabel label, Creature attackingCreature, Creature defendingCreature) {
-		label.setFont(new Font("", Font.PLAIN, 18));
-		label.setBounds(30, 340, 420, 60);
+		label.setFont(new Font("", Font.PLAIN, 22));
+		label.setBounds(30, 340, 420, 85);
 		int[] totalDamage = Calculator.calculate();
 		int minTotalDamage = totalDamage[0];
 		int maxTotalDamage = totalDamage[1];
@@ -139,17 +135,17 @@ public class ObjectCreator {
 			minTotalDamage = 1;
 		if (maxTotalDamage == 0)
 			maxTotalDamage = 1;
-		if (Calculator.numberOfAttackingCreatures != 0) {
+		if (Calculator.creaturesNumber != 0) {
 			if (minTotalDamage == maxTotalDamage)
 				label.setText("Deals " + minTotalDamage + " damage  Kills " + minTotalDamage / defendingCreature.health + " + "
 						+ minTotalDamage % defendingCreature.health + " HP");
 			else {
-				label.setText("<html>Deals " + minTotalDamage + "-" + maxTotalDamage + " damage ("
-						+ (minTotalDamage + maxTotalDamage) / 2 + " on average)" + "<br/>" + "Kills ("
-						+ minTotalDamage / defendingCreature.health + "+" + minTotalDamage % defendingCreature.health + " HP)"
-						+ "-(" + maxTotalDamage / defendingCreature.health + "+" + maxTotalDamage % defendingCreature.health
-						+ " HP) (" + (minTotalDamage + maxTotalDamage) / 2 / defendingCreature.health + "+"
-						+ (minTotalDamage + maxTotalDamage) / 2 % defendingCreature.health + " HP on average)</html>");
+				label.setText("<html>" + minTotalDamage + "-" + maxTotalDamage + " damage: "
+						+ (minTotalDamage + maxTotalDamage) / 2 + " on average" + "<br/>" + "<html>"
+						+ minTotalDamage / defendingCreature.health + "+" + minTotalDamage % defendingCreature.health + " HP"
+						+ " - " + maxTotalDamage / defendingCreature.health + "+" + maxTotalDamage % defendingCreature.health
+						+ " HP" + "<br/>"  + (minTotalDamage + maxTotalDamage) / 2 / defendingCreature.health + "+"
+						+  (minTotalDamage + maxTotalDamage) / 2 % defendingCreature.health + " HP on average</html>");
 			}
 		} else {
 			label.setText("Insert number of attacking creatures");

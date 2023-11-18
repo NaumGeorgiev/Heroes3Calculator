@@ -18,7 +18,7 @@ public class Calculator {
 	public static boolean ranged;
 	public static int minDamage;
 	public static int maxDamage;
-	public static int numberOfAttackingCreatures;
+	public static int creaturesNumber=0;
 	
 
 	public static int[] calculate() {
@@ -99,8 +99,8 @@ public class Calculator {
 		}
 		armorerBonus -= amorerHeroLevel * (1-armorerBonus) * 0.05;
 
-		minDamage = (int) (minDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus*numberOfAttackingCreatures);
-		maxDamage = (int) (maxDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus*numberOfAttackingCreatures);
+		minDamage = (int) (minDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus*creaturesNumber);
+		maxDamage = (int) (maxDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus*creaturesNumber);
 		return new int[] { minDamage, maxDamage };
 	}
 

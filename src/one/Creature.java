@@ -14,7 +14,7 @@ public class Creature {
 	public int health;
 	public boolean ranged;
 	
-	private Creature(String name, int attack, int defense, int minDamage, int maxDamage, int health, boolean ranged) {
+	public Creature(String name, int attack, int defense, int minDamage, int maxDamage, int health, boolean ranged) {
 		this.name=name;
 		this.attack=attack;
 		this.defense=defense;
