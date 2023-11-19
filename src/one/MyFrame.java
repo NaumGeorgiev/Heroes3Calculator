@@ -41,9 +41,12 @@ public class MyFrame extends JFrame implements ActionListener {
 	JComboBox<String> creatureListDefender;
 
 	JTextField creaturesNumber;
-	String input=new String();
+	String inputAttacker=new String();
+	String inputDefender=new String();
+	
 
 	JTextField creatureSearchAttacker;
+	JTextField creatureSearchDefender;
 	
 	JButton submit;
 
@@ -91,25 +94,44 @@ public class MyFrame extends JFrame implements ActionListener {
 
 		creatureSearchAttacker=new JTextField();
 		creatureSearchAttacker.setBounds(0, 0, 140, 30);
+		creatureSearchAttacker.setEditable(false);
+		creatureSearchDefender=new JTextField();
+		creatureSearchDefender.setBounds(0, 0, 140, 30);
+		creatureSearchDefender.setEditable(false);
+		// creatureSearchDefender=new JTextField();
 
 
 		creatureListAttacker = ObjectCreator.creatureList(0, 30, 140, 30, this, creaturesNames);
-		creatureListDefender = ObjectCreator.creatureList(320, 200, 130, 30, this, creaturesNames);
+		creatureListDefender = ObjectCreator.creatureList(0, 30, 140, 30, this, creaturesNames);
 		JPanel attackerPanel = ObjectCreator.attackerPanel(creatureListAttacker, creaturesNumber, creatureSearchAttacker);
-	// defenderPanel
+		JPanel defenderPanel = ObjectCreator.defenderPanel(creatureListDefender, creatureSearchDefender);
+
+		// combine these to unto one method
 	creatureListAttacker.addKeyListener((KeyListener) new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c=e.getKeyChar();
-				input=ObjectCreator.characterPressed(input, c);
-				creatureSearchAttacker.setText(input);
-				String[] filteredNames = ObjectCreator.creatureNamesPick(creaturesNames, input);
+				inputAttacker=ObjectCreator.characterPressed(inputAttacker, c);
+				creatureSearchAttacker.setText(inputAttacker);
+				String[] filteredNames = ObjectCreator.creatureNamesPick(creaturesNames, inputAttacker);
 				creatureListAttacker.removeAllItems();
 				for (String name : filteredNames) {
 					creatureListAttacker.addItem(name);
 				}
 			}
 		});
-
+		creatureListDefender.addKeyListener((KeyListener) new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				char c=e.getKeyChar();
+				inputDefender=ObjectCreator.characterPressed(inputDefender, c);
+				creatureSearchDefender.setText(inputDefender);
+				String[] filteredNames = ObjectCreator.creatureNamesPick(creaturesNames, inputDefender);
+				creatureListDefender.removeAllItems();
+				for (String name : filteredNames) {
+					creatureListDefender.addItem(name);
+				}
+			}
+		});
+		
 		submit = ObjectCreator.button(this);
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -127,7 +149,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		this.add(heroAttackTextField);
 		this.add(heroDefenceTextField);
 		this.add(attackerPanel);
-		this.add(creatureListDefender);
+		this.add(defenderPanel);
 		this.add(submit);
 		this.add(damageDealth);
 		this.setVisible(true);
@@ -166,10 +188,16 @@ public class MyFrame extends JFrame implements ActionListener {
 
 			if (armorerSpecialtyLevel.getText().isEmpty() == false)
 				Calculator.amorerHeroLevel = Integer.valueOf(armorerSpecialtyLevel.getText());
+				else
+				Calculator.amorerHeroLevel=0;
 			if (offenseSpecialtyLevel.getText().isEmpty() == false)
 				Calculator.offenseHeroLevel = Integer.valueOf(offenseSpecialtyLevel.getText());
+				else
+				Calculator.offenseHeroLevel=0;
 			if (archerySpecialtyLevel.getText().isEmpty() == false)
 				Calculator.archeryHeroLevel = Integer.valueOf(archerySpecialtyLevel.getText());
+				else
+				Calculator.archeryHeroLevel=0;
 
 			String creatureNameAttacker = String.valueOf(creatureListAttacker.getSelectedItem());
 			Creature creatureAttacker = ObjectCreator.findCreatureFromList(creatureNameAttacker, creatures);
@@ -183,8 +211,12 @@ public class MyFrame extends JFrame implements ActionListener {
 
 			if (heroAttackTextField.getText().isEmpty() == false)
 				Calculator.attack = Integer.valueOf(heroAttackTextField.getText()) + creatureAttacker.attack;
+				else
+				Calculator.attack=0;
 			if (heroDefenceTextField.getText().isEmpty() == false)
 				Calculator.defence = Integer.valueOf(heroDefenceTextField.getText()) + creatureDefender.defense;
+				else
+				Calculator.defence=0;
 
 			if (creatureNameAttacker.equals("Behemoth"))
 				Calculator.behemoth = true;
@@ -197,11 +229,27 @@ public class MyFrame extends JFrame implements ActionListener {
 
 			if (creaturesNumber.getText().isEmpty()==false)
 				Calculator.creaturesNumber = Integer.valueOf(creaturesNumber.getText());
+				else
+				Calculator.creaturesNumber=0;
 			
 			ObjectCreator.damageDealthLabel(damageDealth, creatureAttacker, creatureDefender);
 
 			this.add(damageDealth);
+
+			if(Calculator.creaturesNumber!=0){
+				creatureSearchAttacker.setText("");
+			creatureListAttacker.removeAllItems();
+			inputAttacker="";
+			creatureSearchDefender.setText("");
+			creatureListDefender.removeAllItems();
+			inputDefender="";
+			for (String name : creaturesNames) {
+					creatureListDefender.addItem(name);
+					creatureListAttacker.addItem(name);
+			}
+			
 		}
+	}
 
 	}
 

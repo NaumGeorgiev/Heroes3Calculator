@@ -69,7 +69,7 @@ public class ObjectCreator {
 			}
 		});
 		textField.setBounds(x, y, weight, height);
-		textField.setText("0");
+		// textField.setText("0");
 		return textField;
 	}
 
@@ -96,22 +96,32 @@ public class ObjectCreator {
 		}
 		return null;
 	}
-	public static JPanel attackerPanel(JComboBox<String> creatureListAttacker, JTextField numberOfAttackingCreatures, JTextField attackingCreatureTextField){
-
+	public static JPanel attackerPanel(JComboBox<String> creatureListAttacker, JTextField numberOfAttackingCreatures, JTextField creatureSearchAttacker){
 		JPanel creatureListAttackerPanel = new JPanel();
 		creatureListAttackerPanel.setLayout(null);
 		creatureListAttackerPanel.add(creatureListAttacker);
 		creatureListAttackerPanel.add(numberOfAttackingCreatures);
-		creatureListAttackerPanel.add(attackingCreatureTextField);
+		creatureListAttackerPanel.add(creatureSearchAttacker);
 		creatureListAttackerPanel.setBounds(30, 190, 180, 60);
 		return creatureListAttackerPanel;
 	}
+		public static JPanel defenderPanel(JComboBox<String> creatureListDefender, JTextField creatureSearchDefender){
+		JPanel creatureListAttackerPanel = new JPanel();
+		creatureListAttackerPanel.setLayout(null);
+		creatureListAttackerPanel.add(creatureListDefender);
+		creatureListAttackerPanel.add(creatureSearchDefender);
+		creatureListAttackerPanel.setBounds(320, 190, 180, 60);
+		return creatureListAttackerPanel;
+	}
+	
 
 	public static String characterPressed(String input, char e){
 		if(e==(char)8){
 			input=deleteLastChar(input);
 			return input;
 		}
+		if( e==(char)27)
+		return "";
 		if(e<65 || e>122){
 			return input;
 		}
