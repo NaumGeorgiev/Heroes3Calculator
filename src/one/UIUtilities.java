@@ -16,44 +16,35 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class UIUtilities {
-	public static JRadioButton secondarySkillRadioButton(JFrame frame, String skillLevel) {
-		JRadioButton skill = new JRadioButton(skillLevel);
-		skill.setFocusable(false);
-		skill.setSize(10, 10);
-		return skill;
+	public static JRadioButton[] secondarySkillRadioButtons(JFrame frame) {
+		JRadioButton[] toBeReturned=new JRadioButton[4];
+		toBeReturned[0]=new JRadioButton("No");
+		toBeReturned[0].setSelected(true);
+		toBeReturned[1]=new JRadioButton("Basic");
+		toBeReturned[2]=new JRadioButton("Advanced");
+		toBeReturned[3]=new JRadioButton("Expert");
+		for(int i=0; i<4; i++){
+			toBeReturned[i].setFocusable(false);
+			toBeReturned[i].setSize(10, 10);
+		}
+		group(toBeReturned);
+		return toBeReturned;
 	}
+	private static void group(JRadioButton[] skills){
+		ButtonGroup skillGroup=new ButtonGroup();
+		for(int i=0; i<4; i++){
+			skillGroup.add(skills[i]);	
+		}
+	} 
 
-	public static void secondarySkillGroups(JRadioButton noOffense, JRadioButton basicOffense, JRadioButton advancedOffense,
-			JRadioButton expertOffense, JRadioButton noArmorer, JRadioButton basicArmorer, JRadioButton advancedArmorer,
-			JRadioButton expertArmorer, JRadioButton noArchery, JRadioButton basicArchery, JRadioButton advancedArchery,
-			JRadioButton expertArchery) {
-		ButtonGroup offenseGroup = new ButtonGroup();
-		ButtonGroup armorerGroup = new ButtonGroup();
-		ButtonGroup archeryGroup = new ButtonGroup();
-		offenseGroup.add(noOffense);
-		offenseGroup.add(basicOffense);
-		offenseGroup.add(advancedOffense);
-		offenseGroup.add(expertOffense);
-		armorerGroup.add(noArmorer);
-		armorerGroup.add(basicArmorer);
-		armorerGroup.add(advancedArmorer);
-		armorerGroup.add(expertArmorer);
-		archeryGroup.add(noArchery);
-		archeryGroup.add(basicArchery);
-		archeryGroup.add(advancedArchery);
-		archeryGroup.add(expertArchery);
-		archeryGroup.getSelection();
-	}
-
-	public static JPanel secondarySkillPanel(String skillName, JRadioButton no, JRadioButton basic, JRadioButton advanced,
-			JRadioButton expert, int x, int y, int weight, int height) {
+	public static JPanel secondarySkillPanel(String skillName, JRadioButton[] skills, int x, int y, int weight, int height) {
 		JPanel panel = new JPanel();
-		JLabel skill = new JLabel(skillName);
-		panel.add(skill);
-		panel.add(no);
-		panel.add(basic);
-		panel.add(advanced);
-		panel.add(expert);
+		JLabel skillLabel = new JLabel(skillName);
+		panel.add(skillLabel);
+		panel.add(skills[0]);
+		panel.add(skills[1]);
+		panel.add(skills[2]);
+		panel.add(skills[3]);
 		panel.setBounds(x, y, weight, height);
 
 		return panel;
@@ -123,9 +114,8 @@ public class UIUtilities {
 		}
 		if( e==(char)27)
 		return "";
-		if(e<65 || e>122){
+		if(e<65 || e>122)
 			return input;
-		}
 		return input+=e;
 	}
 	private static String deleteLastChar(String s){

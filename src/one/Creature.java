@@ -42,11 +42,10 @@ public class Creature {
 				boolean isDoubleShooting=false;
 				String[] stats=creatureInfo.split(",");
 				if(stats[13].contains("Ranged")){
+					isRanged=true;
 					if(stats[13].contains("Doubleattack"))
 					isDoubleShooting=true;
 				}
-
-					isRanged=true;
 				creatures[i]=new Creature(stats[0], Integer.valueOf(stats[3]), Integer.valueOf(stats[4]), Integer.valueOf(stats[5]), Integer.valueOf(stats[6]), Integer.valueOf(stats[7]), isRanged);
 				if(isDoubleShooting){
 					creatures[i].minDamage*=2;
