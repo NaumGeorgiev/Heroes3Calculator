@@ -12,16 +12,16 @@ public class Creature {
 	public int minDamage;
 	public int maxDamage;
 	public int health;
-	public boolean ranged;
+	public boolean isRanged;
 	
-	public Creature(String name, int attack, int defense, int minDamage, int maxDamage, int health, boolean ranged) {
+	public Creature(String name, int attack, int defense, int minDamage, int maxDamage, int health, boolean isRanged) {
 		this.name=name;
 		this.attack=attack;
 		this.defense=defense;
 		this.minDamage=minDamage;
 		this.maxDamage=maxDamage;
 		this.health=health;
-		this.ranged=ranged;
+		this.isRanged=isRanged;
 			
 	}
 	
@@ -38,11 +38,20 @@ public class Creature {
 					reader.close();
 					break;
 				}
-				boolean ranged=false;
+				boolean isRanged=false;
+				boolean isDoubleShooting=false;
 				String[] stats=creatureInfo.split(",");
-				if(stats[13].contains("Ranged"))
-					ranged=true;
-				creatures[i]=new Creature(stats[0], Integer.valueOf(stats[3]), Integer.valueOf(stats[4]), Integer.valueOf(stats[5]), Integer.valueOf(stats[6]), Integer.valueOf(stats[7]), ranged);
+				if(stats[13].contains("Ranged")){
+					if(stats[13].contains("Doubleattack"))
+					isDoubleShooting=true;
+				}
+
+					isRanged=true;
+				creatures[i]=new Creature(stats[0], Integer.valueOf(stats[3]), Integer.valueOf(stats[4]), Integer.valueOf(stats[5]), Integer.valueOf(stats[6]), Integer.valueOf(stats[7]), isRanged);
+				if(isDoubleShooting){
+					creatures[i].minDamage*=2;
+					creatures[i].maxDamage*=2;
+				}
 				i++;
 			}
 			creatures[i]=new Creature("Nymph", 5, 2, 1, 2, 4, false);
@@ -61,6 +70,11 @@ public class Creature {
 			creatures[i+13]=new Creature("SeaSerpent", 22, 16, 30, 55, 180, false);
 			creatures[i+14]=new Creature("Haspid", 29, 20, 30, 55, 300, false);
 			sortByNames(creatures);
+			creatures[57].maxDamage*=2;
+			creatures[57].minDamage*=2;
+			creatures[83].maxDamage*=2;
+			creatures[83].minDamage*=2;
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -98,7 +112,7 @@ public class Creature {
 	}
 	
 	public String toString() {
-		return (this.name+" "+this.attack+" "+this.defense+" "+this.minDamage+" "+this.maxDamage+" "+this.health+" "+this.ranged);
+		return (this.name+" "+this.attack+" "+this.defense+" "+this.minDamage+" "+this.maxDamage+" "+this.health+" "+this.isRanged);
 	}
 	
 	

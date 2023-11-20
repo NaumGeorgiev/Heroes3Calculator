@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class ObjectCreator {
+public class UIUtilities {
 	public static JRadioButton secondarySkillRadioButton(JFrame frame, String skillLevel) {
 		JRadioButton skill = new JRadioButton(skillLevel);
 		skill.setFocusable(false);
@@ -42,6 +42,7 @@ public class ObjectCreator {
 		archeryGroup.add(basicArchery);
 		archeryGroup.add(advancedArchery);
 		archeryGroup.add(expertArchery);
+		archeryGroup.getSelection();
 	}
 
 	public static JPanel secondarySkillPanel(String skillName, JRadioButton no, JRadioButton basic, JRadioButton advanced,
@@ -125,10 +126,7 @@ public class ObjectCreator {
 		if(e<65 || e>122){
 			return input;
 		}
-		input+=e;
-		if(input.length()==1)
-		input=input.toUpperCase();
-		return input;
+		return input+=e;
 	}
 	private static String deleteLastChar(String s){
 		if(s.length()==0)
@@ -140,10 +138,10 @@ public class ObjectCreator {
 		return toBeReturned;
 	}
 	
-	public static String[] creatureNamesPick(String[] creatureNames, String input){
+	public static String[] creatureNamesFilter(String[] creatureNames, String input){
 		ArrayList<String> picked=new ArrayList<>();
 		for(int i=0; i<creatureNames.length; i++){
-			if(creatureNames[i].startsWith(input))
+			if(creatureNames[i].toLowerCase().contains(input))
 			picked.add(creatureNames[i]);
 		}
 		return arraysListToString(picked);

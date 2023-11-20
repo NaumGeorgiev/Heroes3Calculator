@@ -53,44 +53,44 @@ public class MyFrame extends JFrame implements ActionListener {
 	JLabel damageDealth = new JLabel();
 
 	MyFrame() {
-		noOffense = ObjectCreator.secondarySkillRadioButton(this, "No");
-		basicOffense = ObjectCreator.secondarySkillRadioButton(this, "Basic");
-		advancedOffense = ObjectCreator.secondarySkillRadioButton(this, "Advanced");
-		expertOffense = ObjectCreator.secondarySkillRadioButton(this, "Expert");
-		noArmorer = ObjectCreator.secondarySkillRadioButton(this, "No");
-		basicArmorer = ObjectCreator.secondarySkillRadioButton(this, "Basic");
-		advancedArmorer = ObjectCreator.secondarySkillRadioButton(this, "Advanced");
-		expertArmorer = ObjectCreator.secondarySkillRadioButton(this, "Expert");
-		noArchery = ObjectCreator.secondarySkillRadioButton(this, "No");
-		basicArchery = ObjectCreator.secondarySkillRadioButton(this, "Basic");
-		advancedArchery = ObjectCreator.secondarySkillRadioButton(this, "Advanced");
-		expertArchery = ObjectCreator.secondarySkillRadioButton(this, "Expert");
+		noOffense = UIUtilities.secondarySkillRadioButton(this, "No");
+		basicOffense = UIUtilities.secondarySkillRadioButton(this, "Basic");
+		advancedOffense = UIUtilities.secondarySkillRadioButton(this, "Advanced");
+		expertOffense = UIUtilities.secondarySkillRadioButton(this, "Expert");
+		noArmorer = UIUtilities.secondarySkillRadioButton(this, "No");
+		basicArmorer = UIUtilities.secondarySkillRadioButton(this, "Basic");
+		advancedArmorer = UIUtilities.secondarySkillRadioButton(this, "Advanced");
+		expertArmorer = UIUtilities.secondarySkillRadioButton(this, "Expert");
+		noArchery = UIUtilities.secondarySkillRadioButton(this, "No");
+		basicArchery = UIUtilities.secondarySkillRadioButton(this, "Basic");
+		advancedArchery = UIUtilities.secondarySkillRadioButton(this, "Advanced");
+		expertArchery = UIUtilities.secondarySkillRadioButton(this, "Expert");
 		noArchery.setSelected(true);
 		noOffense.setSelected(true);
 		noArmorer.setSelected(true);
-		ObjectCreator.secondarySkillGroups(noOffense, basicOffense, advancedOffense, expertOffense, noArmorer, basicArmorer,
+		UIUtilities.secondarySkillGroups(noOffense, basicOffense, advancedOffense, expertOffense, noArmorer, basicArmorer,
 				advancedArmorer, expertArmorer, noArchery, basicArchery, advancedArchery, expertArchery);
 
-		JPanel offensePanel = ObjectCreator.secondarySkillPanel("Offense:", noOffense, basicOffense, advancedOffense,
+		JPanel offensePanel = UIUtilities.secondarySkillPanel("Offense:", noOffense, basicOffense, advancedOffense,
 				expertOffense, 0, 0, 350, 30);
-		JPanel armorerPanel = ObjectCreator.secondarySkillPanel("Armorer:", noArmorer, basicArmorer, advancedArmorer,
+		JPanel armorerPanel = UIUtilities.secondarySkillPanel("Armorer:", noArmorer, basicArmorer, advancedArmorer,
 				expertArmorer, 0, 30, 350, 30);
-		JPanel archeryPanel = ObjectCreator.secondarySkillPanel("Archery:", noArchery, basicArchery, advancedArchery,
+		JPanel archeryPanel = UIUtilities.secondarySkillPanel("Archery:", noArchery, basicArchery, advancedArchery,
 				expertArchery, 0, 60, 350, 30);
 
-		offenseSpecialtyLevel = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(350, 0, 40, 30);
-		armorerSpecialtyLevel = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(350, 30, 40, 30);
-		archerySpecialtyLevel = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(350, 60, 40, 30);
+		offenseSpecialtyLevel = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(350, 0, 40, 30);
+		armorerSpecialtyLevel = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(350, 30, 40, 30);
+		archerySpecialtyLevel = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(350, 60, 40, 30);
 
 		JLabel heroAttackLabel = new JLabel("Hero's attack skill");
 		heroAttackLabel.setBounds(30, 120, 130, 30);
 		JLabel heroDefenseLabel = new JLabel("Hero's defense skill");
 		heroDefenseLabel.setBounds(320, 120, 130, 30);
 
-		heroAttackTextField = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(30, 150, 40, 30);
-		heroDefenceTextField = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(320, 150, 40, 30);
+		heroAttackTextField = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(30, 150, 40, 30);
+		heroDefenceTextField = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(320, 150, 40, 30);
 
-		creaturesNumber = ObjectCreator.limitingJTextFieldsToNumbersAndSettingBounds(140, 30, 40, 30);
+		creaturesNumber = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(140, 30, 40, 30);
 
 		creatureSearchAttacker=new JTextField();
 		creatureSearchAttacker.setBounds(0, 0, 140, 30);
@@ -101,18 +101,18 @@ public class MyFrame extends JFrame implements ActionListener {
 		// creatureSearchDefender=new JTextField();
 
 
-		creatureListAttacker = ObjectCreator.creatureList(0, 30, 140, 30, this, creaturesNames);
-		creatureListDefender = ObjectCreator.creatureList(0, 30, 140, 30, this, creaturesNames);
-		JPanel attackerPanel = ObjectCreator.attackerPanel(creatureListAttacker, creaturesNumber, creatureSearchAttacker);
-		JPanel defenderPanel = ObjectCreator.defenderPanel(creatureListDefender, creatureSearchDefender);
+		creatureListAttacker = UIUtilities.creatureList(0, 30, 140, 30, this, creaturesNames);
+		creatureListDefender = UIUtilities.creatureList(0, 30, 140, 30, this, creaturesNames);
+		JPanel attackerPanel = UIUtilities.attackerPanel(creatureListAttacker, creaturesNumber, creatureSearchAttacker);
+		JPanel defenderPanel = UIUtilities.defenderPanel(creatureListDefender, creatureSearchDefender);
 
 		// combine these to unto one method
 	creatureListAttacker.addKeyListener((KeyListener) new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c=e.getKeyChar();
-				inputAttacker=ObjectCreator.characterPressed(inputAttacker, c);
+				inputAttacker=UIUtilities.characterPressed(inputAttacker, c);
 				creatureSearchAttacker.setText(inputAttacker);
-				String[] filteredNames = ObjectCreator.creatureNamesPick(creaturesNames, inputAttacker);
+				String[] filteredNames = UIUtilities.creatureNamesFilter(creaturesNames, inputAttacker);
 				creatureListAttacker.removeAllItems();
 				for (String name : filteredNames) {
 					creatureListAttacker.addItem(name);
@@ -122,9 +122,9 @@ public class MyFrame extends JFrame implements ActionListener {
 		creatureListDefender.addKeyListener((KeyListener) new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c=e.getKeyChar();
-				inputDefender=ObjectCreator.characterPressed(inputDefender, c);
+				inputDefender=UIUtilities.characterPressed(inputDefender, c);
 				creatureSearchDefender.setText(inputDefender);
-				String[] filteredNames = ObjectCreator.creatureNamesPick(creaturesNames, inputDefender);
+				String[] filteredNames = UIUtilities.creatureNamesFilter(creaturesNames, inputDefender);
 				creatureListDefender.removeAllItems();
 				for (String name : filteredNames) {
 					creatureListDefender.addItem(name);
@@ -132,7 +132,7 @@ public class MyFrame extends JFrame implements ActionListener {
 			}
 		});
 		
-		submit = ObjectCreator.button(this);
+		submit = UIUtilities.button(this);
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(500, 600);
@@ -155,6 +155,10 @@ public class MyFrame extends JFrame implements ActionListener {
 		this.setVisible(true);
 		this.repaint();
 	}
+
+	// public static int getSelectedButtonIndex(JRadioButton[] buttons) {
+		
+	// }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -199,15 +203,18 @@ public class MyFrame extends JFrame implements ActionListener {
 				else
 				Calculator.archeryHeroLevel=0;
 
-			String creatureNameAttacker = String.valueOf(creatureListAttacker.getSelectedItem());
-			Creature creatureAttacker = ObjectCreator.findCreatureFromList(creatureNameAttacker, creatures);
+				
+					String creatureNameAttacker = String.valueOf(creatureListAttacker.getSelectedItem());
+					
+			Creature creatureAttacker = UIUtilities.findCreatureFromList(creatureNameAttacker, creatures);
 			Calculator.minDamage = creatureAttacker.minDamage;
 			Calculator.maxDamage = creatureAttacker.maxDamage;
-			Calculator.ranged = creatureAttacker.ranged;
-
-			String creatureDefense = String.valueOf(creatureListDefender.getSelectedItem());
-			Creature creatureDefender = ObjectCreator.findCreatureFromList(creatureDefense, creatures);
+			Calculator.ranged = creatureAttacker.isRanged;
+			
+			String creatureNameDefender = String.valueOf(creatureListDefender.getSelectedItem());
+			Creature creatureDefender = UIUtilities.findCreatureFromList(creatureNameDefender, creatures);
 			Calculator.health = creatureDefender.health;
+			
 
 			if (heroAttackTextField.getText().isEmpty() == false)
 				Calculator.attack = Integer.valueOf(heroAttackTextField.getText()) + creatureAttacker.attack;
@@ -222,9 +229,9 @@ public class MyFrame extends JFrame implements ActionListener {
 				Calculator.behemoth = true;
 			if (creatureNameAttacker.equals("AncientBehemoth"))
 				Calculator.ancientBehemoth = true;
-			if (creatureDefense.equals("Nix"))
+			if (creatureNameDefender.equals("Nix"))
 				Calculator.nix = true;
-			else if (creatureDefense.equals("NixWarrior"))
+			else if (creatureNameDefender.equals("NixWarrior"))
 				Calculator.nixWarrior = true;
 
 			if (creaturesNumber.getText().isEmpty()==false)
@@ -232,7 +239,7 @@ public class MyFrame extends JFrame implements ActionListener {
 				else
 				Calculator.creaturesNumber=0;
 			
-			ObjectCreator.damageDealthLabel(damageDealth, creatureAttacker, creatureDefender);
+			UIUtilities.damageDealthLabel(damageDealth, creatureAttacker, creatureDefender);
 
 			this.add(damageDealth);
 
@@ -247,6 +254,8 @@ public class MyFrame extends JFrame implements ActionListener {
 					creatureListDefender.addItem(name);
 					creatureListAttacker.addItem(name);
 			}
+			creatureListAttacker.setSelectedItem(creatureNameAttacker);
+			creatureListDefender.setSelectedItem(creatureNameDefender);
 			
 		}
 	}
