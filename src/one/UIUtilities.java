@@ -61,13 +61,26 @@ public class UIUtilities {
 			}
 		});
 		textField.setBounds(x, y, weight, height);
-		// textField.setText("0");
 		return textField;
 	}
+	public static JPanel statsPanel(JTextField attack, JTextField defence){
+		JLabel heroAttackLabel = new JLabel("Hero's attack skill");
+		heroAttackLabel.setBounds(0, 0, 130, 30);
+		JLabel heroDefenseLabel = new JLabel("Hero's defense skill");
+		heroDefenseLabel.setBounds(290, 0, 130, 30);
+		JPanel statsPanel=new JPanel();
+		statsPanel.setLayout(null);
+		statsPanel.add(heroAttackLabel);
+		statsPanel.add(attack);
+		statsPanel.add(heroDefenseLabel);
+		statsPanel.add(defence);
+		statsPanel.setBounds(30, 120, 420, 60);
+		return statsPanel;
+	}
 
-	public static JComboBox<String> creatureList(int x, int y, int weight, int height, JFrame frame, String[] creaturesNames) {
+	public static JComboBox<String> creatureList(JFrame frame, String[] creaturesNames) {
 		JComboBox<String> list = new JComboBox<String>(creaturesNames);
-		list.setBounds(x, y, weight, height);
+		list.setBounds(0, 30, 140, 30);
 		list.addActionListener((ActionListener) frame);
 		return list;
 	}
@@ -88,6 +101,14 @@ public class UIUtilities {
 		}
 		return null;
 	}
+	public static JPanel defenderPanel(JComboBox<String> creatureListDefender, JTextField creatureSearchDefender){
+	JPanel creatureListAttackerPanel = new JPanel();
+	creatureListAttackerPanel.setLayout(null);
+	creatureListAttackerPanel.add(creatureListDefender);
+	creatureListAttackerPanel.add(creatureSearchDefender);
+	creatureListAttackerPanel.setBounds(320, 190, 180, 60);
+	return creatureListAttackerPanel;
+}
 	public static JPanel attackerPanel(JComboBox<String> creatureListAttacker, JTextField numberOfAttackingCreatures, JTextField creatureSearchAttacker){
 		JPanel creatureListAttackerPanel = new JPanel();
 		creatureListAttackerPanel.setLayout(null);
@@ -97,13 +118,11 @@ public class UIUtilities {
 		creatureListAttackerPanel.setBounds(30, 190, 180, 60);
 		return creatureListAttackerPanel;
 	}
-		public static JPanel defenderPanel(JComboBox<String> creatureListDefender, JTextField creatureSearchDefender){
-		JPanel creatureListAttackerPanel = new JPanel();
-		creatureListAttackerPanel.setLayout(null);
-		creatureListAttackerPanel.add(creatureListDefender);
-		creatureListAttackerPanel.add(creatureSearchDefender);
-		creatureListAttackerPanel.setBounds(320, 190, 180, 60);
-		return creatureListAttackerPanel;
+	public static JTextField creatureSearch(){
+		JTextField toBeReturne=new JTextField();
+		toBeReturne.setBounds(0, 0, 140, 30);
+		toBeReturne.setEditable(false);
+		return toBeReturne;
 	}
 	
 

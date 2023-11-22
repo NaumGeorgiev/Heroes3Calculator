@@ -31,12 +31,12 @@ public class MyFrame extends JFrame implements ActionListener {
 	JComboBox<String> creatureListAttacker;
 	JComboBox<String> creatureListDefender;
 
-	JTextField creaturesNumber;
+	JTextField creaturesNumber = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(140, 30, 40, 30);;
 	String inputAttacker = new String();
 	String inputDefender = new String();
 
-	JTextField creatureSearchAttacker;
-	JTextField creatureSearchDefender;
+	JTextField creatureSearchAttacker=UIUtilities.creatureSearch();
+	JTextField creatureSearchDefender=UIUtilities.creatureSearch();
 
 	JButton submit;
 
@@ -47,26 +47,12 @@ public class MyFrame extends JFrame implements ActionListener {
 		JPanel armorerPanel = UIUtilities.secondarySkillPanel("Armorer:", armorer, 0, 30, 350, 30);
 		JPanel archeryPanel = UIUtilities.secondarySkillPanel("Archery:", archery, 0, 60, 350, 30);
 
-		JLabel heroAttackLabel = new JLabel("Hero's attack skill");
-		heroAttackLabel.setBounds(30, 120, 130, 30);
-		JLabel heroDefenseLabel = new JLabel("Hero's defense skill");
-		heroDefenseLabel.setBounds(320, 120, 130, 30);
+		heroAttackTextField = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(0, 30, 40, 30);
+		heroDefenceTextField = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(290, 30, 40, 30);
+		JPanel statsPanel=UIUtilities.statsPanel(heroAttackTextField, heroDefenceTextField);
 
-		heroAttackTextField = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(30, 150, 40, 30);
-		heroDefenceTextField = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(320, 150, 40, 30);
-
-		creaturesNumber = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(140, 30, 40, 30);
-
-		creatureSearchAttacker = new JTextField();
-		creatureSearchAttacker.setBounds(0, 0, 140, 30);
-		creatureSearchAttacker.setEditable(false);
-		creatureSearchDefender = new JTextField();
-		creatureSearchDefender.setBounds(0, 0, 140, 30);
-		creatureSearchDefender.setEditable(false);
-		// creatureSearchDefender=new JTextField();
-
-		creatureListAttacker = UIUtilities.creatureList(0, 30, 140, 30, this, creaturesNames);
-		creatureListDefender = UIUtilities.creatureList(0, 30, 140, 30, this, creaturesNames);
+		creatureListAttacker = UIUtilities.creatureList(this, creaturesNames);
+		creatureListDefender = UIUtilities.creatureList(this, creaturesNames);
 		JPanel attackerPanel = UIUtilities.attackerPanel(creatureListAttacker, creaturesNumber, creatureSearchAttacker);
 		JPanel defenderPanel = UIUtilities.defenderPanel(creatureListDefender, creatureSearchDefender);
 
@@ -108,10 +94,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		this.add(offenseSpecialtyLevel);
 		this.add(armorerSpecialtyLevel);
 		this.add(archerySpecialtyLevel);
-		this.add(heroAttackLabel);
-		this.add(heroDefenseLabel);
-		this.add(heroAttackTextField);
-		this.add(heroDefenceTextField);
+		this.add(statsPanel);
 		this.add(attackerPanel);
 		this.add(defenderPanel);
 		this.add(submit);
@@ -119,11 +102,6 @@ public class MyFrame extends JFrame implements ActionListener {
 		this.setVisible(true);
 		this.repaint();
 	}
-
-	// public static int getSelectedButtonIndex(JRadioButton[] buttons) {
-
-	// }
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == submit) {
