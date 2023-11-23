@@ -16,7 +16,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class UIUtilities {
-	public static JRadioButton[] secondarySkillRadioButtons(JFrame frame) {
+	public static JRadioButton[] secondarySkillRadioButtons() {
 		JRadioButton[] toBeReturned=new JRadioButton[4];
 		toBeReturned[0]=new JRadioButton("No");
 		toBeReturned[0].setSelected(true);
@@ -76,6 +76,14 @@ public class UIUtilities {
 		statsPanel.add(defence);
 		statsPanel.setBounds(30, 120, 420, 60);
 		return statsPanel;
+	}
+	
+	public static JTextField[] secondarySkillSpecialtyLevel(){
+		JTextField[] toBeReturned=new JTextField[3];
+		toBeReturned[0]=limitingJTextFieldsToNumbersAndSettingBounds(350, 0, 40, 30);
+		toBeReturned[1]=limitingJTextFieldsToNumbersAndSettingBounds(350, 30, 40, 30);
+		toBeReturned[2]=limitingJTextFieldsToNumbersAndSettingBounds(350, 60, 40, 30);
+		return toBeReturned;
 	}
 
 	public static JComboBox<String> creatureList(JFrame frame, String[] creaturesNames) {

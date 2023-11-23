@@ -15,10 +15,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class MyFrame extends JFrame implements ActionListener {
-	JRadioButton[] offense = UIUtilities.secondarySkillRadioButtons(this);
-	JRadioButton[] armorer = UIUtilities.secondarySkillRadioButtons(this);
-	JRadioButton[] archery = UIUtilities.secondarySkillRadioButtons(this);
-
+	JRadioButton[] offense = UIUtilities.secondarySkillRadioButtons();
+	JRadioButton[] armorer = UIUtilities.secondarySkillRadioButtons();
+	JRadioButton[] archery = UIUtilities.secondarySkillRadioButtons();
 	JTextField offenseSpecialtyLevel = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(350, 0, 40, 30);
 	JTextField armorerSpecialtyLevel = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(350, 30, 40, 30);
 	JTextField archerySpecialtyLevel = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(350, 60, 40, 30);
@@ -95,6 +94,8 @@ public class MyFrame extends JFrame implements ActionListener {
 		this.add(armorerSpecialtyLevel);
 		this.add(archerySpecialtyLevel);
 		this.add(statsPanel);
+		this.add(heroAttackTextField);
+		this.add(heroDefenceTextField);
 		this.add(attackerPanel);
 		this.add(defenderPanel);
 		this.add(submit);
