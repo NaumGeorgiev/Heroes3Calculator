@@ -1,7 +1,6 @@
 package one;
 
 public class Calculator {
-	// Offense or archery applying
 	public static boolean behemoth = false;
 	public static boolean nix = false;
 	public static boolean ancientBehemoth = false;
@@ -15,9 +14,9 @@ public class Calculator {
 	public static int offenseHeroLevel;
 	public static int archeryHeroLevel;
 	public static int amorerHeroLevel;
-	public static boolean ranged;
-	public static int minDamage;
-	public static int maxDamage;
+	public static boolean isRanged;
+	public static double minDamage;
+	public static double maxDamage;
 	public static int creaturesNumber=0;
 	
 
@@ -54,7 +53,7 @@ public class Calculator {
 
 		double offenceBonus = 1;
 		double archeryBonus = 1;
-		if (ranged == false) {
+		if (isRanged == false) {
 			switch (offence) {
 			case 0:
 				break;
@@ -98,10 +97,19 @@ public class Calculator {
 			armorerBonus = 0.85;
 		}
 		armorerBonus -= amorerHeroLevel * (1-armorerBonus) * 0.05;
-
-		minDamage = (int) (minDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus*creaturesNumber);
-		maxDamage = (int) (maxDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus*creaturesNumber);
-		return new int[] { minDamage, maxDamage };
+		minDamage = (minDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus*creaturesNumber);
+		maxDamage = (maxDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus*creaturesNumber);
+		return new int[] {(int) minDamage, (int) maxDamage };
 	}
+	// public static int[] calculate(Creature attack, Creature defend){
+		
 
+	// }
+	public static int[] calculateThroughMeleePenalty(Creature creature){
+		Calculator.isRanged=false;
+		int[] damage=calculate();
+		damage[0]/=2;
+		damage[1]/=2;
+		return damage;
+	}
 }
