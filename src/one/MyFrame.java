@@ -133,7 +133,7 @@ public class MyFrame extends JFrame implements ActionListener {
 			Creature creatureAttacker = UIUtilities.findCreatureFromList(creatureNameAttacker, creatures);
 			Calculator.minDamage = creatureAttacker.minDamage;
 			Calculator.maxDamage = creatureAttacker.maxDamage;
-			Calculator.ranged = creatureAttacker.isRanged;
+			Calculator.isRanged = creatureAttacker.isRanged;
 
 			String creatureNameDefender = String.valueOf(creatureListDefender.getSelectedItem());
 			Creature creatureDefender = UIUtilities.findCreatureFromList(creatureNameDefender, creatures);
