@@ -101,10 +101,7 @@ public class Calculator {
 		maxDamage = (maxDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus*creaturesNumber);
 		return new int[] {(int) minDamage, (int) maxDamage };
 	}
-	// public static int[] calculate(Creature attack, Creature defend){
-		
 
-	// }
 	public static int[] calculateThroughMeleePenalty(Creature creature){
 		Calculator.isRanged=false;
 		int[] damage=calculate();

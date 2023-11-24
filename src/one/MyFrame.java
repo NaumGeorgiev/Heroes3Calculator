@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -13,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 
 public class MyFrame extends JFrame implements ActionListener {
 	JRadioButton[] offense = UIUtilities.secondarySkillRadioButtons();
@@ -34,10 +34,11 @@ public class MyFrame extends JFrame implements ActionListener {
 	String inputAttacker = new String();
 	String inputDefender = new String();
 
-	JTextField creatureSearchAttacker=UIUtilities.creatureSearch();
-	JTextField creatureSearchDefender=UIUtilities.creatureSearch();
+	JTextField creatureSearchAttacker = UIUtilities.creatureSearch();
+	JTextField creatureSearchDefender = UIUtilities.creatureSearch();
 
-	JButton submit;
+	JButton submit = UIUtilities.button(this);;
+	JToggleButton melee = UIUtilities.toggleButton(this);
 
 	JLabel damageDealth = new JLabel();
 
@@ -48,7 +49,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
 		heroAttackTextField = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(0, 30, 40, 30);
 		heroDefenceTextField = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(290, 30, 40, 30);
-		JPanel statsPanel=UIUtilities.statsPanel(heroAttackTextField, heroDefenceTextField);
+		JPanel statsPanel = UIUtilities.statsPanel(heroAttackTextField, heroDefenceTextField);
 
 		creatureListAttacker = UIUtilities.creatureList(this, creaturesNames);
 		creatureListDefender = UIUtilities.creatureList(this, creaturesNames);
@@ -81,8 +82,6 @@ public class MyFrame extends JFrame implements ActionListener {
 			}
 		});
 
-		submit = UIUtilities.button(this);
-
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(500, 600);
 		this.setLayout(null);
@@ -94,17 +93,21 @@ public class MyFrame extends JFrame implements ActionListener {
 		this.add(armorerSpecialtyLevel);
 		this.add(archerySpecialtyLevel);
 		this.add(statsPanel);
-		this.add(heroAttackTextField);
-		this.add(heroDefenceTextField);
 		this.add(attackerPanel);
 		this.add(defenderPanel);
 		this.add(submit);
+		this.add(melee);
 		this.add(damageDealth);
 		this.setVisible(true);
 		this.repaint();
+
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (submit.isSelected()) {
+			System.out.println("a");
+		}
 		if (e.getSource() == submit) {
 			for (int i = 0; i < 4; i++) {
 				if (offense[i].isSelected())
@@ -131,6 +134,7 @@ public class MyFrame extends JFrame implements ActionListener {
 			String creatureNameAttacker = String.valueOf(creatureListAttacker.getSelectedItem());
 
 			Creature creatureAttacker = UIUtilities.findCreatureFromList(creatureNameAttacker, creatures);
+			Calculator.isRanged = creatureAttacker.isRanged;
 			Calculator.minDamage = creatureAttacker.minDamage;
 			Calculator.maxDamage = creatureAttacker.maxDamage;
 			Calculator.isRanged = creatureAttacker.isRanged;
@@ -150,19 +154,27 @@ public class MyFrame extends JFrame implements ActionListener {
 
 			if (creatureNameAttacker.equals("Behemoth"))
 				Calculator.behemoth = true;
+			else
+				Calculator.behemoth = false;
 			if (creatureNameAttacker.equals("AncientBehemoth"))
 				Calculator.ancientBehemoth = true;
+				else
+				Calculator.ancientBehemoth = false;
 			if (creatureNameDefender.equals("Nix"))
 				Calculator.nix = true;
-			else if (creatureNameDefender.equals("NixWarrior"))
+				else
+				Calculator.nix = false;
+			if (creatureNameDefender.equals("NixWarrior"))
 				Calculator.nixWarrior = true;
+				else
+				Calculator.nixWarrior = false;
 
 			if (creaturesNumber.getText().isEmpty() == false)
 				Calculator.creaturesNumber = Integer.valueOf(creaturesNumber.getText());
 			else
 				Calculator.creaturesNumber = 0;
 
-			UIUtilities.damageDealthLabel(damageDealth, creatureAttacker, creatureDefender);
+			UIUtilities.damageDealthLabel(damageDealth, creatureAttacker, creatureDefender, melee.isSelected());
 
 			this.add(damageDealth);
 

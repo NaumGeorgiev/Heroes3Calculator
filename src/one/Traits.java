@@ -1,0 +1,6 @@
+// package one;
+// public enum Traits {
+//     HATES_DEVILS,
+//     SHOOTS_TWICE,
+//     ANGEL, ARCHANGEL, DEVIL, ARCHDEVIL, GENIE, MASTERGENIE, EFREETI, EFREETSULTAN, BLACKDRAGON, TITAN;
+// }

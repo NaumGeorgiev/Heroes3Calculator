@@ -1,11 +1,11 @@
 package one;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 
 public class UIUtilities {
 	public static JRadioButton[] secondarySkillRadioButtons() {
@@ -66,6 +67,7 @@ public class UIUtilities {
 	public static JPanel statsPanel(JTextField attack, JTextField defence){
 		JLabel heroAttackLabel = new JLabel("Hero's attack skill");
 		heroAttackLabel.setBounds(0, 0, 130, 30);
+
 		JLabel heroDefenseLabel = new JLabel("Hero's defense skill");
 		heroDefenseLabel.setBounds(290, 0, 130, 30);
 		JPanel statsPanel=new JPanel();
@@ -95,9 +97,17 @@ public class UIUtilities {
 
 	public static JButton button(JFrame frame) {
 		JButton button = new JButton();
-		button.setBounds(30, 270, 420, 60);
+		button.setBounds(30, 300, 420, 60);
 		button.addActionListener((ActionListener) frame);
 		button.setText("Sumbit");
+		button.setFocusable(false);
+		return button;
+	}
+	public static JToggleButton toggleButton(JFrame frame){
+		JToggleButton button=new JToggleButton();
+		button.setBounds(30, 250, 140, 30);
+		button.addActionListener((ActionListener) frame);
+		button.setText("Melee");
 		button.setFocusable(false);
 		return button;
 	}
@@ -127,10 +137,10 @@ public class UIUtilities {
 		return creatureListAttackerPanel;
 	}
 	public static JTextField creatureSearch(){
-		JTextField toBeReturne=new JTextField();
-		toBeReturne.setBounds(0, 0, 140, 30);
-		toBeReturne.setEditable(false);
-		return toBeReturne;
+		JTextField toBeReturned=new JTextField();
+		toBeReturned.setBounds(0, 0, 140, 30);
+		toBeReturned.setEditable(false);
+		return toBeReturned;
 	}
 	
 
@@ -172,10 +182,12 @@ public class UIUtilities {
 		return toBeReturned;
 	}
 
-	public static void damageDealthLabel(JLabel label, Creature attackingCreature, Creature defendingCreature) {
+	public static void damageDealthLabel(JLabel label, Creature attackingCreature, Creature defendingCreature, boolean isMelee) {
 		label.setFont(new Font("", Font.PLAIN, 22));
-		label.setBounds(30, 340, 420, 85);
-		int[] totalDamage = Calculator.calculate();
+		label.setBounds(30, 370, 420, 85);
+		int[] totalDamage;
+		totalDamage=Calculator.calculate();
+
 		int minTotalDamage = totalDamage[0];
 		int maxTotalDamage = totalDamage[1];
 		if (minTotalDamage == 0)
