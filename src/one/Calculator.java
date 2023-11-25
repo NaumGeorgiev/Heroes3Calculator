@@ -1,26 +1,50 @@
 package one;
 
-public class Calculator {
-	public static boolean behemoth = false;
-	public static boolean nix = false;
-	public static boolean ancientBehemoth = false;
-	public static boolean nixWarrior = false;
-	public static int attack;
-	public static int defence;
-	public static int health;
-	public static int armorer;
-	public static int offence;
-	public static int archery;
-	public static int offenseHeroLevel;
-	public static int archeryHeroLevel;
-	public static int amorerHeroLevel;
-	public static boolean isRanged;
-	public static double minDamage;
-	public static double maxDamage;
-	public static int creaturesNumber=0;
-	
+import javax.swing.JToggleButton;
 
-	public static int[] calculate() {
+public class Calculator {
+	public boolean behemoth = false;
+	public boolean nix = false;
+	public boolean ancientBehemoth = false;
+	public boolean nixWarrior = false;
+	public int attack;
+	public int defence;
+	public int health;
+	public int armorer;
+	public int offence;
+	public int archery;
+	public int offenseHeroLevel;
+	public int archeryHeroLevel;
+	public int armorerHeroLevel;
+	public boolean isRanged;
+	public double minDamage;
+	public double maxDamage;
+	public int creaturesNumber;
+
+	public Calculator(boolean behemoth, boolean nix, boolean ancientBehemoth, boolean nixWarrior, int attack,
+			int defence, int health, int armorer, int offence, int archery, int offenseHeroLevel, int archeryHeroLevel,
+			int armorerHeroLevel, boolean isRanged, double minDamage, double maxDamage,
+			int creaturesNumber) {
+		this.behemoth = behemoth;
+		this.nix = nix;
+		this.ancientBehemoth = ancientBehemoth;
+		this.nixWarrior = nixWarrior;
+		this.attack = attack;
+		this.defence = defence;
+		this.health = health;
+		this.armorer = armorer;
+		this.offence = offence;
+		this.archery = archery;
+		this.offenseHeroLevel = offenseHeroLevel;
+		this.archeryHeroLevel = archeryHeroLevel;
+		this.armorerHeroLevel = armorerHeroLevel;
+		this.isRanged = isRanged;
+		this.minDamage = minDamage;
+		this.maxDamage = maxDamage;
+		this.creaturesNumber = creaturesNumber;
+	}
+
+	public int[] fianlCalculate() {
 
 		if (behemoth == true) {
 			if ((defence * 3) % 5 > 0)
@@ -55,58 +79,107 @@ public class Calculator {
 		double archeryBonus = 1;
 		if (isRanged == false) {
 			switch (offence) {
-			case 0:
-				break;
-			case 1:
-				offenceBonus = 1.1;
-				break;
-			case 2:
-				offenceBonus = 1.2;
-				break;
-			case 3:
-				offenceBonus = 1.3;
+				case 0:
+					break;
+				case 1:
+					offenceBonus = 1.1;
+					break;
+				case 2:
+					offenceBonus = 1.2;
+					break;
+				case 3:
+					offenceBonus = 1.3;
 			}
-			offenceBonus += offenseHeroLevel * (offenceBonus-1) * 0.05;
+			offenceBonus += offenseHeroLevel * (offenceBonus - 1) * 0.05;
 		} else {
 			switch (archery) {
-			case 0:
-				break;
-			case 1:
-				archeryBonus = 1.1;
-				break;
-			case 2:
-				archeryBonus = 1.25;
-				break;
-			case 3:
-				archeryBonus = 1.5;
+				case 0:
+					break;
+				case 1:
+					archeryBonus = 1.1;
+					break;
+				case 2:
+					archeryBonus = 1.25;
+					break;
+				case 3:
+					archeryBonus = 1.5;
 			}
-			archeryBonus += archeryHeroLevel * (archeryBonus-1) * 0.05;
+			archeryBonus += archeryHeroLevel * (archeryBonus - 1) * 0.05;
 		}
 
 		double armorerBonus = 1;
 		switch (armorer) {
-		case 0:
-			break;
-		case 1:
-			armorerBonus = 0.95;
-			break;
-		case 2:
-			armorerBonus = 0.9;
-			break;
-		case 3:
-			armorerBonus = 0.85;
+			case 0:
+				break;
+			case 1:
+				armorerBonus = 0.95;
+				break;
+			case 2:
+				armorerBonus = 0.9;
+				break;
+			case 3:
+				armorerBonus = 0.85;
 		}
-		armorerBonus -= amorerHeroLevel * (1-armorerBonus) * 0.05;
-		minDamage = (minDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus*creaturesNumber);
-		maxDamage = (maxDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus*creaturesNumber);
-		return new int[] {(int) minDamage, (int) maxDamage };
+		armorerBonus -= armorerHeroLevel * (1 - armorerBonus) * 0.05;
+		minDamage = (minDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus
+				* creaturesNumber);
+		maxDamage = (maxDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus
+				* creaturesNumber);
+		return new int[] { (int) minDamage, (int) maxDamage };
 	}
 
-	public static int[] calculateThroughMeleePenalty(Creature creature){
-		Calculator.isRanged=false;
-		int[] damage=calculate();
-		damage[0]/=2;
-		damage[1]/=2;
-		return damage;
+	public void calculateMelee(Creature attacker) {
+		this.isRanged = false;
+		if (attacker.hasMeleePenalty) {
+			this.minDamage /= 2;
+			this.maxDamage /= 2;
+		}
+	}
+
+	public void calculateHatred() {
+		this.minDamage = this.minDamage * 3 / 2;
+		this.maxDamage = this.maxDamage * 3 / 2;
+	}
+
+	public void calculateOppositeElements() {
+		this.minDamage = this.minDamage * 2;
+		this.maxDamage = this.maxDamage * 2;
+	}
+
+	public void bullshitElemental(Creature defender) {
+		switch (defender.name) {
+			case "Sekeleton":
+			case "SekeletonWarrior":
+			case "WalkingDead":
+			case "Zombie":
+			case "Wight":
+			case "Wraith":
+			case "Vampire":
+			case "VampireLord":
+			case "Lich":
+			case "PowerLich":
+			case "BlackKnight":
+			case "DreadKnight":
+			case "BoneDragon":
+			case "GhostDragon":
+			case "BlackDragon":
+			case "Giant":
+			case "Titan":
+				this.minDamage /= 2;
+				this.maxDamage /= 2;
+				break;
+		}
+	}
+
+	public int[] calculate(boolean isMelee, Creature attacker, Creature defender) {
+		if (isMelee)
+			calculateMelee(attacker);
+		else if (attacker.hates(defender))
+			calculateHatred();
+		else if (attacker.isOppositeElemental(defender))
+			calculateOppositeElements();
+		else if (attacker.name.equals("PsychicElemental") || attacker.name.equals("MagicElemental"))
+			bullshitElemental(defender);
+			return this.fianlCalculate();
 	}
 }

@@ -1,7 +1,7 @@
 package one;
 
-import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -18,27 +18,29 @@ import javax.swing.JToggleButton;
 
 public class UIUtilities {
 	public static JRadioButton[] secondarySkillRadioButtons() {
-		JRadioButton[] toBeReturned=new JRadioButton[4];
-		toBeReturned[0]=new JRadioButton("No");
+		JRadioButton[] toBeReturned = new JRadioButton[4];
+		toBeReturned[0] = new JRadioButton("No");
 		toBeReturned[0].setSelected(true);
-		toBeReturned[1]=new JRadioButton("Basic");
-		toBeReturned[2]=new JRadioButton("Advanced");
-		toBeReturned[3]=new JRadioButton("Expert");
-		for(int i=0; i<4; i++){
+		toBeReturned[1] = new JRadioButton("Basic");
+		toBeReturned[2] = new JRadioButton("Advanced");
+		toBeReturned[3] = new JRadioButton("Expert");
+		for (int i = 0; i < 4; i++) {
 			toBeReturned[i].setFocusable(false);
 			toBeReturned[i].setSize(10, 10);
 		}
 		group(toBeReturned);
 		return toBeReturned;
 	}
-	private static void group(JRadioButton[] skills){
-		ButtonGroup skillGroup=new ButtonGroup();
-		for(int i=0; i<4; i++){
-			skillGroup.add(skills[i]);	
-		}
-	} 
 
-	public static JPanel secondarySkillPanel(String skillName, JRadioButton[] skills, int x, int y, int weight, int height) {
+	private static void group(JRadioButton[] skills) {
+		ButtonGroup skillGroup = new ButtonGroup();
+		for (int i = 0; i < 4; i++) {
+			skillGroup.add(skills[i]);
+		}
+	}
+
+	public static JPanel secondarySkillPanel(String skillName, JRadioButton[] skills, int x, int y, int weight,
+			int height) {
 		JPanel panel = new JPanel();
 		JLabel skillLabel = new JLabel(skillName);
 		panel.add(skillLabel);
@@ -64,13 +66,14 @@ public class UIUtilities {
 		textField.setBounds(x, y, weight, height);
 		return textField;
 	}
-	public static JPanel statsPanel(JTextField attack, JTextField defence){
+
+	public static JPanel statsPanel(JTextField attack, JTextField defence) {
 		JLabel heroAttackLabel = new JLabel("Hero's attack skill");
 		heroAttackLabel.setBounds(0, 0, 130, 30);
 
 		JLabel heroDefenseLabel = new JLabel("Hero's defense skill");
 		heroDefenseLabel.setBounds(290, 0, 130, 30);
-		JPanel statsPanel=new JPanel();
+		JPanel statsPanel = new JPanel();
 		statsPanel.setLayout(null);
 		statsPanel.add(heroAttackLabel);
 		statsPanel.add(attack);
@@ -79,12 +82,12 @@ public class UIUtilities {
 		statsPanel.setBounds(30, 120, 420, 60);
 		return statsPanel;
 	}
-	
-	public static JTextField[] secondarySkillSpecialtyLevel(){
-		JTextField[] toBeReturned=new JTextField[3];
-		toBeReturned[0]=limitingJTextFieldsToNumbersAndSettingBounds(350, 0, 40, 30);
-		toBeReturned[1]=limitingJTextFieldsToNumbersAndSettingBounds(350, 30, 40, 30);
-		toBeReturned[2]=limitingJTextFieldsToNumbersAndSettingBounds(350, 60, 40, 30);
+
+	public static JTextField[] secondarySkillSpecialtyLevel() {
+		JTextField[] toBeReturned = new JTextField[3];
+		toBeReturned[0] = limitingJTextFieldsToNumbersAndSettingBounds(350, 0, 40, 30);
+		toBeReturned[1] = limitingJTextFieldsToNumbersAndSettingBounds(350, 30, 40, 30);
+		toBeReturned[2] = limitingJTextFieldsToNumbersAndSettingBounds(350, 60, 40, 30);
 		return toBeReturned;
 	}
 
@@ -103,12 +106,29 @@ public class UIUtilities {
 		button.setFocusable(false);
 		return button;
 	}
-	public static JToggleButton toggleButton(JFrame frame){
-		JToggleButton button=new JToggleButton();
+
+	public static void showOrHideMelee(JComboBox<String> creatureListAttacker, Creature[] creatures,
+			JToggleButton melee) {
+		creatureListAttacker.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String creatureNameAttacker = String.valueOf(creatureListAttacker.getSelectedItem());
+				if (findCreatureFromList(creatureNameAttacker, creatures).isRanged)
+					melee.setVisible(true);
+				else
+					melee.setVisible(false);
+				melee.setSelected(false);
+			}
+		});
+	}
+
+	public static JToggleButton toggleButton(JFrame frame) {
+		JToggleButton button = new JToggleButton();
 		button.setBounds(30, 250, 140, 30);
 		button.addActionListener((ActionListener) frame);
 		button.setText("Melee");
 		button.setFocusable(false);
+		button.setVisible(false);
 		return button;
 	}
 
@@ -119,15 +139,18 @@ public class UIUtilities {
 		}
 		return null;
 	}
-	public static JPanel defenderPanel(JComboBox<String> creatureListDefender, JTextField creatureSearchDefender){
-	JPanel creatureListAttackerPanel = new JPanel();
-	creatureListAttackerPanel.setLayout(null);
-	creatureListAttackerPanel.add(creatureListDefender);
-	creatureListAttackerPanel.add(creatureSearchDefender);
-	creatureListAttackerPanel.setBounds(320, 190, 180, 60);
-	return creatureListAttackerPanel;
-}
-	public static JPanel attackerPanel(JComboBox<String> creatureListAttacker, JTextField numberOfAttackingCreatures, JTextField creatureSearchAttacker){
+
+	public static JPanel defenderPanel(JComboBox<String> creatureListDefender, JTextField creatureSearchDefender) {
+		JPanel creatureListAttackerPanel = new JPanel();
+		creatureListAttackerPanel.setLayout(null);
+		creatureListAttackerPanel.add(creatureListDefender);
+		creatureListAttackerPanel.add(creatureSearchDefender);
+		creatureListAttackerPanel.setBounds(320, 190, 180, 60);
+		return creatureListAttackerPanel;
+	}
+
+	public static JPanel attackerPanel(JComboBox<String> creatureListAttacker, JTextField numberOfAttackingCreatures,
+			JTextField creatureSearchAttacker) {
 		JPanel creatureListAttackerPanel = new JPanel();
 		creatureListAttackerPanel.setLayout(null);
 		creatureListAttackerPanel.add(creatureListAttacker);
@@ -136,75 +159,73 @@ public class UIUtilities {
 		creatureListAttackerPanel.setBounds(30, 190, 180, 60);
 		return creatureListAttackerPanel;
 	}
-	public static JTextField creatureSearch(){
-		JTextField toBeReturned=new JTextField();
+
+	public static JTextField creatureSearch() {
+		JTextField toBeReturned = new JTextField();
 		toBeReturned.setBounds(0, 0, 140, 30);
 		toBeReturned.setEditable(false);
 		return toBeReturned;
 	}
-	
 
-	public static String characterPressed(String input, char e){
-		if(e==(char)8){
-			input=deleteLastChar(input);
+	public static String characterPressed(String input, char e) {
+		if (e == (char) 8) {
+			input = deleteLastChar(input);
 			return input;
 		}
-		if( e==(char)27)
-		return "";
-		if(e<65 || e>122)
+		if (e == (char) 27)
+			return "";
+		if (e < 65 || e > 122)
 			return input;
-		return input+=e;
+		return input += e;
 	}
-	private static String deleteLastChar(String s){
-		if(s.length()==0)
-		return s;
-		String toBeReturned=new String("");
-		for(int i=0; i<s.length()-1; i++){
-			toBeReturned+=s.charAt(i);
+
+	private static String deleteLastChar(String s) {
+		if (s.length() == 0)
+			return s;
+		String toBeReturned = new String("");
+		for (int i = 0; i < s.length() - 1; i++) {
+			toBeReturned += s.charAt(i);
 		}
 		return toBeReturned;
 	}
-	
-	public static String[] creatureNamesFilter(String[] creatureNames, String input){
-		ArrayList<String> picked=new ArrayList<>();
-		for(int i=0; i<creatureNames.length; i++){
-			if(creatureNames[i].toLowerCase().contains(input))
-			picked.add(creatureNames[i]);
+
+	public static String[] creatureNamesFilter(String[] creatureNames, String input) {
+		ArrayList<String> picked = new ArrayList<>();
+		for (int i = 0; i < creatureNames.length; i++) {
+			if (creatureNames[i].toLowerCase().contains(input))
+				picked.add(creatureNames[i]);
 		}
 		return arraysListToString(picked);
-		
+
 	}
-	private static String[] arraysListToString(ArrayList<String> al){
-		String[] toBeReturned =new String[al.size()];
-		for(int i=0; i<al.size(); i++){
-			toBeReturned[i]=al.get(i);
+
+	private static String[] arraysListToString(ArrayList<String> al) {
+		String[] toBeReturned = new String[al.size()];
+		for (int i = 0; i < al.size(); i++) {
+			toBeReturned[i] = al.get(i);
 		}
 		return toBeReturned;
 	}
 
-	public static void damageDealthLabel(JLabel label, Creature attackingCreature, Creature defendingCreature, boolean isMelee) {
+	public static void damageDealthLabel(JLabel label ,int health, int minDamage, int maxDamage, int creaturesNumber) {
 		label.setFont(new Font("", Font.PLAIN, 22));
 		label.setBounds(30, 370, 420, 85);
-		int[] totalDamage;
-		totalDamage=Calculator.calculate();
 
-		int minTotalDamage = totalDamage[0];
-		int maxTotalDamage = totalDamage[1];
-		if (minTotalDamage == 0)
-			minTotalDamage = 1;
-		if (maxTotalDamage == 0)
-			maxTotalDamage = 1;
-		if (Calculator.creaturesNumber != 0) {
-			if (minTotalDamage == maxTotalDamage)
-				label.setText("Deals " + minTotalDamage + " damage  Kills " + minTotalDamage / defendingCreature.health + " + "
-						+ minTotalDamage % defendingCreature.health + " HP");
+	
+		if (creaturesNumber != 0) {
+			if (minDamage == maxDamage)
+				label.setText("Deals " + minDamage + " damage  Kills " + minDamage / health
+						+ " + "
+						+ minDamage % health + " HP");
 			else {
-				label.setText("<html>" + minTotalDamage + "-" + maxTotalDamage + " damage: "
-						+ (minTotalDamage + maxTotalDamage) / 2 + " on average" + "<br/>" + "<html>"
-						+ minTotalDamage / defendingCreature.health + "+" + minTotalDamage % defendingCreature.health + " HP"
-						+ " - " + maxTotalDamage / defendingCreature.health + "+" + maxTotalDamage % defendingCreature.health
-						+ " HP" + "<br/>"  + (minTotalDamage + maxTotalDamage) / 2 / defendingCreature.health + "+"
-						+  (minTotalDamage + maxTotalDamage) / 2 % defendingCreature.health + " HP on average</html>");
+				// label.setText("<html>" + minDamage + "-" + maxDamage + " damage: "
+				// 		+ (minDamage + maxDamage) / 2 + " on average" + "<br/>" + "<html>"
+				// 		+ minDamage / health + "+" + minDamage % health
+				// 		+ " HP"
+				// 		+ " - " + maxDamage / health + "+"
+				// 		+ maxDamage % health
+				// 		+ " HP" + "<br/>" + (minDamage + maxDamage) / 2 / health + "+"
+				// 		+ ((minDamage + maxDamage)/2) % health + " HP on average</html>");
 			}
 		} else {
 			label.setText("Insert number of attacking creatures");

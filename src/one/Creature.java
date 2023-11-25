@@ -15,11 +15,13 @@ public class Creature {
 	public double maxDamage;
 	public int health;
 	public boolean isRanged;
-	public boolean meleePenalty;
-	public Set<String> hates;
+	public boolean hasMeleePenalty;
+	public Set<String> hatedTraits;
+	public Set<String> oppositeElementalTraits;
 
 	public Creature(String name, int attack, int defense, double minDamage, double maxDamage, int health,
-			boolean isRanged, boolean meleePenalty, Set<String> hates) { // Update constructor
+			boolean isRanged, boolean hasMeleePenalty, Set<String> hhatedTrait, Set<String> oppositeElementalTraits) { // Update
+																														// constructor
 		this.name = name;
 		this.attack = attack;
 		this.defense = defense;
@@ -27,8 +29,9 @@ public class Creature {
 		this.maxDamage = maxDamage;
 		this.health = health;
 		this.isRanged = isRanged;
-		this.meleePenalty = meleePenalty;
-		this.hates = hates;
+		this.hasMeleePenalty = hasMeleePenalty;
+		this.hatedTraits = hatedTraits;
+		this.oppositeElementalTraits = oppositeElementalTraits;
 	}
 
 	public static Creature[] createAll() {
@@ -46,40 +49,41 @@ public class Creature {
 				}
 				boolean isRanged = false;
 				boolean isDoubleShooting = false;
-				boolean meleePenalty = false;
+				boolean hasMeleePenalty = false;
 				String[] stats = creatureInfo.split(",");
-				Set<String> hatedTraits=hatedTraits(stats[0]);
+				Set<String> hatedTraits = hatedTraits(stats[0]);
+				Set<String> oppositeElementalTraits = oppositeElementalTraits(stats[0]);
 				if (stats[13].contains("Ranged")) {
 					if (stats[13].contains("Doubleattack"))
 						isDoubleShooting = true;
 					isRanged = true;
 					if (stats[13].contains("Nomeleepenalty") == false)
-						meleePenalty = true;
+						hasMeleePenalty = true;
 				}
 				creatures[i] = new Creature(stats[0], Integer.valueOf(stats[3]), Integer.valueOf(stats[4]),
 						Integer.valueOf(stats[5]), Integer.valueOf(stats[6]), Integer.valueOf(stats[7]), isRanged,
-						meleePenalty, hatedTraits);
+						hasMeleePenalty, hatedTraits, oppositeElementalTraits);
 				if (isDoubleShooting) {
 					creatures[i].minDamage *= 2;
 					creatures[i].maxDamage *= 2;
 				}
 				i++;
 			}
-			creatures[i] = new Creature("Nymph", 5, 2, 1, 2, 4, false, false, null);
-			creatures[i + 1] = new Creature("Oceanid", 6, 2, 1, 3, 4, false, false, null);
-			creatures[i + 2] = new Creature("CrewMate", 7, 4, 2, 4, 15, false, false, null);
-			creatures[i + 3] = new Creature("Seaman", 8, 6, 3, 4, 15, false, false, null);
-			creatures[i + 4] = new Creature("Pirate", 8, 6, 3, 7, 15, true, false, null);
-			creatures[i + 5] = new Creature("Corasair", 10, 8, 3, 7, 15, true, false, null);
-			creatures[i + 6] = new Creature("SeaDog", 12, 11, 3, 7, 15, true, false, null);
-			creatures[i + 7] = new Creature("Stormbird", 10, 8, 6, 9, 30, false, false, null);
-			creatures[i + 8] = new Creature("Ayssid", 11, 8, 6, 10, 30, false, false, null);
-			creatures[i + 9] = new Creature("SeaWitch", 12, 7, 10, 14, 35, true, true, null);
-			creatures[i + 10] = new Creature("Sorceress", 12, 9, 10, 16, 35, true, true, null);
-			creatures[i + 11] = new Creature("Nix", 13, 16, 18, 22, 80, false, false, null);
-			creatures[i + 12] = new Creature("NixWarrior", 14, 17, 18, 22, 90, false, false, null);
-			creatures[i + 13] = new Creature("SeaSerpent", 22, 16, 30, 55, 180, false, false, null);
-			creatures[i + 14] = new Creature("Haspid", 29, 20, 30, 55, 300, false, false, null);
+			creatures[i] = new Creature("Nymph", 5, 2, 1, 2, 4, false, false, null, null);
+			creatures[i + 1] = new Creature("Oceanid", 6, 2, 1, 3, 4, false, false, null, null);
+			creatures[i + 2] = new Creature("CrewMate", 7, 4, 2, 4, 15, false, false, null, null);
+			creatures[i + 3] = new Creature("Seaman", 8, 6, 3, 4, 15, false, false, null, null);
+			creatures[i + 4] = new Creature("Pirate", 8, 6, 3, 7, 15, true, false, null, null);
+			creatures[i + 5] = new Creature("Corasair", 10, 8, 3, 7, 15, true, false, null, null);
+			creatures[i + 6] = new Creature("SeaDog", 12, 11, 3, 7, 15, true, false, null, null);
+			creatures[i + 7] = new Creature("Stormbird", 10, 8, 6, 9, 30, false, false, null, null);
+			creatures[i + 8] = new Creature("Ayssid", 11, 8, 6, 10, 30, false, false, null, null);
+			creatures[i + 9] = new Creature("SeaWitch", 12, 7, 10, 14, 35, true, true, null, null);
+			creatures[i + 10] = new Creature("Sorceress", 12, 9, 10, 16, 35, true, true, null, null);
+			creatures[i + 11] = new Creature("Nix", 13, 16, 18, 22, 80, false, false, null, null);
+			creatures[i + 12] = new Creature("NixWarrior", 14, 17, 18, 22, 90, false, false, null, null);
+			creatures[i + 13] = new Creature("SeaSerpent", 22, 16, 30, 55, 180, false, false, null, null);
+			creatures[i + 14] = new Creature("Haspid", 29, 20, 30, 55, 300, false, false, null, null);
 			sortByNames(creatures);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,7 +111,7 @@ public class Creature {
 		return creature;
 	}
 
-	public static Set<String> hatedTraits(String name) {
+	private static Set<String> hatedTraits(String name) {
 		Set<String> toBeReturned = new HashSet<>();
 		switch (name) {
 			case "Angel":
@@ -138,6 +142,49 @@ public class Creature {
 				break;
 		}
 		return toBeReturned;
+	}
+
+	private static Set<String> oppositeElementalTraits(String name) {
+		Set<String> toBeReturned = new HashSet<>();
+		switch (name) {
+			case "AirElemental":
+			case "StormElemental":
+				toBeReturned.add("EarthElemental");
+				toBeReturned.add("MagmaElemental");
+				break;
+			case "EarthElemental":
+			case "MagmaElemental":
+				toBeReturned.add("AirElemental");
+				toBeReturned.add("StormElemental");
+				break;
+			case "WaterElemental":
+			case "IceElemental":
+				toBeReturned.add("FireElemental");
+				toBeReturned.add("EnergyElemental");
+				break;
+			case "FireElemental":
+			case "EnergyElemental":
+				toBeReturned.add("WaterElemental");
+				toBeReturned.add("IceElemental");
+				break;
+		}
+		return toBeReturned;
+	}
+
+	public boolean hates(Creature defender) {
+		if (this.hatedTraits!=null) {
+			if (this.hatedTraits.contains(defender.name))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean isOppositeElemental(Creature defender) {
+		if (this.oppositeElementalTraits!=null) {
+			if (this.oppositeElementalTraits.contains(defender.name))
+				return true;
+		}
+		return false;
 	}
 
 	public static String[] createNames() {
