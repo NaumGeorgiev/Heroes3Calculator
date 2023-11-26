@@ -69,7 +69,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		JPanel statsPanel = UIUtilities.statsPanel(heroAttackTextField, heroDefenceTextField);
 
 		creatureListAttacker = UIUtilities.creatureList(this, creaturesNames);
-		UIUtilities.showOrHideMelee(this, creatureListAttacker, melee, creatures);
+		// UIUtilities.showOrHideMelee(this, creatureListAttacker, melee, creatures);
 		creatureListDefender = UIUtilities.creatureList(this, creaturesNames);
 		JPanel attackerPanel = UIUtilities.attackerPanel(creatureListAttacker, creaturesNumberTexitField,
 				creatureSearchAttacker);
@@ -195,10 +195,10 @@ public class MyFrame extends JFrame implements ActionListener {
 
 			if (creaturesNumber != 0) {
 				creatureSearchAttacker.setText("");
-				UIUtilities.removeAllItems(creatureListAttacker);
+				creatureListAttacker.removeAllItems();
 				inputAttacker = "";
 				creatureSearchDefender.setText("");
-				UIUtilities.removeAllItems(creatureListDefender);
+				creatureListDefender.removeAllItems();
 				inputDefender = "";
 				for (String name : creaturesNames) {
 					creatureListDefender.addItem(name);
