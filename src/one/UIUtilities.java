@@ -3,6 +3,8 @@ package one;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -106,23 +108,7 @@ public class UIUtilities {
 		button.setFocusable(false);
 		return button;
 	}
-
-	public static void showOrHideMelee(JComboBox<String> creatureListAttacker, Creature[] creatures,
-			JToggleButton melee) {
-		creatureListAttacker.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String creatureNameAttacker = String.valueOf(creatureListAttacker.getSelectedItem());
-				if (findCreatureFromList(creatureNameAttacker, creatures).isRanged)
-					melee.setVisible(true);
-				else
-					melee.setVisible(false);
-				melee.setSelected(false);
-			}
-		});
-	}
-
-	public static JToggleButton toggleButton(JFrame frame) {
+		public static JToggleButton toggleButton(JFrame frame) {
 		JToggleButton button = new JToggleButton();
 		button.setBounds(30, 250, 140, 30);
 		button.addActionListener((ActionListener) frame);
@@ -131,6 +117,33 @@ public class UIUtilities {
 		button.setVisible(false);
 		return button;
 	}
+	// public static void showOrHideMelee(JFrame frame ,JComboBox<String> creatureListAttacker, JToggleButton button, Creature[] creature) {
+	// 	creatureListAttacker.addItemListener((ItemListener) new ItemListener() {
+    //         public void itemStateChanged(ItemEvent ie) {
+	// 			if(findCreatureFromList((String)creatureListAttacker.getSelectedItem(), creature).isRanged)
+    //             button.setVisible(true);
+	// 			else
+	// 			button.setVisible(false);
+    //         }
+    //     });
+	// }
+	// broken method
+	// public static void showOrHideMelee(JComboBox<String> creatureListAttacker, Creature[] creatures,
+	// 		JToggleButton melee) {
+	// 	creatureListAttacker.addActionListener(new ActionListener() {
+	// 		@Override
+	// 		public void actionPerformed(ActionEvent e) {
+	// 			String creatureNameAttacker = String.valueOf(creatureListAttacker.getSelectedItem());
+	// 			if (findCreatureFromList(creatureNameAttacker, creatures).isRanged)
+	// 				melee.setVisible(true);
+	// 			else
+	// 				melee.setVisible(false);
+	// 			melee.setSelected(false);
+	// 		}
+	// 	});
+	// }
+
+
 
 	public static Creature findCreatureFromList(String creatureName, Creature[] creature) {
 		for (int i = 0; i < 156; i++) {
@@ -218,22 +231,27 @@ public class UIUtilities {
 						+ " + "
 						+ minDamage % health + " HP");
 			else {
-				// label.setText("<html>" + minDamage + "-" + maxDamage + " damage: "
-				// 		+ (minDamage + maxDamage) / 2 + " on average" + "<br/>" + "<html>"
-				// 		+ minDamage / health + "+" + minDamage % health
-				// 		+ " HP"
-				// 		+ " - " + maxDamage / health + "+"
-				// 		+ maxDamage % health
-				// 		+ " HP" + "<br/>" + (minDamage + maxDamage) / 2 / health + "+"
-				// 		+ ((minDamage + maxDamage)/2) % health + " HP on average</html>");
+				label.setText("<html>" + minDamage + "-" + maxDamage + " damage: "
+						+ (minDamage + maxDamage) / 2 + " on average" + "<br/>" + "<html>"
+						+ minDamage / health + "+" + minDamage % health
+						+ " HP"
+						+ " - " + maxDamage / health + "+"
+						+ maxDamage % health
+						+ " HP" + "<br/>" + (minDamage + maxDamage) / 2 / health + "+"
+						+ ((minDamage + maxDamage)/2) % health + " HP on average</html>");
 			}
 		} else {
 			label.setText("Insert number of attacking creatures");
 		}
 	}
+	// public static void removeAllItems(JComboBox<String> box){
+	// 	while(box.getItemAt(0)!=null){
+	// 		box.removeItemAt(0);
+	// 	}
+	// }
 
 	public static void main(String[] args) {
 		new MyFrame();
 	}
-
+	
 }

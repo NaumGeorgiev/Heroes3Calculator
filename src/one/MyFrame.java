@@ -31,7 +31,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	boolean isRanged;
 	double minDamage;
 	double maxDamage;
-	int creaturesNumber=0;
+	int creaturesNumber = 0;
 
 	JRadioButton[] offenceButton = UIUtilities.secondarySkillRadioButtons();
 	JRadioButton[] armorerButton = UIUtilities.secondarySkillRadioButtons();
@@ -57,7 +57,8 @@ public class MyFrame extends JFrame implements ActionListener {
 
 	JButton submit = UIUtilities.button(this);;
 	JToggleButton melee = UIUtilities.toggleButton(this);
-	JLabel damageDealth=new JLabel();
+	JLabel damageDealth = new JLabel();
+
 	MyFrame() {
 		JPanel offensePanel = UIUtilities.secondarySkillPanel("Offense:", offenceButton, 0, 0, 350, 30);
 		JPanel armorerPanel = UIUtilities.secondarySkillPanel("Armorer:", armorerButton, 0, 30, 350, 30);
@@ -68,7 +69,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		JPanel statsPanel = UIUtilities.statsPanel(heroAttackTextField, heroDefenceTextField);
 
 		creatureListAttacker = UIUtilities.creatureList(this, creaturesNames);
-		UIUtilities.showOrHideMelee(creatureListAttacker, creatures, melee);
+		UIUtilities.showOrHideMelee(this, creatureListAttacker, melee, creatures);
 		creatureListDefender = UIUtilities.creatureList(this, creaturesNames);
 		JPanel attackerPanel = UIUtilities.attackerPanel(creatureListAttacker, creaturesNumberTexitField,
 				creatureSearchAttacker);
@@ -157,11 +158,11 @@ public class MyFrame extends JFrame implements ActionListener {
 			if (heroAttackTextField.getText().isEmpty() == false)
 				attack = Integer.valueOf(heroAttackTextField.getText()) + creatureAttacker.attack;
 			else
-				attack = 0;
+				attack = creatureAttacker.attack;
 			if (heroDefenceTextField.getText().isEmpty() == false)
 				defence = Integer.valueOf(heroDefenceTextField.getText()) + creatureDefender.defense;
 			else
-				defence = 0;
+				defence = creatureDefender.defense;
 
 			if (creatureNameAttacker.equals("Behemoth"))
 				behemoth = true;
@@ -188,16 +189,16 @@ public class MyFrame extends JFrame implements ActionListener {
 			Calculator calculator = new Calculator(behemoth, nix, ancientBehemoth, nixWarrior, attack, defence, health,
 					armorer, offence, archery, offenseHeroLevel, archeryHeroLevel, amorerHeroLevel, isRanged, minDamage,
 					maxDamage, creaturesNumber);
-			int[] totalDamage=calculator.calculate(melee.isSelected(), creatureAttacker, creatureDefender);
+			int[] totalDamage = calculator.calculate(melee.isSelected(), creatureAttacker, creatureDefender);
 
-			UIUtilities.damageDealthLabel(damageDealth, health ,totalDamage[0], totalDamage[1], creaturesNumber);
+			UIUtilities.damageDealthLabel(damageDealth, health, totalDamage[0], totalDamage[1], creaturesNumber);
 
 			if (creaturesNumber != 0) {
 				creatureSearchAttacker.setText("");
-				creatureListAttacker.removeAllItems();
+				UIUtilities.removeAllItems(creatureListAttacker);
 				inputAttacker = "";
 				creatureSearchDefender.setText("");
-				creatureListDefender.removeAllItems();
+				UIUtilities.removeAllItems(creatureListDefender);
 				inputDefender = "";
 				for (String name : creaturesNames) {
 					creatureListDefender.addItem(name);
