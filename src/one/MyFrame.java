@@ -37,50 +37,50 @@ class CreatureList {
 }
 
 public class MyFrame extends JFrame implements ActionListener {
-	boolean behemoth = false;
-	boolean nix = false;
-	boolean ancientBehemoth = false;
-	boolean nixWarrior = false;
+	boolean isBehemoth = false;
+	boolean isNix = false;
+	boolean isAncientBehemoth = false;
+	boolean isNixWarrior = false;
 	int attack;
 	int defence;
 	int health;
 	int armorer;
 	int offence;
 	int archery;
-	int offenseHeroLevel;
-	int archeryHeroLevel;
-	int amorerHeroLevel;
+	int offenseSpecialtyLevel;
+	int armorerSpecialtyLevel;
+	int archerySpecialtyLevel;
 	boolean isRanged;
 	double minDamage;
 	double maxDamage;
-	int creaturesNumber = 0;
+	int creatureCount = 0;
 
 	JRadioButton[] offenceButton = UIUtilities.secondarySkillRadioButtons();
 	JRadioButton[] armorerButton = UIUtilities.secondarySkillRadioButtons();
 	JRadioButton[] archeryButton = UIUtilities.secondarySkillRadioButtons();
-	JTextField offenseSpecialtyLevel = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(350, 0, 40, 30);
-	JTextField armorerSpecialtyLevel = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(350, 30, 40, 30);
-	JTextField archerySpecialtyLevel = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(350, 60, 40, 30);
+	JTextField offenseSpecialtyLevelField = UIUtilities.limitingFieldsToNumbersSettingBounds(350, 0, 40, 30, null, null);
+	JTextField armorerSpecialtyLevelField = UIUtilities.limitingFieldsToNumbersSettingBounds(350, 30, 40, 30, null, null);
+	JTextField archerySpecialtyLevelField = UIUtilities.limitingFieldsToNumbersSettingBounds(350, 60, 40, 30, null, null);
 
-	JTextField heroAttackTextField;
-	JTextField heroDefenceTextField;
+	JTextField heroAttackField;
+	JTextField heroDefenceField;
 
-	Creature[] creatures = Creature.createAll();
+	Creature[] allCreatures = Creature.createAll();
 	String[] creaturesNames = Creature.createNames();
-	JComboBox<String> creatureListAttacker;
-	JComboBox<String> creatureListDefender;
+	JComboBox<String> attackerCreatureList;
+	JComboBox<String> defenderCreatureList;
 	//CreatureList attackerCreatureList;
 	//CreatureList defenderCreatureList;
 
-	JTextField creaturesNumberTexitField = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(140, 30, 40, 30);;
+	JTextField creatureCountField = UIUtilities.limitingFieldsToNumbersSettingBounds(140, 30, 40, 30, null, null);;
 	String inputAttacker = new String();
 	String inputDefender = new String();
 
-	JTextField creatureSearchAttacker = UIUtilities.creatureSearch();
-	JTextField creatureSearchDefender = UIUtilities.creatureSearch();
+	JTextField attackerCreatureSearch = UIUtilities.creatureSearch();
+	JTextField defenderCreatureSearch = UIUtilities.creatureSearch();
 
-	JButton submit = UIUtilities.button(this);;
-	JToggleButton melee = UIUtilities.toggleButton(this);
+	JButton submit = UIUtilities.submitButton(this);;
+	JToggleButton melee = UIUtilities.meleeButton(this);
 	JLabel damageDealth = new JLabel();
 
 	MyFrame() {
@@ -88,39 +88,39 @@ public class MyFrame extends JFrame implements ActionListener {
 		JPanel armorerPanel = UIUtilities.secondarySkillPanel("Armorer:", armorerButton, 0, 30, 350, 30);
 		JPanel archeryPanel = UIUtilities.secondarySkillPanel("Archery:", archeryButton, 0, 60, 350, 30);
 
-		heroAttackTextField = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(0, 30, 40, 30);
-		heroDefenceTextField = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(290, 30, 40, 30);
-		JPanel statsPanel = UIUtilities.statsPanel(heroAttackTextField, heroDefenceTextField);
+		heroAttackField = UIUtilities.limitingFieldsToNumbersSettingBounds(0, 30, 40, 30, null, null);
+		heroDefenceField = UIUtilities.limitingFieldsToNumbersSettingBounds(290, 30, 40, 30, null, null);
+		JPanel statsPanel = UIUtilities.statsPanel(heroAttackField, heroDefenceField);
 
-		creatureListAttacker = UIUtilities.creatureList(this, creaturesNames);
+		attackerCreatureList = UIUtilities.creatureList(this, creaturesNames);
 		// UIUtilities.showOrHideMelee(this, creatureListAttacker, melee, creatures);
-		creatureListDefender = UIUtilities.creatureList(this, creaturesNames);
-		JPanel attackerPanel = UIUtilities.attackerPanel(creatureListAttacker, creaturesNumberTexitField,
-				creatureSearchAttacker);
-		JPanel defenderPanel = UIUtilities.defenderPanel(creatureListDefender, creatureSearchDefender);
+		defenderCreatureList = UIUtilities.creatureList(this, creaturesNames);
+		JPanel attackerPanel = UIUtilities.attackerPanel(attackerCreatureList, creatureCountField,
+				attackerCreatureSearch);
+		JPanel defenderPanel = UIUtilities.defenderPanel(defenderCreatureList, defenderCreatureSearch);
 
 		// combine these to unto one method
-		creatureListAttacker.addKeyListener((KeyListener) new KeyAdapter() {
+		attackerCreatureList.addKeyListener((KeyListener) new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
 				inputAttacker = UIUtilities.characterPressed(inputAttacker, c);
-				creatureSearchAttacker.setText(inputAttacker);
+				attackerCreatureSearch.setText(inputAttacker);
 				String[] filteredNames = UIUtilities.creatureNamesFilter(creaturesNames, inputAttacker);
-				creatureListAttacker.removeAllItems();
+				attackerCreatureList.removeAllItems();
 				for (String name : filteredNames) {
-					creatureListAttacker.addItem(name);
+					attackerCreatureList.addItem(name);
 				}
 			}
 		});
-		creatureListDefender.addKeyListener((KeyListener) new KeyAdapter() {
+		defenderCreatureList.addKeyListener((KeyListener) new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
 				inputDefender = UIUtilities.characterPressed(inputDefender, c);
-				creatureSearchDefender.setText(inputDefender);
+				defenderCreatureSearch.setText(inputDefender);
 				String[] filteredNames = UIUtilities.creatureNamesFilter(creaturesNames, inputDefender);
-				creatureListDefender.removeAllItems();
+				defenderCreatureList.removeAllItems();
 				for (String name : filteredNames) {
-					creatureListDefender.addItem(name);
+					defenderCreatureList.addItem(name);
 				}
 			}
 		});
@@ -132,9 +132,9 @@ public class MyFrame extends JFrame implements ActionListener {
 		this.add(offensePanel);
 		this.add(armorerPanel);
 		this.add(archeryPanel);
-		this.add(offenseSpecialtyLevel);
-		this.add(armorerSpecialtyLevel);
-		this.add(archerySpecialtyLevel);
+		this.add(offenseSpecialtyLevelField);
+		this.add(armorerSpecialtyLevelField);
+		this.add(archerySpecialtyLevelField);
 		this.add(statsPanel);
 		this.add(attackerPanel);
 		this.add(defenderPanel);
@@ -158,82 +158,72 @@ public class MyFrame extends JFrame implements ActionListener {
 					archery = i;
 			}
 
-			if (armorerSpecialtyLevel.getText().isEmpty() == false)
-				amorerHeroLevel = Integer.valueOf(armorerSpecialtyLevel.getText());
+			if (armorerSpecialtyLevelField.getText().isEmpty())
+			armorerSpecialtyLevel = 0;
 			else
-				amorerHeroLevel = 0;
-			if (offenseSpecialtyLevel.getText().isEmpty() == false)
-				offenseHeroLevel = Integer.valueOf(offenseSpecialtyLevel.getText());
+			armorerSpecialtyLevel = Integer.valueOf(armorerSpecialtyLevelField.getText());
+			
+			if (offenseSpecialtyLevelField.getText().isEmpty())
+			offenseSpecialtyLevel = 0;
 			else
-				offenseHeroLevel = 0;
-			if (archerySpecialtyLevel.getText().isEmpty() == false)
-				archeryHeroLevel = Integer.valueOf(archerySpecialtyLevel.getText());
-			else
-				archeryHeroLevel = 0;
+			offenseSpecialtyLevel = Integer.valueOf(offenseSpecialtyLevelField.getText());
 
-			String creatureNameAttacker = String.valueOf(creatureListAttacker.getSelectedItem());
-			Creature creatureAttacker = UIUtilities.findCreatureFromList(creatureNameAttacker, creatures);
+			if (archerySpecialtyLevelField.getText().isEmpty())
+			archerySpecialtyLevel = 0;
+			else
+			archerySpecialtyLevel = Integer.valueOf(archerySpecialtyLevelField.getText());
+
+			String creatureNameAttacker = String.valueOf(attackerCreatureList.getSelectedItem());
+			Creature creatureAttacker = UIUtilities.findCreatureFromList(creatureNameAttacker, allCreatures);
 			//Creature creatureAttacker = attackerCreatureList.getSelectedCreature();
-			String creatureNameDefender = String.valueOf(creatureListDefender.getSelectedItem());
-			Creature creatureDefender = UIUtilities.findCreatureFromList(creatureNameDefender, creatures);
+			String creatureNameDefender = String.valueOf(defenderCreatureList.getSelectedItem());
+			Creature creatureDefender = UIUtilities.findCreatureFromList(creatureNameDefender, allCreatures);
 			minDamage = creatureAttacker.minDamage;
 			maxDamage = creatureAttacker.maxDamage;
 			isRanged = creatureAttacker.isRanged;
 			health = creatureDefender.health;
 
-			if (heroAttackTextField.getText().isEmpty() == false)
-				attack = Integer.valueOf(heroAttackTextField.getText()) + creatureAttacker.attack;
+			if (heroAttackField.getText().isEmpty() == false)
+				attack = Integer.valueOf(heroAttackField.getText()) + creatureAttacker.attack;
 			else
 				attack = creatureAttacker.attack;
-			if (heroDefenceTextField.getText().isEmpty() == false)
-				defence = Integer.valueOf(heroDefenceTextField.getText()) + creatureDefender.defense;
+			if (heroDefenceField.getText().isEmpty() == false)
+				defence = Integer.valueOf(heroDefenceField.getText()) + creatureDefender.defense;
 			else
 				defence = creatureDefender.defense;
 
-			if (creatureNameAttacker.equals("Behemoth"))
-				behemoth = true;
-			else
-				behemoth = false;
-			if (creatureNameAttacker.equals("AncientBehemoth"))
-				ancientBehemoth = true;
-			else
-				ancientBehemoth = false;
-			if (creatureNameDefender.equals("Nix"))
-				nix = true;
-			else
-				nix = false;
-			if (creatureNameDefender.equals("NixWarrior"))
-				nixWarrior = true;
-			else
-				nixWarrior = false;
+			isBehemoth=creatureNameAttacker.equals("Behemoth");
+			isAncientBehemoth=creatureNameAttacker.equals("AncientBehemoth");
+			isNix=creatureNameDefender.equals("Nix");
+			isNixWarrior=creatureNameDefender.equals("NixWarrior");
 
-			if (creaturesNumberTexitField.getText().isEmpty() == false)
-				creaturesNumber = Integer.valueOf(creaturesNumberTexitField.getText());
+			if (creatureCountField.getText().isEmpty() == false)
+				creatureCount = Integer.valueOf(creatureCountField.getText());
 			else
-				creaturesNumber = 0;
+				creatureCount = 0;
 
-			Calculator calculator = new Calculator(behemoth, nix, ancientBehemoth, nixWarrior, attack, defence, health,
-					armorer, offence, archery, offenseHeroLevel, archeryHeroLevel, amorerHeroLevel, isRanged, minDamage,
-					maxDamage, creaturesNumber);
+			Calculator calculator = new Calculator(isBehemoth, isNix, isAncientBehemoth, isNixWarrior, attack, defence, health,
+					armorer, offence, archery, offenseSpecialtyLevel, archerySpecialtyLevel, archerySpecialtyLevel, isRanged, minDamage,
+					maxDamage, creatureCount);
 			int[] totalDamage = calculator.calculate(melee.isSelected(), creatureAttacker, creatureDefender);
 
-			UIUtilities.damageDealthLabel(damageDealth, health, totalDamage[0], totalDamage[1], creaturesNumber);
+			UIUtilities.damageDealthLabel(damageDealth, health, totalDamage[0], totalDamage[1], creatureCount);
 
-			if (creaturesNumber != 0) {
+			if (creatureCount != 0) {
 				//attackerCreatureList.clearSearch();
 				//defenderCreatureList.clearSearch();
-				creatureSearchAttacker.setText("");
-				creatureListAttacker.removeAllItems();
+				attackerCreatureSearch.setText("");
+				attackerCreatureList.removeAllItems();
 				inputAttacker = "";
-				creatureSearchDefender.setText("");
-				creatureListDefender.removeAllItems();
+				defenderCreatureSearch.setText("");
+				defenderCreatureList.removeAllItems();
 				inputDefender = "";
 				for (String name : creaturesNames) {
-					creatureListDefender.addItem(name);
-					creatureListAttacker.addItem(name);
+					defenderCreatureList.addItem(name);
+					attackerCreatureList.addItem(name);
 				}
-				creatureListAttacker.setSelectedItem(creatureNameAttacker);
-				creatureListDefender.setSelectedItem(creatureNameDefender);
+				attackerCreatureList.setSelectedItem(creatureNameAttacker);
+				defenderCreatureList.setSelectedItem(creatureNameDefender);
 
 			}
 		}

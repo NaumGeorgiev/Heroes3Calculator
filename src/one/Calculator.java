@@ -3,10 +3,10 @@ package one;
 import javax.swing.JToggleButton;
 
 public class Calculator {
-	public boolean behemoth = false;
-	public boolean nix = false;
-	public boolean ancientBehemoth = false;
-	public boolean nixWarrior = false;
+	public boolean behemoth;
+	public boolean isNix;
+	public boolean isAncientBehemoth;
+	public boolean isNixWarrior;
 	public int attack;
 	public int defence;
 	public int health;
@@ -21,14 +21,14 @@ public class Calculator {
 	public double maxDamage;
 	public int creaturesNumber;
 
-	public Calculator(boolean behemoth, boolean nix, boolean ancientBehemoth, boolean nixWarrior, int attack,
+	public Calculator(boolean behemoth, boolean isNix, boolean isAncientBehemoth, boolean isNixWarrior, int attack,
 			int defence, int health, int armorer, int offence, int archery, int offenseHeroLevel, int archeryHeroLevel,
 			int armorerHeroLevel, boolean isRanged, double minDamage, double maxDamage,
 			int creaturesNumber) {
 		this.behemoth = behemoth;
-		this.nix = nix;
-		this.ancientBehemoth = ancientBehemoth;
-		this.nixWarrior = nixWarrior;
+		this.isNix = isNix;
+		this.isAncientBehemoth = isAncientBehemoth;
+		this.isNixWarrior = isNixWarrior;
 		this.attack = attack;
 		this.defence = defence;
 		this.health = health;
@@ -51,15 +51,15 @@ public class Calculator {
 				defence = defence * 3 / 5;
 			else
 				defence = defence * 3 / 5 - 1;
-		} else if (ancientBehemoth == true) {
+		} else if (isAncientBehemoth == true) {
 			if (defence % 5 > 0)
 				defence = defence / 5;
 			else
 				defence = defence / 5 - 1;
 		}
-		if (nix == true)
+		if (isNix == true)
 			attack = attack * 7 / 10 + 2;
-		else if (nixWarrior == true)
+		else if (isNixWarrior == true)
 			attack = attack * 4 / 10 + 2;
 
 		double attackDefenceDifferenceBonus = 1;

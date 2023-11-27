@@ -1,10 +1,7 @@
 package one;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -51,11 +48,10 @@ public class UIUtilities {
 		panel.add(skills[2]);
 		panel.add(skills[3]);
 		panel.setBounds(x, y, weight, height);
-
 		return panel;
 	}
 
-	public static JTextField limitingJTextFieldsToNumbersAndSettingBounds(int x, int y, int weight, int height) {
+	public static JTextField limitingFieldsToNumbersSettingBounds(int x, int y, int weight, int height, Object newParam, Object newParam2) {
 		JTextField textField = new JTextField();
 		textField.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
@@ -85,11 +81,11 @@ public class UIUtilities {
 		return statsPanel;
 	}
 
-	public static JTextField[] secondarySkillSpecialtyLevel() {
+	public static JTextField[] SkillSpecialtyLevel() {
 		JTextField[] toBeReturned = new JTextField[3];
-		toBeReturned[0] = limitingJTextFieldsToNumbersAndSettingBounds(350, 0, 40, 30);
-		toBeReturned[1] = limitingJTextFieldsToNumbersAndSettingBounds(350, 30, 40, 30);
-		toBeReturned[2] = limitingJTextFieldsToNumbersAndSettingBounds(350, 60, 40, 30);
+		toBeReturned[0] = limitingFieldsToNumbersSettingBounds(350, 0, 40, 30, null, null);
+		toBeReturned[1] = limitingFieldsToNumbersSettingBounds(350, 30, 40, 30, null, null);
+		toBeReturned[2] = limitingFieldsToNumbersSettingBounds(350, 60, 40, 30, null, null);
 		return toBeReturned;
 	}
 
@@ -100,7 +96,7 @@ public class UIUtilities {
 		return list;
 	}
 
-	public static JButton button(JFrame frame) {
+	public static JButton submitButton(JFrame frame) {
 		JButton button = new JButton();
 		button.setBounds(30, 300, 420, 60);
 		button.addActionListener((ActionListener) frame);
@@ -108,7 +104,7 @@ public class UIUtilities {
 		button.setFocusable(false);
 		return button;
 	}
-		public static JToggleButton toggleButton(JFrame frame) {
+		public static JToggleButton meleeButton(JFrame frame) {
 		JToggleButton button = new JToggleButton();
 		button.setBounds(30, 250, 140, 30);
 		button.addActionListener((ActionListener) frame);
@@ -145,29 +141,29 @@ public class UIUtilities {
 
 
 
-	public static Creature findCreatureFromList(String creatureName, Creature[] creature) {
-		for (int i = 0; i < 156; i++) {
-			if (creatureName.equals(creature[i].name))
-				return creature[i];
+	public static Creature findCreatureFromList(String creatureName, Creature[] allCreatures) {
+		for (int i = 0; i < allCreatures.length; i++) {
+			if (creatureName.equals(allCreatures[i].name))
+				return allCreatures[i];
 		}
 		return null;
 	}
 
-	public static JPanel defenderPanel(JComboBox<String> creatureListDefender, JTextField creatureSearchDefender) {
+	public static JPanel defenderPanel(JComboBox<String> defenderCreatureList, JTextField defenderCreatureSearch) {
 		JPanel creatureListAttackerPanel = new JPanel();
 		creatureListAttackerPanel.setLayout(null);
-		creatureListAttackerPanel.add(creatureListDefender);
-		creatureListAttackerPanel.add(creatureSearchDefender);
+		creatureListAttackerPanel.add(defenderCreatureList);
+		creatureListAttackerPanel.add(defenderCreatureSearch);
 		creatureListAttackerPanel.setBounds(320, 190, 180, 60);
 		return creatureListAttackerPanel;
 	}
 
-	public static JPanel attackerPanel(JComboBox<String> creatureListAttacker, JTextField numberOfAttackingCreatures,
+	public static JPanel attackerPanel(JComboBox<String> attackerCreatureList, JTextField creatureCount,
 			JTextField creatureSearchAttacker) {
 		JPanel creatureListAttackerPanel = new JPanel();
 		creatureListAttackerPanel.setLayout(null);
-		creatureListAttackerPanel.add(creatureListAttacker);
-		creatureListAttackerPanel.add(numberOfAttackingCreatures);
+		creatureListAttackerPanel.add(attackerCreatureList);
+		creatureListAttackerPanel.add(creatureCount);
 		creatureListAttackerPanel.add(creatureSearchAttacker);
 		creatureListAttackerPanel.setBounds(30, 190, 180, 60);
 		return creatureListAttackerPanel;
