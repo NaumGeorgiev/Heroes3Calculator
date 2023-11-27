@@ -14,6 +14,28 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
+class CreatureList {
+	JComboBox<String> comboBox;
+	JTextField searchField = UIUtilities.creatureSearch();
+	String searchString;
+	String[] creaturesNames = Creature.createNames();
+
+	CreatureList() {
+		comboBox.addKeyListener((KeyListener) new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				searchString = UIUtilities.characterPressed(searchString, c);
+				searchField.setText(searchString);
+				String[] filteredNames = UIUtilities.creatureNamesFilter(creaturesNames, searchString);
+				comboBox.removeAllItems();
+				for (String name : filteredNames) {
+					comboBox.addItem(name);
+				}
+			}
+		});
+	}
+}
+
 public class MyFrame extends JFrame implements ActionListener {
 	boolean behemoth = false;
 	boolean nix = false;
@@ -47,6 +69,8 @@ public class MyFrame extends JFrame implements ActionListener {
 	String[] creaturesNames = Creature.createNames();
 	JComboBox<String> creatureListAttacker;
 	JComboBox<String> creatureListDefender;
+	//CreatureList attackerCreatureList;
+	//CreatureList defenderCreatureList;
 
 	JTextField creaturesNumberTexitField = UIUtilities.limitingJTextFieldsToNumbersAndSettingBounds(140, 30, 40, 30);;
 	String inputAttacker = new String();
@@ -123,6 +147,7 @@ public class MyFrame extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		// if (creatureCount == 0) { setText(whatever); return; }
 		if (e.getSource() == submit) {
 			for (int i = 0; i < 4; i++) {
 				if (offenceButton[i].isSelected())
@@ -148,6 +173,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
 			String creatureNameAttacker = String.valueOf(creatureListAttacker.getSelectedItem());
 			Creature creatureAttacker = UIUtilities.findCreatureFromList(creatureNameAttacker, creatures);
+			//Creature creatureAttacker = attackerCreatureList.getSelectedCreature();
 			String creatureNameDefender = String.valueOf(creatureListDefender.getSelectedItem());
 			Creature creatureDefender = UIUtilities.findCreatureFromList(creatureNameDefender, creatures);
 			minDamage = creatureAttacker.minDamage;
@@ -194,6 +220,8 @@ public class MyFrame extends JFrame implements ActionListener {
 			UIUtilities.damageDealthLabel(damageDealth, health, totalDamage[0], totalDamage[1], creaturesNumber);
 
 			if (creaturesNumber != 0) {
+				//attackerCreatureList.clearSearch();
+				//defenderCreatureList.clearSearch();
 				creatureSearchAttacker.setText("");
 				creatureListAttacker.removeAllItems();
 				inputAttacker = "";

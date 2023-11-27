@@ -148,8 +148,8 @@ public class Calculator {
 
 	public void bullshitElemental(Creature defender) {
 		switch (defender.name) {
-			case "Sekeleton":
-			case "SekeletonWarrior":
+			case "Skeleton":
+			case "SkeletonWarrior":
 			case "WalkingDead":
 			case "Zombie":
 			case "Wight":
@@ -165,6 +165,7 @@ public class Calculator {
 			case "BlackDragon":
 			case "Giant":
 			case "Titan":
+			
 				this.minDamage /= 2;
 				this.maxDamage /= 2;
 				break;

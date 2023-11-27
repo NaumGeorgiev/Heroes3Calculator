@@ -20,7 +20,7 @@ public class Creature {
 	public Set<String> oppositeElementalTraits;
 
 	public Creature(String name, int attack, int defense, double minDamage, double maxDamage, int health,
-			boolean isRanged, boolean hasMeleePenalty, Set<String> hhatedTrait, Set<String> oppositeElementalTraits) { // Update
+			boolean isRanged, boolean hasMeleePenalty, Set<String> hatedTraits, Set<String> oppositeElementalTraits) { // Update
 																														// constructor
 		this.name = name;
 		this.attack = attack;
