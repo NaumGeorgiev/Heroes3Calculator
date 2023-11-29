@@ -1,5 +1,6 @@
 package one;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -62,9 +63,9 @@ public class MyFrame extends JFrame implements ActionListener {
 			if (e.getStateChange() == ItemEvent.SELECTED) {
 				if (UIUtilities.findCreatureFromList((String) attackerCreatureList.getSelectedItem(),
 						allCreatures).isRanged)
-					melee.setVisible(true);
+					meleeButton.setVisible(true);
 				else
-					melee.setVisible(false);
+					meleeButton.setVisible(false);
 
 			}
 		}
@@ -97,11 +98,11 @@ public class MyFrame extends JFrame implements ActionListener {
 	JTextField attackerSearchField = UIUtilities.creatureSearch();
 	JTextField defenderSearchField = UIUtilities.creatureSearch();
 
-	JLabel damageDealth = new JLabel();
+	JLabel damageDealthLabel = UIUtilities.damageDealthLabel();
 
-	JButton submit = UIUtilities.submitButton(this);;
-	JToggleButton melee = UIUtilities.meleeButton(this);
-	JButton swap = UIUtilities.swapButton(this);
+	JButton submitButton = UIUtilities.submitButton(this);;
+	JToggleButton meleeButton = UIUtilities.meleeButton(this);
+	JButton swapButton = UIUtilities.swapButton(this);
 
 	MyFrame() {
 		JPanel offensePanel = UIUtilities.secondarySkillPanel("Offense:", offenceButton, 0, 0, 350, 30);
@@ -113,7 +114,6 @@ public class MyFrame extends JFrame implements ActionListener {
 		JPanel statsPanel = UIUtilities.statsPanel(heroAttackField, heroDefenceField);
 
 		attackerCreatureList = UIUtilities.creatureList(this, creaturesNames);
-		// UIUtilities.showOrHideMelee(this, creatureListAttacker, melee, creatures);
 		defenderCreatureList = UIUtilities.creatureList(this, creaturesNames);
 		JPanel attackerPanel = UIUtilities.attackerPanel(attackerCreatureList, creatureCountField,
 				attackerSearchField);
@@ -159,26 +159,28 @@ public class MyFrame extends JFrame implements ActionListener {
 		this.add(statsPanel);
 		this.add(attackerPanel);
 		this.add(defenderPanel);
-		this.add(submit);
-		this.add(melee);
-		this.add(swap);
-		this.add(damageDealth);
+		this.add(submitButton);
+		this.add(meleeButton);
+		this.add(swapButton);
+		this.add(damageDealthLabel);
 		this.setVisible(true);
 		this.repaint();
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==swap){
-			String creatureNameAttacker = String.valueOf(attackerCreatureList.getSelectedItem());
-			String creatureNameDefender = String.valueOf(defenderCreatureList.getSelectedItem());
-			attackerCreatureList.setSelectedItem(creatureNameDefender);
-			defenderCreatureList.setSelectedItem(creatureNameAttacker);
+		// if (e.getSource() == swapButton)
+		// 	UIUtilities.swap(attackerCreatureList, defenderCreatureList, heroAttackField, heroDefenceField,
+		// 			offenceButton, armorerButton, archeryButton, offenseSpecialtyLevelField, armorerSpecialtyLevelField,
+		// 			archerySpecialtyLevelField);
+		if (e.getSource() == submitButton) {
+			try {
+				Integer.valueOf(creatureCountField.getText());
+			} catch (NumberFormatException a) {
+				damageDealthLabel.setText("select creature count");
+				return;
+			}
 
-		}
-		if (e.getSource() == submit) {
-			// Integer.valueOf(creatureCountField.getText());
-			
 			for (int i = 0; i < 4; i++) {
 				if (offenceButton[i].isSelected())
 					offence = i;
@@ -236,15 +238,15 @@ public class MyFrame extends JFrame implements ActionListener {
 					armorer, offence, archery, offenseSpecialtyLevel, archerySpecialtyLevel, archerySpecialtyLevel,
 					isRanged, minDamage,
 					maxDamage, creatureCount);
-			int[] totalDamage = calculator.calculate(melee.isSelected(), creatureAttacker, creatureDefender,
+			int[] totalDamage = calculator.calculate(meleeButton.isSelected(), creatureAttacker, creatureDefender,
 					creaturesNames);
 
-			UIUtilities.damageDealthLabel(damageDealth, health, totalDamage[0], totalDamage[1], creatureCount);
+			UIUtilities.damageDealth(damageDealthLabel, health, totalDamage[0], totalDamage[1], creatureCount);
 
-			attackerCreatureList.removeItemListener(itemListener);
-			UIUtilities.clearInputs(attackerCreatureList, attackerSearchField, attackerSearchString, creaturesNames);
-			UIUtilities.clearInputs(defenderCreatureList, defenderSearchField, defenderSearchString, creaturesNames);
-			attackerCreatureList.addItemListener(itemListener);
+			UIUtilities.clearSomeInput(attackerCreatureList, attackerSearchField, attackerSearchString, creaturesNames,
+					itemListener);
+			UIUtilities.clearSomeInput(defenderCreatureList, defenderSearchField, defenderSearchString, creaturesNames,
+					itemListener);
 
 		}
 

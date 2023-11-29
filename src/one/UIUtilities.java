@@ -2,6 +2,7 @@ package one;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -51,7 +52,8 @@ public class UIUtilities {
 		return panel;
 	}
 
-	public static JTextField limitingFieldsToNumbersSettingBounds(int x, int y, int weight, int height, Object newParam, Object newParam2) {
+	public static JTextField limitingFieldsToNumbersSettingBounds(int x, int y, int weight, int height, Object newParam,
+			Object newParam2) {
 		JTextField textField = new JTextField();
 		textField.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
@@ -104,6 +106,7 @@ public class UIUtilities {
 		button.setFocusable(false);
 		return button;
 	}
+
 	public static JButton swapButton(JFrame frame) {
 		JButton button = new JButton();
 		button.setBounds(223, 220, 80, 30);
@@ -112,7 +115,8 @@ public class UIUtilities {
 		button.setFocusable(false);
 		return button;
 	}
-		public static JToggleButton meleeButton(JFrame frame) {
+
+	public static JToggleButton meleeButton(JFrame frame) {
 		JToggleButton button = new JToggleButton();
 		button.setBounds(30, 250, 140, 30);
 		button.addActionListener((ActionListener) frame);
@@ -121,33 +125,35 @@ public class UIUtilities {
 		button.setVisible(false);
 		return button;
 	}
-	// public static void showOrHideMelee(JFrame frame ,JComboBox<String> creatureListAttacker, JToggleButton button, Creature[] creature) {
-	// 	creatureListAttacker.addItemListener((ItemListener) new ItemListener() {
-    //         public void itemStateChanged(ItemEvent ie) {
-	// 			if(findCreatureFromList((String)creatureListAttacker.getSelectedItem(), creature).isRanged)
-    //             button.setVisible(true);
-	// 			else
-	// 			button.setVisible(false);
-    //         }
-    //     });
+	// public static void showOrHideMelee(JFrame frame ,JComboBox<String>
+	// creatureListAttacker, JToggleButton button, Creature[] creature) {
+	// creatureListAttacker.addItemListener((ItemListener) new ItemListener() {
+	// public void itemStateChanged(ItemEvent ie) {
+	// if(findCreatureFromList((String)creatureListAttacker.getSelectedItem(),
+	// creature).isRanged)
+	// button.setVisible(true);
+	// else
+	// button.setVisible(false);
+	// }
+	// });
 	// }
 	// broken method
-	// public static void showOrHideMelee(JComboBox<String> creatureListAttacker, Creature[] creatures,
-	// 		JToggleButton melee) {
-	// 	creatureListAttacker.addActionListener(new ActionListener() {
-	// 		@Override
-	// 		public void actionPerformed(ActionEvent e) {
-	// 			String creatureNameAttacker = String.valueOf(creatureListAttacker.getSelectedItem());
-	// 			if (findCreatureFromList(creatureNameAttacker, creatures).isRanged)
-	// 				melee.setVisible(true);
-	// 			else
-	// 				melee.setVisible(false);
-	// 			melee.setSelected(false);
-	// 		}
-	// 	});
+	// public static void showOrHideMelee(JComboBox<String> creatureListAttacker,
+	// Creature[] creatures,
+	// JToggleButton melee) {
+	// creatureListAttacker.addActionListener(new ActionListener() {
+	// @Override
+	// public void actionPerformed(ActionEvent e) {
+	// String creatureNameAttacker =
+	// String.valueOf(creatureListAttacker.getSelectedItem());
+	// if (findCreatureFromList(creatureNameAttacker, creatures).isRanged)
+	// melee.setVisible(true);
+	// else
+	// melee.setVisible(false);
+	// melee.setSelected(false);
 	// }
-
-
+	// });
+	// }
 
 	public static Creature findCreatureFromList(String creatureName, Creature[] allCreatures) {
 		for (int i = 0; i < allCreatures.length; i++) {
@@ -224,36 +230,65 @@ public class UIUtilities {
 		return toBeReturned;
 	}
 
-	public static void damageDealthLabel(JLabel label ,int health, int minDamage, int maxDamage, int creaturesNumber) {
+	public static JLabel damageDealthLabel() {
+		JLabel label = new JLabel();
 		label.setFont(new Font("", Font.PLAIN, 22));
-		label.setBounds(30, 370, 420, 85);
-
-	
-			if (minDamage == maxDamage)
-				label.setText("Deals " + minDamage + " damage  Kills " + minDamage / health
-						+ " + "
-						+ minDamage % health + " HP");
-			else {
-				label.setText("<html>" + minDamage + "-" + maxDamage + " damage: "
-						+ (minDamage + maxDamage) / 2 + " on average" + "<br/>" + "<html>"
-						+ minDamage / health + "+" + minDamage % health
-						+ " HP"
-						+ " - " + maxDamage / health + "+"
-						+ maxDamage % health
-						+ " HP" + "<br/>" + (minDamage + maxDamage) / 2 / health + "+"
-						+ ((minDamage + maxDamage)/2) % health + " HP on average</html>");
-			} 
+		label.setBounds(30, 380, 430, 85);
+		return label;
 	}
-	public static void clearInputs(JComboBox<String>creatureList, JTextField creatureSearchField, String searchString, String[] creaturesNames){
+
+	public static void damageDealth(JLabel label, int health, int minDamage, int maxDamage, int creaturesNumber) {
+		if (minDamage == maxDamage)
+			label.setText("Deals " + minDamage + " damage  Kills " + minDamage / health
+					+ " + "
+					+ minDamage % health + " HP");
+		else {
+			label.setText("<html>" + minDamage + "-" + maxDamage + " damage: "
+					+ (minDamage + maxDamage) / 2 + " on average" + "<br/>" + "<html>"
+					+ minDamage / health + "+" + minDamage % health
+					+ " HP"
+					+ " - " + maxDamage / health + "+"
+					+ maxDamage % health
+					+ " HP" + "<br/>" + (minDamage + maxDamage) / 2 / health + "+"
+					+ ((minDamage + maxDamage) / 2) % health + " HP on average</html>");
+		}
+	}
+
+	public static void clearSomeInput(JComboBox<String> creatureList, JTextField creatureSearchField,
+			String searchString,
+			String[] creaturesNames, ItemListener itemListener) {
+		creatureList.removeItemListener(itemListener);
+		String slectedName = (String) creatureList.getSelectedItem();
 		creatureSearchField.setText("");
-		searchString="";
+		searchString = "";
 		creatureList.removeAllItems();
 		for (String name : creaturesNames) {
 			creatureList.addItem(name);
 		}
+		creatureList.setSelectedItem(slectedName);
+		creatureList.addItemListener(itemListener);
+	}
+
+	public static void swap(JComboBox<String> attackerCreatureList, JComboBox<String> defenderCreatureList,
+			JTextField heroAttackField, JTextField heroDefenceField, JRadioButton[] offenseButton, JRadioButton[] armorerButton,
+			JRadioButton[] archeryButton, JTextField offenseSpecialtyLevelField, JTextField armorerSpecialtyLevelField,
+			JTextField archerySpecialtyLevelField) {
+		String attackerName = String.valueOf(attackerCreatureList.getSelectedItem());
+		String defenderName = String.valueOf(defenderCreatureList.getSelectedItem());
+		attackerCreatureList.setSelectedItem(defenderName);
+		defenderCreatureList.setSelectedItem(attackerName);
+		String attack = heroAttackField.getText();
+		String defence = heroDefenceField.getText();
+		heroAttackField.setText(defence);
+		heroDefenceField.setText(attack);
+		offenseButton[0].setSelected(true);
+		armorerButton[0].setSelected(true);
+		archeryButton[0].setSelected(true);
+		offenseSpecialtyLevelField.setText("");
+		armorerSpecialtyLevelField.setText("");
+		archerySpecialtyLevelField.setText("");
 	}
 	public static void main(String[] args) {
-		new MyFrame();
+
 	}
-	
 }
