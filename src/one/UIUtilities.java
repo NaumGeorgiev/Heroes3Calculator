@@ -34,7 +34,7 @@ public class UIUtilities {
 
 	private static void group(JRadioButton[] skills) {
 		ButtonGroup skillGroup = new ButtonGroup();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < skills.length; i++) {
 			skillGroup.add(skills[i]);
 		}
 	}

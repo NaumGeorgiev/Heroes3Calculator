@@ -1,6 +1,4 @@
 package one;
-
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -64,11 +62,15 @@ public class MyFrame extends JFrame implements ActionListener {
 				if (UIUtilities.findCreatureFromList((String) attackerCreatureList.getSelectedItem(),
 						allCreatures).isRanged){
 							meleeButton.setVisible(true);
-							shotSum.setVisible(true);
+							shotSumButton.setVisible(true);
 						}
 				else{
+					meleeButton.setEnabled(true);
+					shotSumButton.setEnabled(true);
+					meleeButton.setSelected(false);
+					shotSumButton.setSelected(false);
 					meleeButton.setVisible(false);
-					shotSum.setVisible(true);
+					shotSumButton.setVisible(false);
 				}
 
 			}
@@ -106,7 +108,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
 	JButton submitButton = UIUtilities.submitButton(this);;
 	JToggleButton meleeButton = UIUtilities.meleeButton(this);
-	JToggleButton shotSum=UIUtilities.shotSum(this);
+	JToggleButton shotSumButton=UIUtilities.shotSum(this);
 	JButton swapButton = UIUtilities.swapButton(this);
 
 
@@ -168,7 +170,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		this.add(submitButton);
 		this.add(meleeButton);
 		this.add(swapButton);
-		this.add(shotSum);
+		this.add(shotSumButton);
 		this.add(damageDealthLabel);
 		this.setVisible(true);
 		this.repaint();
@@ -176,17 +178,17 @@ public class MyFrame extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==shotSum){
-			if(shotSum.isSelected())
+		if(e.getSource()==shotSumButton){
+			if(shotSumButton.isSelected())
 				meleeButton.setEnabled(false);
 			else
 			meleeButton.setEnabled(true);
 		}
 		if(e.getSource()==meleeButton){
 			if(meleeButton.isSelected())
-				shotSum.setEnabled(false);
+				shotSumButton.setEnabled(false);
 			else
-			shotSum.setEnabled(true);
+			shotSumButton.setEnabled(true);
 		}
 		if (e.getSource() == swapButton)
 			UIUtilities.swap(attackerCreatureList, defenderCreatureList, heroAttackField,
@@ -256,7 +258,7 @@ public class MyFrame extends JFrame implements ActionListener {
 					isRanged, minDamage,
 					maxDamage, creatureCount);
 			int[] totalDamage = calculator.calculate(meleeButton.isSelected(), creatureAttacker, creatureDefender,
-					creaturesNames, shotSum.isSelected());
+					creaturesNames, shotSumButton.isSelected());
 
 			UIUtilities.damageDealth(damageDealthLabel, health, totalDamage[0], totalDamage[1], creatureCount);
 
