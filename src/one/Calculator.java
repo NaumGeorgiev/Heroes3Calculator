@@ -146,33 +146,14 @@ public class Calculator {
 		this.maxDamage = this.maxDamage * 2;
 	}
 
-	public void bullshitElemental(Creature defender) {
-		switch (defender.name) {
-			case "Skeleton":
-			case "SkeletonWarrior":
-			case "WalkingDead":
-			case "Zombie":
-			case "Wight":
-			case "Wraith":
-			case "Vampire":
-			case "VampireLord":
-			case "Lich":
-			case "PowerLich":
-			case "BlackKnight":
-			case "DreadKnight":
-			case "BoneDragon":
-			case "GhostDragon":
-			case "BlackDragon":
-			case "Giant":
-			case "Titan":
-			
-				this.minDamage /= 2;
-				this.maxDamage /= 2;
-				break;
+	public void bullshitElemental(Creature defender, String[] creaturesNames) {
+		if(defender.isMindSpellImmune){
+			this.minDamage /= 2;
+			this.maxDamage /= 2;
 		}
 	}
 
-	public int[] calculate(boolean isMelee, Creature attacker, Creature defender) {
+	public int[] calculate(boolean isMelee, Creature attacker, Creature defender, String[] creaturesNames) {
 		if (isMelee)
 			calculateMelee(attacker);
 		else if (attacker.hates(defender))
@@ -180,7 +161,7 @@ public class Calculator {
 		else if (attacker.isOppositeElemental(defender))
 			calculateOppositeElements();
 		else if (attacker.name.equals("PsychicElemental") || attacker.name.equals("MagicElemental"))
-			bullshitElemental(defender);
-			return this.fianlCalculate();
+			bullshitElemental(defender, creaturesNames);
+		return this.fianlCalculate();
 	}
 }

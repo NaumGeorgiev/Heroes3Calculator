@@ -205,7 +205,7 @@ public class MyFrame extends JFrame implements ActionListener {
 			Calculator calculator = new Calculator(isBehemoth, isNix, isAncientBehemoth, isNixWarrior, attack, defence, health,
 					armorer, offence, archery, offenseSpecialtyLevel, archerySpecialtyLevel, archerySpecialtyLevel, isRanged, minDamage,
 					maxDamage, creatureCount);
-			int[] totalDamage = calculator.calculate(melee.isSelected(), creatureAttacker, creatureDefender);
+			int[] totalDamage = calculator.calculate(melee.isSelected(), creatureAttacker, creatureDefender, creaturesNames);
 
 			UIUtilities.damageDealthLabel(damageDealth, health, totalDamage[0], totalDamage[1], creatureCount);
 
