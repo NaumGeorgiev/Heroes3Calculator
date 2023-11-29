@@ -1,7 +1,4 @@
 package one;
-
-import javax.swing.JToggleButton;
-
 public class Calculator {
 	public boolean behemoth;
 	public boolean isNix;
@@ -125,6 +122,10 @@ public class Calculator {
 				* creaturesNumber);
 		maxDamage = (maxDamage * attackDefenceDifferenceBonus * offenceBonus * archeryBonus * armorerBonus
 				* creaturesNumber);
+				if(minDamage==0)
+				minDamage=1;
+				if(maxDamage==0)
+				maxDamage=1;
 		return new int[] { (int) minDamage, (int) maxDamage };
 	}
 
@@ -134,6 +135,11 @@ public class Calculator {
 			this.minDamage /= 2;
 			this.maxDamage /= 2;
 		}
+	}
+
+	public void calculateDoubleShooting() {
+		this.minDamage *= 2;
+		this.maxDamage *= 2;
 	}
 
 	public void calculateHatred() {
@@ -147,7 +153,7 @@ public class Calculator {
 	}
 
 	public void bullshitElemental(Creature defender, String[] creaturesNames) {
-		if(defender.isMindSpellImmune){
+		if (defender.isMindSpellImmune) {
 			this.minDamage /= 2;
 			this.maxDamage /= 2;
 		}
@@ -156,11 +162,13 @@ public class Calculator {
 	public int[] calculate(boolean isMelee, Creature attacker, Creature defender, String[] creaturesNames) {
 		if (isMelee)
 			calculateMelee(attacker);
-		else if (attacker.hates(defender))
+		else if (attacker.isDoubleShooting)
+			calculateDoubleShooting();
+		if (attacker.hates(defender))
 			calculateHatred();
-		else if (attacker.isOppositeElemental(defender))
+		if (attacker.isOppositeElemental(defender))
 			calculateOppositeElements();
-		else if (attacker.name.equals("PsychicElemental") || attacker.name.equals("MagicElemental"))
+		if (attacker.name.equals("PsychicElemental") || attacker.name.equals("MagicElemental"))
 			bullshitElemental(defender, creaturesNames);
 		return this.fianlCalculate();
 	}

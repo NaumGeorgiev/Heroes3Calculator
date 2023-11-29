@@ -221,7 +221,6 @@ public class UIUtilities {
 		label.setBounds(30, 370, 420, 85);
 
 	
-		if (creaturesNumber != 0) {
 			if (minDamage == maxDamage)
 				label.setText("Deals " + minDamage + " damage  Kills " + minDamage / health
 						+ " + "
@@ -235,10 +234,7 @@ public class UIUtilities {
 						+ maxDamage % health
 						+ " HP" + "<br/>" + (minDamage + maxDamage) / 2 / health + "+"
 						+ ((minDamage + maxDamage)/2) % health + " HP on average</html>");
-			}
-		} else {
-			label.setText("Insert number of attacking creatures");
-		}
+			} 
 	}
 	// public static void removeAllItems(JComboBox<String> box){
 	// 	while(box.getItemAt(0)!=null){

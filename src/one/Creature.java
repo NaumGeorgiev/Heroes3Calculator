@@ -16,13 +16,14 @@ public class Creature {
 	public int health;
 	public boolean isRanged;
 	public boolean hasMeleePenalty;
-	public Set<String> hatedTraits;
+	public Set<String> hatedCreatureNames;
 	public Set<String> oppositeElementalTraits;
 	public boolean isMindSpellImmune;
+	public boolean isDoubleShooting;
 
 	public Creature(String name, int attack, int defense, double minDamage, double maxDamage, int health,
-			boolean isRanged, boolean hasMeleePenalty, Set<String> hatedTraits, Set<String> oppositeElementalTraits,
-			boolean isMindSpellImmune) { // Update
+			boolean isRanged, boolean hasMeleePenalty, Set<String> hatedCreatureNames, Set<String> oppositeElementalTraits,
+			boolean isMindSpellImmune, boolean isDoubleShooting) { // Update
 		// constructor
 		this.name = name;
 		this.attack = attack;
@@ -32,9 +33,10 @@ public class Creature {
 		this.health = health;
 		this.isRanged = isRanged;
 		this.hasMeleePenalty = hasMeleePenalty;
-		this.hatedTraits = hatedTraits;
+		this.hatedCreatureNames = hatedCreatureNames;
 		this.oppositeElementalTraits = oppositeElementalTraits;
 		this.isMindSpellImmune = isMindSpellImmune;
+		this.isDoubleShooting=isDoubleShooting;
 	}
 
 	public static Creature[] createAll() {
@@ -55,42 +57,38 @@ public class Creature {
 				boolean isDoubleShooting = false;
 				boolean hasMeleePenalty = false;
 				String[] stats = creatureInfo.split(",");
-				Set<String> hatedTraits = hatedTraits(stats[0]);
-				Set<String> oppositeElementalTraits = oppositeElementalTraits(stats[0]);
+				Set<String> hatedCreatureNames = hatedCreatureNames(stats[0]);
+				Set<String> oppositeElemental = oppositeElemental(stats[0]);
 				if (creatureInfo.contains("Ranged")) {
-					if (creatureInfo.contains("Doubleattack"))
-						isDoubleShooting = true;
 					isRanged = true;
 					if (creatureInfo.contains("Nomeleepenalty") == false)
 						hasMeleePenalty = true;
+					if (creatureInfo.contains("Doubleattack"))
+						isDoubleShooting = true;
 				}
 				boolean isMindSpellImmune = (creatureInfo.contains("Undead") || creatureInfo.contains("Elemental")
 						|| creatureInfo.contains("Unliving") || creatureInfo.contains("Mind")
 						|| creatureInfo.contains("Resistallspells"));
 				creatures[i] = new Creature(stats[0], Integer.valueOf(stats[3]), Integer.valueOf(stats[4]),
 						Integer.valueOf(stats[5]), Integer.valueOf(stats[6]), Integer.valueOf(stats[7]), isRanged,
-						hasMeleePenalty, hatedTraits, oppositeElementalTraits, isMindSpellImmune);
-				if (isDoubleShooting) {
-					creatures[i].minDamage *= 2;
-					creatures[i].maxDamage *= 2;
-				}
+						hasMeleePenalty, hatedCreatureNames, oppositeElemental, isMindSpellImmune, isDoubleShooting);
 				i++;
 			}
-			creatures[i] = new Creature("Nymph", 5, 2, 1, 2, 4, false, false, null, null, false);
-			creatures[i + 1] = new Creature("Oceanid", 6, 2, 1, 3, 4, false, false, null, null, false);
-			creatures[i + 2] = new Creature("CrewMate", 7, 4, 2, 4, 15, false, false, null, null, false);
-			creatures[i + 3] = new Creature("Seaman", 8, 6, 3, 4, 15, false, false, null, null, false);
-			creatures[i + 4] = new Creature("Pirate", 8, 6, 3, 7, 15, true, false, null, null, false);
-			creatures[i + 5] = new Creature("Corasair", 10, 8, 3, 7, 15, true, false, null, null, false);
-			creatures[i + 6] = new Creature("SeaDog", 12, 11, 3, 7, 15, true, false, null, null, false);
-			creatures[i + 7] = new Creature("Stormbird", 10, 8, 6, 9, 30, false, false, null, null, false);
-			creatures[i + 8] = new Creature("Ayssid", 11, 8, 6, 10, 30, false, false, null, null, false);
-			creatures[i + 9] = new Creature("SeaWitch", 12, 7, 10, 14, 35, true, true, null, null, false);
-			creatures[i + 10] = new Creature("Sorceress", 12, 9, 10, 16, 35, true, true, null, null, false);
-			creatures[i + 11] = new Creature("Nix", 13, 16, 18, 22, 80, false, false, null, null, false);
-			creatures[i + 12] = new Creature("NixWarrior", 14, 17, 18, 22, 90, false, false, null, null, false);
-			creatures[i + 13] = new Creature("SeaSerpent", 22, 16, 30, 55, 180, false, false, null, null, false);
-			creatures[i + 14] = new Creature("Haspid", 29, 20, 30, 55, 300, false, false, null, null, false);
+			creatures[i] = new Creature("Nymph", 5, 2, 1, 2, 4, false, false, null, null, false, false);
+			creatures[i + 1] = new Creature("Oceanid", 6, 2, 1, 3, 4, false, false, null, null, false, false);
+			creatures[i + 2] = new Creature("CrewMate", 7, 4, 2, 4, 15, false, false, null, null, false, false);
+			creatures[i + 3] = new Creature("Seaman", 8, 6, 3, 4, 15, false, false, null, null, false, false);
+			creatures[i + 4] = new Creature("Pirate", 8, 6, 3, 7, 15, true, false, null, null, false, false);
+			creatures[i + 5] = new Creature("Corasair", 10, 8, 3, 7, 15, true, false, null, null, false, false);
+			creatures[i + 6] = new Creature("SeaDog", 12, 11, 3, 7, 15, true, false, null, null, false, false);
+			creatures[i + 7] = new Creature("Stormbird", 10, 8, 6, 9, 30, false, false, null, null, false, false);
+			creatures[i + 8] = new Creature("Ayssid", 11, 8, 6, 10, 30, false, false, null, null, false, false);
+			creatures[i + 9] = new Creature("SeaWitch", 12, 7, 10, 14, 35, true, true, null, null, false, false);
+			creatures[i + 10] = new Creature("Sorceress", 12, 9, 10, 16, 35, true, true, null, null, false, false);
+			creatures[i + 11] = new Creature("Nix", 13, 16, 18, 22, 80, false, false, null, null, false, false);
+			creatures[i + 12] = new Creature("NixWarrior", 14, 17, 18, 22, 90, false, false, null, null, false, false);
+			creatures[i + 13] = new Creature("SeaSerpent", 22, 16, 30, 55, 180, false, false, null, null, false, false);
+			creatures[i + 14] = new Creature("Haspid", 29, 20, 30, 55, 300, false, false, null, null, false, false);
 			sortByNames(creatures);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,7 +116,7 @@ public class Creature {
 		return creature;
 	}
 
-	private static Set<String> hatedTraits(String name) {
+	private static Set<String> hatedCreatureNames(String name) {
 		Set<String> toBeReturned = new HashSet<>();
 		switch (name) {
 			case "Angel":
@@ -151,7 +149,7 @@ public class Creature {
 		return toBeReturned;
 	}
 
-	private static Set<String> oppositeElementalTraits(String name) {
+	private static Set<String> oppositeElemental(String name) {
 		Set<String> toBeReturned = new HashSet<>();
 		switch (name) {
 			case "AirElemental":
@@ -179,8 +177,8 @@ public class Creature {
 	}
 
 	public boolean hates(Creature defender) {
-		if (this.hatedTraits != null) {
-			if (this.hatedTraits.contains(defender.name))
+		if (this.hatedCreatureNames != null) {
+			if (this.hatedCreatureNames.contains(defender.name))
 				return true;
 		}
 		return false;

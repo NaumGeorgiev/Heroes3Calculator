@@ -2,6 +2,8 @@ package one;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,27 +16,27 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
-class CreatureList {
-	JComboBox<String> comboBox;
-	JTextField searchField = UIUtilities.creatureSearch();
-	String searchString;
-	String[] creaturesNames = Creature.createNames();
+// class CreatureList {
+// 	JComboBox<String> comboBox;
+// 	JTextField searchField = UIUtilities.creatureSearch();
+// 	String searchString;
+// 	String[] creaturesNames = Creature.createNames();
 
-	CreatureList() {
-		comboBox.addKeyListener((KeyListener) new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				searchString = UIUtilities.characterPressed(searchString, c);
-				searchField.setText(searchString);
-				String[] filteredNames = UIUtilities.creatureNamesFilter(creaturesNames, searchString);
-				comboBox.removeAllItems();
-				for (String name : filteredNames) {
-					comboBox.addItem(name);
-				}
-			}
-		});
-	}
-}
+// 	CreatureList() {
+// 		comboBox.addKeyListener((KeyListener) new KeyAdapter() {
+// 			public void keyTyped(KeyEvent e) {
+// 				char c = e.getKeyChar();
+// 				searchString = UIUtilities.characterPressed(searchString, c);
+// 				searchField.setText(searchString);
+// 				String[] filteredNames = UIUtilities.creatureNamesFilter(creaturesNames, searchString);
+// 				comboBox.removeAllItems();
+// 				for (String name : filteredNames) {
+// 					comboBox.addItem(name);
+// 				}
+// 			}
+// 		});
+// 	}
+// }
 
 public class MyFrame extends JFrame implements ActionListener {
 	boolean isBehemoth = false;
@@ -55,12 +57,26 @@ public class MyFrame extends JFrame implements ActionListener {
 	double maxDamage;
 	int creatureCount = 0;
 
+		ItemListener itemListener = new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED){
+					if(UIUtilities.findCreatureFromList((String)attackerCreatureList.getSelectedItem(), allCreatures).isRanged)
+				  melee.setVisible(true);
+					  else
+					  melee.setVisible(false);
+				}
+            }
+        };
+
 	JRadioButton[] offenceButton = UIUtilities.secondarySkillRadioButtons();
 	JRadioButton[] armorerButton = UIUtilities.secondarySkillRadioButtons();
 	JRadioButton[] archeryButton = UIUtilities.secondarySkillRadioButtons();
-	JTextField offenseSpecialtyLevelField = UIUtilities.limitingFieldsToNumbersSettingBounds(350, 0, 40, 30, null, null);
-	JTextField armorerSpecialtyLevelField = UIUtilities.limitingFieldsToNumbersSettingBounds(350, 30, 40, 30, null, null);
-	JTextField archerySpecialtyLevelField = UIUtilities.limitingFieldsToNumbersSettingBounds(350, 60, 40, 30, null, null);
+	JTextField offenseSpecialtyLevelField = UIUtilities.limitingFieldsToNumbersSettingBounds(350, 0, 40, 30, null,
+			null);
+	JTextField armorerSpecialtyLevelField = UIUtilities.limitingFieldsToNumbersSettingBounds(350, 30, 40, 30, null,
+			null);
+	JTextField archerySpecialtyLevelField = UIUtilities.limitingFieldsToNumbersSettingBounds(350, 60, 40, 30, null,
+			null);
 
 	JTextField heroAttackField;
 	JTextField heroDefenceField;
@@ -69,8 +85,8 @@ public class MyFrame extends JFrame implements ActionListener {
 	String[] creaturesNames = Creature.createNames();
 	JComboBox<String> attackerCreatureList;
 	JComboBox<String> defenderCreatureList;
-	//CreatureList attackerCreatureList;
-	//CreatureList defenderCreatureList;
+	// CreatureList attackerCreatureList;
+	// CreatureList defenderCreatureList;
 
 	JTextField creatureCountField = UIUtilities.limitingFieldsToNumbersSettingBounds(140, 30, 40, 30, null, null);;
 	String inputAttacker = new String();
@@ -99,9 +115,12 @@ public class MyFrame extends JFrame implements ActionListener {
 				attackerCreatureSearch);
 		JPanel defenderPanel = UIUtilities.defenderPanel(defenderCreatureList, defenderCreatureSearch);
 
-		// combine these to unto one method
+	
+		attackerCreatureList.addItemListener(itemListener);
+		
+		
 		attackerCreatureList.addKeyListener((KeyListener) new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
+	public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
 				inputAttacker = UIUtilities.characterPressed(inputAttacker, c);
 				attackerCreatureSearch.setText(inputAttacker);
@@ -147,8 +166,11 @@ public class MyFrame extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		// if (creatureCount == 0) { setText(whatever); return; }
 		if (e.getSource() == submit) {
+			if(creatureCountField.getText()=="0" || creatureCountField.getText()==""){
+				damageDealth.setText("Insert number of attacking creatures");
+				return;
+			}
 			for (int i = 0; i < 4; i++) {
 				if (offenceButton[i].isSelected())
 					offence = i;
@@ -159,23 +181,22 @@ public class MyFrame extends JFrame implements ActionListener {
 			}
 
 			if (armorerSpecialtyLevelField.getText().isEmpty())
-			armorerSpecialtyLevel = 0;
+				armorerSpecialtyLevel = 0;
 			else
-			armorerSpecialtyLevel = Integer.valueOf(armorerSpecialtyLevelField.getText());
-			
+				armorerSpecialtyLevel = Integer.valueOf(armorerSpecialtyLevelField.getText());
+
 			if (offenseSpecialtyLevelField.getText().isEmpty())
-			offenseSpecialtyLevel = 0;
+				offenseSpecialtyLevel = 0;
 			else
-			offenseSpecialtyLevel = Integer.valueOf(offenseSpecialtyLevelField.getText());
+				offenseSpecialtyLevel = Integer.valueOf(offenseSpecialtyLevelField.getText());
 
 			if (archerySpecialtyLevelField.getText().isEmpty())
-			archerySpecialtyLevel = 0;
+				archerySpecialtyLevel = 0;
 			else
-			archerySpecialtyLevel = Integer.valueOf(archerySpecialtyLevelField.getText());
+				archerySpecialtyLevel = Integer.valueOf(archerySpecialtyLevelField.getText());
 
 			String creatureNameAttacker = String.valueOf(attackerCreatureList.getSelectedItem());
 			Creature creatureAttacker = UIUtilities.findCreatureFromList(creatureNameAttacker, allCreatures);
-			//Creature creatureAttacker = attackerCreatureList.getSelectedCreature();
 			String creatureNameDefender = String.valueOf(defenderCreatureList.getSelectedItem());
 			Creature creatureDefender = UIUtilities.findCreatureFromList(creatureNameDefender, allCreatures);
 			minDamage = creatureAttacker.minDamage;
@@ -192,26 +213,27 @@ public class MyFrame extends JFrame implements ActionListener {
 			else
 				defence = creatureDefender.defense;
 
-			isBehemoth=creatureNameAttacker.equals("Behemoth");
-			isAncientBehemoth=creatureNameAttacker.equals("AncientBehemoth");
-			isNix=creatureNameDefender.equals("Nix");
-			isNixWarrior=creatureNameDefender.equals("NixWarrior");
+			isBehemoth = creatureNameAttacker.equals("Behemoth");
+			isAncientBehemoth = creatureNameAttacker.equals("AncientBehemoth");
+			isNix = creatureNameDefender.equals("Nix");
+			isNixWarrior = creatureNameDefender.equals("NixWarrior");
 
 			if (creatureCountField.getText().isEmpty() == false)
 				creatureCount = Integer.valueOf(creatureCountField.getText());
 			else
 				creatureCount = 0;
 
-			Calculator calculator = new Calculator(isBehemoth, isNix, isAncientBehemoth, isNixWarrior, attack, defence, health,
-					armorer, offence, archery, offenseSpecialtyLevel, archerySpecialtyLevel, archerySpecialtyLevel, isRanged, minDamage,
+			Calculator calculator = new Calculator(isBehemoth, isNix, isAncientBehemoth, isNixWarrior, attack, defence,
+					health,
+					armorer, offence, archery, offenseSpecialtyLevel, archerySpecialtyLevel, archerySpecialtyLevel,
+					isRanged, minDamage,
 					maxDamage, creatureCount);
-			int[] totalDamage = calculator.calculate(melee.isSelected(), creatureAttacker, creatureDefender, creaturesNames);
+			int[] totalDamage = calculator.calculate(melee.isSelected(), creatureAttacker, creatureDefender,
+					creaturesNames);
 
 			UIUtilities.damageDealthLabel(damageDealth, health, totalDamage[0], totalDamage[1], creatureCount);
 
-			if (creatureCount != 0) {
-				//attackerCreatureList.clearSearch();
-				//defenderCreatureList.clearSearch();
+				attackerCreatureList.removeItemListener(itemListener);
 				attackerCreatureSearch.setText("");
 				attackerCreatureList.removeAllItems();
 				inputAttacker = "";
@@ -224,8 +246,8 @@ public class MyFrame extends JFrame implements ActionListener {
 				}
 				attackerCreatureList.setSelectedItem(creatureNameAttacker);
 				defenderCreatureList.setSelectedItem(creatureNameDefender);
+				attackerCreatureList.addItemListener(itemListener);
 
-			}
 		}
 
 	}
