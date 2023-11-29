@@ -104,6 +104,14 @@ public class UIUtilities {
 		button.setFocusable(false);
 		return button;
 	}
+	public static JButton swapButton(JFrame frame) {
+		JButton button = new JButton();
+		button.setBounds(223, 220, 80, 30);
+		button.addActionListener((ActionListener) frame);
+		button.setText("Swap");
+		button.setFocusable(false);
+		return button;
+	}
 		public static JToggleButton meleeButton(JFrame frame) {
 		JToggleButton button = new JToggleButton();
 		button.setBounds(30, 250, 140, 30);
@@ -236,12 +244,14 @@ public class UIUtilities {
 						+ ((minDamage + maxDamage)/2) % health + " HP on average</html>");
 			} 
 	}
-	// public static void removeAllItems(JComboBox<String> box){
-	// 	while(box.getItemAt(0)!=null){
-	// 		box.removeItemAt(0);
-	// 	}
-	// }
-
+	public static void clearInputs(JComboBox<String>creatureList, JTextField creatureSearchField, String searchString, String[] creaturesNames){
+		creatureSearchField.setText("");
+		searchString="";
+		creatureList.removeAllItems();
+		for (String name : creaturesNames) {
+			creatureList.addItem(name);
+		}
+	}
 	public static void main(String[] args) {
 		new MyFrame();
 	}

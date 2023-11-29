@@ -57,16 +57,18 @@ public class MyFrame extends JFrame implements ActionListener {
 	double maxDamage;
 	int creatureCount = 0;
 
-		ItemListener itemListener = new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange() == ItemEvent.SELECTED){
-					if(UIUtilities.findCreatureFromList((String)attackerCreatureList.getSelectedItem(), allCreatures).isRanged)
-				  melee.setVisible(true);
-					  else
-					  melee.setVisible(false);
-				}
-            }
-        };
+	ItemListener itemListener = new ItemListener() {
+		public void itemStateChanged(ItemEvent e) {
+			if (e.getStateChange() == ItemEvent.SELECTED) {
+				if (UIUtilities.findCreatureFromList((String) attackerCreatureList.getSelectedItem(),
+						allCreatures).isRanged)
+					melee.setVisible(true);
+				else
+					melee.setVisible(false);
+
+			}
+		}
+	};
 
 	JRadioButton[] offenceButton = UIUtilities.secondarySkillRadioButtons();
 	JRadioButton[] armorerButton = UIUtilities.secondarySkillRadioButtons();
@@ -89,15 +91,17 @@ public class MyFrame extends JFrame implements ActionListener {
 	// CreatureList defenderCreatureList;
 
 	JTextField creatureCountField = UIUtilities.limitingFieldsToNumbersSettingBounds(140, 30, 40, 30, null, null);;
-	String inputAttacker = new String();
-	String inputDefender = new String();
+	String attackerSearchString = new String();
+	String defenderSearchString = new String();
 
-	JTextField attackerCreatureSearch = UIUtilities.creatureSearch();
-	JTextField defenderCreatureSearch = UIUtilities.creatureSearch();
+	JTextField attackerSearchField = UIUtilities.creatureSearch();
+	JTextField defenderSearchField = UIUtilities.creatureSearch();
+
+	JLabel damageDealth = new JLabel();
 
 	JButton submit = UIUtilities.submitButton(this);;
 	JToggleButton melee = UIUtilities.meleeButton(this);
-	JLabel damageDealth = new JLabel();
+	JButton swap = UIUtilities.swapButton(this);
 
 	MyFrame() {
 		JPanel offensePanel = UIUtilities.secondarySkillPanel("Offense:", offenceButton, 0, 0, 350, 30);
@@ -112,19 +116,17 @@ public class MyFrame extends JFrame implements ActionListener {
 		// UIUtilities.showOrHideMelee(this, creatureListAttacker, melee, creatures);
 		defenderCreatureList = UIUtilities.creatureList(this, creaturesNames);
 		JPanel attackerPanel = UIUtilities.attackerPanel(attackerCreatureList, creatureCountField,
-				attackerCreatureSearch);
-		JPanel defenderPanel = UIUtilities.defenderPanel(defenderCreatureList, defenderCreatureSearch);
+				attackerSearchField);
+		JPanel defenderPanel = UIUtilities.defenderPanel(defenderCreatureList, defenderSearchField);
 
-	
 		attackerCreatureList.addItemListener(itemListener);
-		
-		
+
 		attackerCreatureList.addKeyListener((KeyListener) new KeyAdapter() {
-	public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				inputAttacker = UIUtilities.characterPressed(inputAttacker, c);
-				attackerCreatureSearch.setText(inputAttacker);
-				String[] filteredNames = UIUtilities.creatureNamesFilter(creaturesNames, inputAttacker);
+				attackerSearchString = UIUtilities.characterPressed(attackerSearchString, c);
+				attackerSearchField.setText(attackerSearchString);
+				String[] filteredNames = UIUtilities.creatureNamesFilter(creaturesNames, attackerSearchString);
 				attackerCreatureList.removeAllItems();
 				for (String name : filteredNames) {
 					attackerCreatureList.addItem(name);
@@ -134,9 +136,9 @@ public class MyFrame extends JFrame implements ActionListener {
 		defenderCreatureList.addKeyListener((KeyListener) new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				inputDefender = UIUtilities.characterPressed(inputDefender, c);
-				defenderCreatureSearch.setText(inputDefender);
-				String[] filteredNames = UIUtilities.creatureNamesFilter(creaturesNames, inputDefender);
+				defenderSearchString = UIUtilities.characterPressed(defenderSearchString, c);
+				defenderSearchField.setText(defenderSearchString);
+				String[] filteredNames = UIUtilities.creatureNamesFilter(creaturesNames, defenderSearchString);
 				defenderCreatureList.removeAllItems();
 				for (String name : filteredNames) {
 					defenderCreatureList.addItem(name);
@@ -159,6 +161,7 @@ public class MyFrame extends JFrame implements ActionListener {
 		this.add(defenderPanel);
 		this.add(submit);
 		this.add(melee);
+		this.add(swap);
 		this.add(damageDealth);
 		this.setVisible(true);
 		this.repaint();
@@ -166,11 +169,16 @@ public class MyFrame extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==swap){
+			String creatureNameAttacker = String.valueOf(attackerCreatureList.getSelectedItem());
+			String creatureNameDefender = String.valueOf(defenderCreatureList.getSelectedItem());
+			attackerCreatureList.setSelectedItem(creatureNameDefender);
+			defenderCreatureList.setSelectedItem(creatureNameAttacker);
+
+		}
 		if (e.getSource() == submit) {
-			if(creatureCountField.getText()=="0" || creatureCountField.getText()==""){
-				damageDealth.setText("Insert number of attacking creatures");
-				return;
-			}
+			// Integer.valueOf(creatureCountField.getText());
+			
 			for (int i = 0; i < 4; i++) {
 				if (offenceButton[i].isSelected())
 					offence = i;
@@ -233,20 +241,10 @@ public class MyFrame extends JFrame implements ActionListener {
 
 			UIUtilities.damageDealthLabel(damageDealth, health, totalDamage[0], totalDamage[1], creatureCount);
 
-				attackerCreatureList.removeItemListener(itemListener);
-				attackerCreatureSearch.setText("");
-				attackerCreatureList.removeAllItems();
-				inputAttacker = "";
-				defenderCreatureSearch.setText("");
-				defenderCreatureList.removeAllItems();
-				inputDefender = "";
-				for (String name : creaturesNames) {
-					defenderCreatureList.addItem(name);
-					attackerCreatureList.addItem(name);
-				}
-				attackerCreatureList.setSelectedItem(creatureNameAttacker);
-				defenderCreatureList.setSelectedItem(creatureNameDefender);
-				attackerCreatureList.addItemListener(itemListener);
+			attackerCreatureList.removeItemListener(itemListener);
+			UIUtilities.clearInputs(attackerCreatureList, attackerSearchField, attackerSearchString, creaturesNames);
+			UIUtilities.clearInputs(defenderCreatureList, defenderSearchField, defenderSearchString, creaturesNames);
+			attackerCreatureList.addItemListener(itemListener);
 
 		}
 
