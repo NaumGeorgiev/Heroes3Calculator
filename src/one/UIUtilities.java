@@ -118,9 +118,18 @@ public class UIUtilities {
 
 	public static JToggleButton meleeButton(JFrame frame) {
 		JToggleButton button = new JToggleButton();
-		button.setBounds(30, 250, 140, 30);
+		button.setBounds(30, 250, 70, 30);
 		button.addActionListener((ActionListener) frame);
 		button.setText("Melee");
+		button.setFocusable(false);
+		button.setVisible(false);
+		return button;
+	}
+	public static JToggleButton shotSum(JFrame frame) {
+		JToggleButton button = new JToggleButton();
+		button.setBounds(100, 250, 109, 30);
+		button.addActionListener((ActionListener) frame);
+		button.setText("ShotSum");
 		button.setFocusable(false);
 		button.setVisible(false);
 		return button;
@@ -277,10 +286,8 @@ public class UIUtilities {
 		String defenderName = String.valueOf(defenderCreatureList.getSelectedItem());
 		attackerCreatureList.setSelectedItem(defenderName);
 		defenderCreatureList.setSelectedItem(attackerName);
-		String attack = heroAttackField.getText();
-		String defence = heroDefenceField.getText();
-		heroAttackField.setText(defence);
-		heroDefenceField.setText(attack);
+		heroAttackField.setText("");
+		heroDefenceField.setText("");
 		offenseButton[0].setSelected(true);
 		armorerButton[0].setSelected(true);
 		archeryButton[0].setSelected(true);
@@ -289,6 +296,6 @@ public class UIUtilities {
 		archerySpecialtyLevelField.setText("");
 	}
 	public static void main(String[] args) {
-
+		new MyFrame();
 	}
 }

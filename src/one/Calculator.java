@@ -158,10 +158,15 @@ public class Calculator {
 			this.maxDamage /= 2;
 		}
 	}
-
-	public int[] calculate(boolean isMelee, Creature attacker, Creature defender, String[] creaturesNames) {
+	public void calculateAllShots(Creature attacker){
+		minDamage*=attacker.shotCount;
+		maxDamage*=attacker.shotCount;
+	}
+	public int[] calculate(boolean isMelee, Creature attacker, Creature defender, String[] creaturesNames, boolean allShots) {
 		if (isMelee)
 			calculateMelee(attacker);
+		else if(allShots)
+		calculateAllShots(attacker);
 		else if (attacker.isDoubleShooting)
 			calculateDoubleShooting();
 		if (attacker.hates(defender))
