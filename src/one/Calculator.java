@@ -55,9 +55,9 @@ public class Calculator {
 				defence = defence / 5 - 1;
 		}
 		if (isNix == true)
-			attack = attack * 7 / 10 + 2;
+			attack = attack * 7 / 10;
 		else if (isNixWarrior == true)
-			attack = attack * 4 / 10 + 2;
+			attack = attack * 4 / 10;
 
 		double attackDefenceDifferenceBonus = 1;
 		if (attack >= defence) {
