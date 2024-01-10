@@ -265,10 +265,15 @@ public class MyFrame extends JFrame implements ActionListener {
 			UIUtilities.clearSomeInput(attackerCreatureList, attackerSearchField, attackerSearchString,
 					creaturesNames,
 					itemListener);
+					attackerSearchString="";
 			UIUtilities.clearSomeInput(defenderCreatureList, defenderSearchField, defenderSearchString,
 					creaturesNames,
 					itemListener);
+					defenderSearchString="";
 		}
 
+	}
+	public static void main(String[] args) {
+		new MyFrame();
 	}
 }

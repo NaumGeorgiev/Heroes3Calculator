@@ -269,7 +269,7 @@ public class UIUtilities {
 		creatureList.removeItemListener(itemListener);
 		String slectedName = (String) creatureList.getSelectedItem();
 		creatureSearchField.setText("");
-		searchString = "";
+		// searchString = "";
 		creatureList.removeAllItems();
 		for (String name : creaturesNames) {
 			creatureList.addItem(name);
@@ -294,8 +294,5 @@ public class UIUtilities {
 		offenseSpecialtyLevelField.setText("");
 		armorerSpecialtyLevelField.setText("");
 		archerySpecialtyLevelField.setText("");
-	}
-	public static void main(String[] args) {
-		new MyFrame();
 	}
 }
